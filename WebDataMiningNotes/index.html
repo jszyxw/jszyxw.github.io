@@ -18,59 +18,59 @@
     var CONFIG = {"hostname":"nozora.xyz","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="词袋模型一篇文档看作一个词语的无序集合  优点：简单有效  缺点：忽略了词之间的句法关系以及篇章结构信息  符号化 tokenization: 识别词的边界  词语形态规范化 Stemming:   删除后缀 结果可能不是词语 不相关的词可能具有相同的 stem    词形还原 lemmatization：  将词语变为其语法原型 处理结果仍然为词 处理过程要考虑词性不同  thought -&amp;g">
+  <meta name="description" content="词袋模型 一篇文档看作一个词语的无序集合  优点：简单有效 缺点：忽略了词之间的句法关系以及篇章结构信息 符号化 tokenization: 识别词的边界 词语形态规范化 Stemming:  删除后缀 结果可能不是词语 不相关的词可能具有相同的 stem   词形还原 lemmatization：  将词语变为其语法原型 处理结果仍然为词 处理过程要考虑词性不同  thought -> t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pku 互联网数据挖掘 2020 fall 知识点整理">
 <meta property="og:url" content="http://nozora.xyz/WebDataMiningNotes/index.html">
 <meta property="og:site_name" content="ノゾラのブログ">
-<meta property="og:description" content="词袋模型一篇文档看作一个词语的无序集合  优点：简单有效  缺点：忽略了词之间的句法关系以及篇章结构信息  符号化 tokenization: 识别词的边界  词语形态规范化 Stemming:   删除后缀 结果可能不是词语 不相关的词可能具有相同的 stem    词形还原 lemmatization：  将词语变为其语法原型 处理结果仍然为词 处理过程要考虑词性不同  thought -&amp;g">
+<meta property="og:description" content="词袋模型 一篇文档看作一个词语的无序集合  优点：简单有效 缺点：忽略了词之间的句法关系以及篇章结构信息 符号化 tokenization: 识别词的边界 词语形态规范化 Stemming:  删除后缀 结果可能不是词语 不相关的词可能具有相同的 stem   词形还原 lemmatization：  将词语变为其语法原型 处理结果仍然为词 处理过程要考虑词性不同  thought -> t">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110123127453.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110141621685.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110135316725.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110140859912.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110140840367.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110141145194.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110131617592.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110142117405.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110144142726.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110151457217.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110151518107.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110151607844.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110153127054.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110154115446.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110154558264.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111165334786.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111165353185.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110155453751.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110155550089.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110161144710.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110161408853.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110161704093.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110161908314.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210110161936661.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111103724666.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111103852232.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111105114783.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111110516703.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111113551730.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111113916354.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111113935972.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111114052856.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111121716012.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111121806072.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111122833862.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111122932275.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111122156198.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111123442168.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111123552489.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111143558017.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111143652464.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111143744097.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111143911407.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111144450917.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111145352091.png">
-<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/image-20210111160356905.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110141621685.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110135316725.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110140859912.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110140840367.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110141145194.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110131617592.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110142117405.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110144142726.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110151457217.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110151518107.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110151607844.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110153127054.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110154115446.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110154558264.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111165334786.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111165353185.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110155453751.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110155550089.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110161144710.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110161408853.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110161704093.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110161908314.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210110161936661.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111103724666.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111103852232.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111105114783.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111110516703.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111113551730.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111113916354.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111113935972.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111114052856.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111121716012.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111121806072.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111122833862.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111122932275.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111122156198.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111123442168.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111123552489.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111143558017.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111143652464.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111143744097.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111143911407.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111144450917.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111145352091.png">
+<meta property="og:image" content="http://nozora.xyz/WebDataMiningNotes/WebDataMiningNotes/image-20210111160356905.png">
 <meta property="article:published_time" content="2021-01-10T16:00:00.000Z">
 <meta property="article:modified_time" content="2021-01-10T16:00:00.000Z">
 <meta property="article:author" content="nozora">
@@ -1269,7 +1269,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #49ff71;
+  background: #366c46;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2532,346 +2532,367 @@ embed {
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="词袋模型"><a href="#词袋模型" class="headerlink" title="词袋模型"></a>词袋模型</h2><p>一篇文档看作一个词语的<strong>无序</strong>集合</p>
+        <h2 id="词袋模型">词袋模型</h2>
+<p>一篇文档看作一个词语的<strong>无序</strong>集合</p>
 <ul>
-<li><p>优点：简单有效</p>
-</li>
-<li><p>缺点：忽略了词之间的句法关系以及篇章结构信息</p>
-</li>
-<li><p>符号化 <code>tokenization</code>: 识别词的边界</p>
-</li>
-<li><p>词语形态规范化 <code>Stemming</code>: </p>
+<li>优点：简单有效</li>
+<li><p>缺点：忽略了词之间的句法关系以及篇章结构信息</p></li>
+<li>符号化 <code>tokenization</code>: 识别词的边界</li>
+<li>词语形态规范化 <code>Stemming</code>:
 <ul>
 <li>删除后缀</li>
 <li>结果可能不是词语</li>
 <li>不相关的词可能具有相同的 stem</li>
-</ul>
-</li>
-<li><p> 词形还原 <code>lemmatization</code>：</p>
+</ul></li>
+<li> 词形还原 <code>lemmatization</code>：
 <ul>
 <li>将词语变为其语法原型</li>
 <li>处理结果仍然为词</li>
-<li>处理过程要考虑词性不同<ul>
-<li> thought -&gt; think if thought is a verb</li>
+<li>处理过程要考虑词性不同
+<ul>
+<li>thought -&gt; think if thought is a verb</li>
 <li>thought not change if it is a noun</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p> 停用词 <code>stop words</code></p>
+</ul></li>
+</ul></li>
+<li> 停用词 <code>stop words</code>
 <ul>
 <li>不具有内容信息的词</li>
-<li>过滤停用词的原因：<ul>
+<li>过滤停用词的原因：
+<ul>
 <li>停用词并不能提高检索效果</li>
 <li>可以大幅减少索引大小</li>
 <li>减少检索时间</li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="文档余弦相似度计算"><a href="#文档余弦相似度计算" class="headerlink" title="文档余弦相似度计算"></a>文档余弦相似度计算</h2><p>查询向量 $q$, 文档向量 $d$，向量维度均为 $n$, 其余弦相似度定义为：<br>$$<br>\begin{aligned}<br>\operatorname{sim}(q, d) &amp;= \cos (q, d)\<br>&amp;=\left(|q|^{-1} \cdot q\right) \bullet\left(|d|^{-1} \cdot d\right) \<br>&amp;=\frac{\sum_{i=1}^{n}\left(q_{i} \cdot d_{i}\right)}{\sqrt{\sum_{i=1}^{n} q_{i}^{2}} \cdot \sqrt{\sum_{i=1}^{n} d_{i}^{2}}}<br>\end{aligned}<br>$$</p>
-<h2 id="倒排索引构建与优点"><a href="#倒排索引构建与优点" class="headerlink" title="倒排索引构建与优点"></a>倒排索引构建与优点</h2><p>以关键词为核心对文档进行索引，帮助快速地找到文档中所包含的关键词</p>
-<img src="WebDataMiningNotes/image-20210110123127453.png" alt="image-20210110123127453" style="zoom:50%;">
-
-<p>倒排索引的优势</p>
+<h2 id="文档余弦相似度计算">文档余弦相似度计算</h2>
+<p>查询向量 <span class="math inline">\(q\)</span>, 文档向量 <span class="math inline">\(d\)</span>，向量维度均为 <span class="math inline">\(n\)</span>, 其余弦相似度定义为：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\operatorname{sim}(q, d) &amp;= \cos (q, d)\\
+&amp;=\left(\|q\|^{-1} \cdot q\right) \bullet\left(\|d\|^{-1} \cdot d\right) \\
+&amp;=\frac{\sum_{i=1}^{n}\left(q_{i} \cdot d_{i}\right)}{\sqrt{\sum_{i=1}^{n} q_{i}^{2}} \cdot \sqrt{\sum_{i=1}^{n} d_{i}^{2}}}
+\end{aligned}
+\]</span></p>
+<h2 id="倒排索引构建与优点">倒排索引构建与优点</h2>
+<p>以关键词为核心对文档进行索引，帮助快速地找到文档中所包含的关键词</p>
+<p><img src="WebDataMiningNotes/image-20210110123127453.png" alt="image-20210110123127453" style="zoom:50%;"></p>
+<p>倒排索引的优势 - 关键词个数比文档少，因此检索效率高 - 特别适合信息检索任务，信息检索任务的查询词一般很少，通过几次查询就能找出所有可能的文档</p>
+<h2 id="布尔检索模型及其优缺点">布尔检索模型及其优缺点</h2>
+<p>基于布尔代数的检索模型 (<span class="math inline">\(\text{AND, OR, NOT}\)</span>) - 优点 - 简单 - 对查询严格掌控 - 缺点 - 一般用户难以构造布尔查询，耗时耗力 - 检索结果文档无法排序（只能分为匹配或不匹配） - 根据布尔运算进行严格匹配，导致过少或过多的检索结果</p>
+<p>尽管布尔模型不再用做主流文档检索模型，但其思想常用于实现高级检索功能 ## Web 搜索架构</p>
+<p><img src="WebDataMiningNotes/image-20210110141621685.png" alt="image-20210110141621685" style="zoom: 33%;"></p>
+<h2 id="pagerank算法">PageRank 算法</h2>
 <ul>
-<li>关键词个数比文档少，因此检索效率高</li>
-<li>特别适合信息检索任务，信息检索任务的查询词一般很少，通过几次查询就能找出所有可能的文档</li>
-</ul>
-<h2 id="布尔检索模型及其优缺点"><a href="#布尔检索模型及其优缺点" class="headerlink" title="布尔检索模型及其优缺点"></a>布尔检索模型及其优缺点</h2><p>基于布尔代数的检索模型 ($\text {AND, OR, NOT}$)</p>
-<ul>
-<li>优点<ul>
-<li>简单</li>
-<li>对查询严格掌控</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>一般用户难以构造布尔查询，耗时耗力</li>
-<li>检索结果文档无法排序（只能分为匹配或不匹配）</li>
-<li>根据布尔运算进行严格匹配，导致过少或过多的检索结果</li>
-</ul>
-</li>
-</ul>
-<p>尽管布尔模型不再用做主流文档检索模型，但其思想常用于实现高级检索功能</p>
-<h2 id="Web搜索架构"><a href="#Web搜索架构" class="headerlink" title="Web搜索架构"></a>Web 搜索架构</h2><img src="image-20210110141621685.png" alt="image-20210110141621685" style="zoom: 33%;">
-
-<h2 id="PageRank算法"><a href="#PageRank算法" class="headerlink" title="PageRank算法"></a>PageRank 算法</h2><ul>
 <li><p>随机游走 (Random Walk) 模型</p>
 <ul>
-<li><p>对网页按照流行度或权威性进行排序</p>
-</li>
-<li><p>为图中每个节点 $v_i$ 计算一个 PageRank 值 $\pi (v_i)$, 可看作用户随机点击链接将会到达特定网页的可能性</p>
-</li>
-</ul>
-</li>
-<li><p>页面节点的 PageRank 与其父节点的 Rank 值成正比，但与其父节点的出度 (out-degree) 成反比</p>
-</li>
+<li><p>对网页按照流行度或权威性进行排序</p></li>
+<li><p>为图中每个节点<span class="math inline"> \(v_i\)</span> 计算一个 PageRank 值<span class="math inline"> \(\pi(v_i)\)</span>, 可看作用户随机点击链接将会到达特定网页的可能性</p></li>
+</ul></li>
+<li><p>页面节点的 PageRank 与其父节点的 Rank 值成正比，但与其父节点的出度 (out-degree) 成反比</p></li>
 <li><p>样例：</p>
-  <img src="image-20210110135316725.png" alt="image-20210110135316725" style="zoom:50%;">
-
-</li>
+<p><img src="WebDataMiningNotes/image-20210110135316725.png" alt="image-20210110135316725" style="zoom:50%;"></p></li>
 </ul>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Node</th>
 <th>Outlinks</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>$v_1$</td>
-<td>$v_2$, $v_3$, $v_6$</td>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(v_1\)</span></td>
+<td><span class="math inline">\(v_2\)</span>, <span class="math inline">\(v_3\)</span>, <span class="math inline">\(v_6\)</span></td>
 </tr>
-<tr>
-<td>$v_2$</td>
-<td>$v_4$, $v_5$</td>
+<tr class="even">
+<td><span class="math inline">\(v_2\)</span></td>
+<td><span class="math inline">\(v_4\)</span>, <span class="math inline">\(v_5\)</span></td>
 </tr>
-<tr>
-<td>$v_3$</td>
-<td>$v_4$, $v_6$</td>
+<tr class="odd">
+<td><span class="math inline">\(v_3\)</span></td>
+<td><span class="math inline">\(v_4\)</span>, <span class="math inline">\(v_6\)</span></td>
 </tr>
-<tr>
-<td>$v_4$</td>
-<td>$v_6$</td>
+<tr class="even">
+<td><span class="math inline">\(v_4\)</span></td>
+<td><span class="math inline">\(v_6\)</span></td>
 </tr>
-<tr>
-<td>$v_5$</td>
-<td>$v_1$, $v_4$, $v_7$, $v_8$</td>
+<tr class="odd">
+<td><span class="math inline">\(v_5\)</span></td>
+<td><span class="math inline">\(v_1\)</span>, <span class="math inline">\(v_4\)</span>, <span class="math inline">\(v_7\)</span>, <span class="math inline">\(v_8\)</span></td>
 </tr>
-<tr>
-<td>$v_6$</td>
-<td>$v_4$</td>
+<tr class="even">
+<td><span class="math inline">\(v_6\)</span></td>
+<td><span class="math inline">\(v_4\)</span></td>
 </tr>
-<tr>
-<td>$v_7$</td>
-<td>$v_3$</td>
+<tr class="odd">
+<td><span class="math inline">\(v_7\)</span></td>
+<td><span class="math inline">\(v_3\)</span></td>
 </tr>
-<tr>
-<td>$v_8$</td>
-<td>$v_4$, $v_7$</td>
+<tr class="even">
+<td><span class="math inline">\(v_8\)</span></td>
+<td><span class="math inline">\(v_4\)</span>, <span class="math inline">\(v_7\)</span></td>
 </tr>
-</tbody></table>
-<p>$\text { Adjacent Matrix: }$<br>$$<br>\begin{aligned}<br>&amp;M=\left[\begin{array}{llllllll}<br>0 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \<br>1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 \<br>0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0<br>\end{array}\right]<br>\end{aligned}<br>$$<br>$\text { Transition Probability Matrix: }$<br>$$<br>P=\left[\begin{array}{cccccccc}<br>0 &amp; 1 / 3 &amp; 1 / 3 &amp; 0 &amp; 0 &amp; 1 / 3 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 1 / 2 &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \<br>1 / 4 &amp; 0 &amp; 0 &amp; 1 / 4 &amp; 0 &amp; 0 &amp; 1 / 4 &amp; 1 / 4 \<br>0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0<br>\end{array}\right]<br>$$<br>$$<br>\pi(v_i) = \sum_{v_j\in inlink[v_i]} \frac{\pi(v_j)}{|outlink[v_j]} \Rightarrow \pi = P^T \pi<br>$$</p>
+</tbody>
+</table>
+<p><span class="math inline">\(\text { Adjacent Matrix: }\)</span> <span class="math display">\[
+\begin{aligned}
+&amp;M=\left[\begin{array}{llllllll}
+0 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0
+\end{array}\right]
+\end{aligned}
+\]</span> <span class="math inline">\(\text { Transition Probability Matrix: }\)</span> <span class="math display">\[
+P=\left[\begin{array}{cccccccc}
+0 &amp; 1 / 3 &amp; 1 / 3 &amp; 0 &amp; 0 &amp; 1 / 3 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 1 / 2 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+1 / 4 &amp; 0 &amp; 0 &amp; 1 / 4 &amp; 0 &amp; 0 &amp; 1 / 4 &amp; 1 / 4 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0
+\end{array}\right]
+\]</span> <span class="math display">\[
+\pi(v_i) = \sum_{v_j\in inlink[v_i]} \frac{\pi(v_j)}{|outlink[v_j]} \Rightarrow \pi = P^T \pi
+\]</span></p>
 <ul>
-<li><p>缺点：</p>
+<li>缺点：
 <ul>
-<li>排序泄漏<ul>
+<li>排序泄漏
+<ul>
 <li>一个独立的网页没有 outlink</li>
 <li> 得到不合理的 rank 值，影响收敛速度</li>
-<li><img src="image-20210110140859912.png" alt="image-20210110140859912" style="zoom: 50%;"></li>
-</ul>
-</li>
-<li>排序沉入<ul>
+<li><img src="WebDataMiningNotes/image-20210110140859912.png" alt="image-20210110140859912" style="zoom: 50%;"></li>
+</ul></li>
+<li>排序沉入
+<ul>
 <li>形成没有外部 outlink 的强连通分量</li>
 <li>得到不合理的 rank 值，影响收敛速度</li>
-<li><img src="image-20210110140840367.png" alt="image-20210110140840367" style="zoom: 50%;">
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li><img src="WebDataMiningNotes/image-20210110140840367.png" alt="image-20210110140840367" style="zoom: 50%;"></li>
+</ul></li>
+</ul></li>
 <li><p>改进：Random walk with restart (RWR)，随机游走过程中开始浏览一个新网页</p>
-  <img src="image-20210110141145194.png" alt="image-20210110141145194" style="zoom: 33%;">
-
-</li>
+<p><img src="WebDataMiningNotes/image-20210110141145194.png" alt="image-20210110141145194" style="zoom: 33%;"></p></li>
 </ul>
-<h2 id="HITS算法"><a href="#HITS算法" class="headerlink" title="HITS算法"></a>HITS 算法</h2><p>考虑到两类页面：内容页 与 枢纽页 (导航、目录等)，对于某个 (子) 图中的任一顶点 $\mathbf {v}_{\mathbf {i}}$：</p>
+<h2 id="hits算法">HITS 算法</h2>
+<p>考虑到两类页面：内容页 与 枢纽页 (导航、目录等)，对于某个 (子) 图中的任一顶点 <span class="math inline">\(\mathbf{v}_{\mathbf{i}}\)</span>：</p>
 <ul>
-<li><p>$\mathrm{a}\left(\mathrm{v}<em>{\mathrm{i}}\right): \mathrm{v}</em>{\text {i} }$ 的权威值 (authority)。一个页面被越多重要的枢纽页所引用，该页面权威性越高</p>
-</li>
-<li><p>$h\left (v_{i}\right): v_{i}$ 的枢纽值 (hub)。一个好的枢纽页面会链接到许多权威页面</p>
-  <img src="image-20210110131617592.png" alt="image-20210110131617592" style="zoom:50%;">
-</li>
-<li><p>计算方法</p>
-</li>
+<li><p><span class="math inline">\(\mathrm{a}\left(\mathrm{v}_{\mathrm{i}}\right): \mathrm{v}_{\text {i} }\)</span> 的权威值 (authority)。一个页面被越多重要的枢纽页所引用，该页面权威性越高</p></li>
+<li><p><span class="math inline"> \(h\left(v_{i}\right): v_{i}\)</span> 的枢纽值 (hub)。一个好的枢纽页面会链接到许多权威页面</p>
+<p><img src="WebDataMiningNotes/image-20210110131617592.png" alt="image-20210110131617592" style="zoom:50%;"></p></li>
+<li><p>计算方法</p></li>
 </ul>
-<p>$$<br>\text{Recursive dependency:}\<br>a\left(v_{i}\right)=\sum_{v_{j} \in \text { inlink } \left[v_{i}\right]} h\left(v_{j}\right) \<br>h\left(v_{i}\right)=\sum_{v_{j} \in \text { outlink }\left[v_{i}\right]} a\left(v_{j}\right)\<br>\quad \<br>\text{Iterative algorithm:}\<br>a^{(k+1)}\left(v_{i}\right)=\sum_{v_{j} \in inlink\left[v_{i}\right]} h^{(k)}\left(v_{j}\right) \<br>h^{(k+1)}\left(v_{i}\right)=\sum_{v_{j} \in \text { outlink }\left[v_{i}\right]} a^{(k+1)}\left(v_{j}\right) \<br>\quad \<br>规范化（保证收敛）：\<br>a^{(k+1)}\left(v_{i}\right) \leftarrow \frac{a^{(k+1)}\left(v_{i}\right)}{\sum_{j} a^{(k+1)}\left(v_{j}\right)} \<br>h^{(k+1)}\left(v_{i}\right) \leftarrow \frac{h^{(k+1)}\left(v_{i}\right)}{\sum_{j} h^{(k+1)}\left(v_{j}\right)}<br>$$</p>
-<h2 id="信息检索评价指标MAP的计算"><a href="#信息检索评价指标MAP的计算" class="headerlink" title="信息检索评价指标MAP的计算"></a>信息检索评价指标 MAP 的计算</h2><img src="image-20210110142117405.png" alt="image-20210110142117405" style="zoom: 33%;">
-
+<p><span class="math display">\[
+\text {Recursive dependency:}\\
+a\left (v_{i}\right)=\sum_{v_{j} \in \text { inlink } \left [v_{i}\right]} h\left (v_{j}\right) \\
+h\left (v_{i}\right)=\sum_{v_{j} \in \text { outlink }\left [v_{i}\right]} a\left (v_{j}\right)\\
+\quad \\
+\text {Iterative algorithm:}\\
+a^{(k+1)}\left (v_{i}\right)=\sum_{v_{j} \in inlink\left [v_{i}\right]} h^{(k)}\left (v_{j}\right) \\
+h^{(k+1)}\left (v_{i}\right)=\sum_{v_{j} \in \text { outlink }\left [v_{i}\right]} a^{(k+1)}\left (v_{j}\right) \\
+\quad \\
+规范化（保证收敛）：\\
+a^{(k+1)}\left (v_{i}\right) \leftarrow \frac {a^{(k+1)}\left (v_{i}\right)}{\sum_{j} a^{(k+1)}\left (v_{j}\right)} \\
+h^{(k+1)}\left (v_{i}\right) \leftarrow \frac {h^{(k+1)}\left (v_{i}\right)}{\sum_{j} h^{(k+1)}\left (v_{j}\right)}
+\]</span></p>
+<h2 id="信息检索评价指标map的计算">信息检索评价指标 MAP 的计算</h2>
+<p><img src="WebDataMiningNotes/image-20210110142117405.png" alt="image-20210110142117405" style="zoom: 33%;"></p>
 <ul>
-<li>不同 recall levels 的 precision 值<ul>
+<li>不同 recall levels 的 precision 值
+<ul>
 <li>沿着检索结果列表从头往后考察</li>
-<li><code>11 recall points</code> : $0 %, 10 %, 20 %, \ldots, 90 %, 100 %$</li>
-<li> 在<strong>找到 $n%$ 的相关文档</strong>时的 <code>precision</code> 值</li>
-<li><img src="image-20210110144142726.png" alt="image-20210110144142726" style="zoom:33%;"></li>
-<li> Non-interpolated average precision(<strong>MAP</strong>)<br>  $\mathrm{REL}<em>{\boldsymbol{q}}$ are the relevant documents for $\boldsymbol{q},$<br>$$<br>\text { non-int. avg. prec. }=\sum</em>{\boldsymbol{q} \in \boldsymbol{Q}} \frac{\sum_{\boldsymbol{r}=1}^{\left|\mathrm{REL}<em>{\boldsymbol{q}}\right|} \frac{\boldsymbol{P}</em>{q}\left(\boldsymbol{r} /\left|\mathrm{REL}<em>{\boldsymbol{q}}\right|\right)}{\left|\mathrm{REL}</em>{\boldsymbol{q}}\right|}}{|\boldsymbol{Q}|}<br>$$</li>
+<li><code>11 recall points</code> : <span class="math inline">\(0 \%, 10 \%, 20 \%, \ldots, 90 \%, 100 \%\)</span></li>
+<li> 在<strong>找到 <span class="math inline">\(n\%\)</span> 的相关文档</strong>时的 <code>precision</code> 值</li>
+<li><img src="WebDataMiningNotes/image-20210110144142726.png" alt="image-20210110144142726" style="zoom:33%;"></li>
+<li> Non-interpolated average precision(<strong>MAP</strong>) <span class="math inline">\(\mathrm{REL}_{\boldsymbol{q}}\)</span> are the relevant documents for <span class="math inline">\(\boldsymbol{q},\)</span> <span class="math display">\[
+\text { non-int. avg. prec. }=\sum_{\boldsymbol{q} \in \boldsymbol{Q}} \frac{\sum_{\boldsymbol{r}=1}^{\left|\mathrm{REL}_{\boldsymbol{q}}\right|} \frac{\boldsymbol{P}_{q}\left(\boldsymbol{r} /\left|\mathrm{REL}_{\boldsymbol{q}}\right|\right)}{\left|\mathrm{REL}_{\boldsymbol{q}}\right|}}{|\boldsymbol{Q}|}
+\]</span></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="关联规则挖掘过程与Apriori算法"><a href="#关联规则挖掘过程与Apriori算法" class="headerlink" title="关联规则挖掘过程与Apriori算法"></a>关联规则挖掘过程与 Apriori 算法</h2><ul>
-<li><img src="image-20210110151457217.png" alt="image-20210110151457217" style="zoom:33%;"></li>
-<li><img src="image-20210110151518107.png" alt="image-20210110151518107" style="zoom: 33%;"></li>
-<li><img src="image-20210110151607844.png" alt="image-20210110151607844" style="zoom:33%;"></li>
-<li>关联规则根据以下两个标准（包含或排除）：<ul>
+<h2 id="关联规则挖掘过程与apriori算法">关联规则挖掘过程与 Apriori 算法</h2>
+<ul>
+<li><img src="WebDataMiningNotes/image-20210110151457217.png" alt="image-20210110151457217" style="zoom:33%;"></li>
+<li><img src="WebDataMiningNotes/image-20210110151518107.png" alt="image-20210110151518107" style="zoom: 33%;"></li>
+<li><img src="WebDataMiningNotes/image-20210110151607844.png" alt="image-20210110151607844" style="zoom:33%;"></li>
+<li>关联规则根据以下两个标准（包含或排除）：
+<ul>
 <li>最小支持度 <code>min</code>sup</li>
 <li> 最小置信度 <code>min</code>conf</li>
-</ul>
-</li>
-<li> 基本步骤<ul>
-<li>找出所有的频繁项集<ul>
+</ul></li>
+<li> 基本步骤
+<ul>
+<li>找出所有的频繁项集
+<ul>
 <li>满足最小支持度</li>
-</ul>
-</li>
-<li>找出所有的强关联规则<ul>
+</ul></li>
+<li>找出所有的强关联规则
+<ul>
 <li>由频繁项集生成关联规则</li>
 <li>保留满足最小置信度的规则</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
 <li>挖掘关联规则的总体性能由第一步决定</li>
 <li><code>Apriori 性质</code>: 若 A 是一个频繁项集，则 A 的每一个子集都是一个频繁项集。</li>
 <li><code>Apriori 算法</code>: 利用 <code>Apriori 性质</code>高效搜索所有频繁项集</li>
-<li><img src="image-20210110153127054.png" alt="image-20210110153127054" style="zoom:33%;"></li>
-<li><img src="image-20210110154115446.png" alt="image-20210110154115446" style="zoom:33%;"></li>
-<li> $X$ 满足，则 $A\rightarrow B$ 必满足（ps by me）</li>
-<li><img src="image-20210110154558264.png" alt="image-20210110154558264" style="zoom:33%;">
-
-</li>
+<li><img src="WebDataMiningNotes/image-20210110153127054.png" alt="image-20210110153127054" style="zoom:33%;"></li>
+<li><img src="WebDataMiningNotes/image-20210110154115446.png" alt="image-20210110154115446" style="zoom:33%;"></li>
+<li><span class="math inline"> \(X\)</span> 满足，则<span class="math inline"> \(A\rightarrow B\)</span> 必满足（ps by me）</li>
+<li><img src="WebDataMiningNotes/image-20210110154558264.png" alt="image-20210110154558264" style="zoom:33%;"></li>
 </ul>
-<h2 id="朴素贝叶斯分类算法"><a href="#朴素贝叶斯分类算法" class="headerlink" title="朴素贝叶斯分类算法"></a>朴素贝叶斯分类算法</h2><img src="image-20210111165334786.png" alt="image-20210111165334786" style="zoom:33%;">
-
-<img src="image-20210111165353185.png" alt="image-20210111165353185" style="zoom:33%;">
-
-<h2 id="K近邻分类算法"><a href="#K近邻分类算法" class="headerlink" title="K近邻分类算法"></a>K 近邻分类算法</h2><img src="image-20210110155453751.png" alt="image-20210110155453751" style="zoom: 33%;">
-
-<img src="image-20210110155550089.png" alt="image-20210110155550089" style="zoom:33%;">
-
+<h2 id="朴素贝叶斯分类算法">朴素贝叶斯分类算法</h2>
+<p><img src="WebDataMiningNotes/image-20210111165334786.png" alt="image-20210111165334786" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210111165353185.png" alt="image-20210111165353185" style="zoom:33%;"></p>
+<h2 id="k近邻分类算法">K 近邻分类算法</h2>
+<p><img src="WebDataMiningNotes/image-20210110155453751.png" alt="image-20210110155453751" style="zoom: 33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210110155550089.png" alt="image-20210110155550089" style="zoom:33%;"></p>
 <ul>
-<li>优势<ul>
+<li>优势
+<ul>
 <li>不需要训练阶段</li>
 <li>类别数量增加也具有良好的扩展性</li>
-</ul>
-</li>
-<li>劣势<ul>
+</ul></li>
+<li>劣势
+<ul>
 <li>训练数据很大时模型很大</li>
 <li>需要大量内存</li>
 <li>性能较慢</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="分类与回归的联系与区别"><a href="#分类与回归的联系与区别" class="headerlink" title="分类与回归的联系与区别"></a>分类与回归的联系与区别</h2><p>联系：常常可以相互转化，如线性回归与逻辑回归；SVR 与 SVM 等算法具有共通性，稍加修改后两者常常可以相互转化。</p>
-<p>区别：<br>$$<br>\begin{array}{|l|c|c|}<br>\hline \text {特性} &amp; \text { 分类 } &amp; \text { 回归 } \<br>\hline \text {输出类型} &amp; \text { 离散数据 } &amp; \text { 连续数据 } \<br>\hline \text {目的} &amp; \text { 寻找决策边界 } &amp; \text { 找到最优拟合 } \<br>\hline \text {评价方法} &amp; \text { 精度 (accuracy)、混淆矩阵等 } &amp; \text { SSE (sum of square errors) 或拟合优度等 } \<br>\hline<br>\end{array}<br>$$</p>
-<h2 id="K均值聚类算法"><a href="#K均值聚类算法" class="headerlink" title="K均值聚类算法"></a>K 均值聚类算法</h2><img src="image-20210110161144710.png" alt="image-20210110161144710" style="zoom: 33%;">
-
-<p>时间复杂度 $O (tkn),n$ 为数据点个数，$k$ 为聚类数目，$t$ 为迭代次数，通常 $kt&lt;&lt;n$。</p>
-<h2 id="凝聚式聚类算法"><a href="#凝聚式聚类算法" class="headerlink" title="凝聚式聚类算法"></a>凝聚式聚类算法</h2><img src="image-20210110161408853.png" alt="image-20210110161408853" style="zoom:33%;">
-
-<h2 id="半监督聚类之COP-K-means算法"><a href="#半监督聚类之COP-K-means算法" class="headerlink" title="半监督聚类之COP K-means算法"></a>半监督聚类之 COP K-means 算法</h2><img src="image-20210110161704093.png" alt="image-20210110161704093" style="zoom:33%;">
-
-<img src="image-20210110161908314.png" alt="image-20210110161908314" style="zoom:33%;">
-
-<img src="image-20210110161936661.png" alt="image-20210110161936661" style="zoom:33%;">
-
-<h2 id="自然语言处理领域的歧义现象"><a href="#自然语言处理领域的歧义现象" class="headerlink" title="自然语言处理领域的歧义现象"></a>自然语言处理领域的歧义现象</h2><ul>
+<h2 id="分类与回归的联系与区别">分类与回归的联系与区别</h2>
+<p>联系：常常可以相互转化，如线性回归与逻辑回归；SVR 与 SVM 等算法具有共通性，稍加修改后两者常常可以相互转化。</p>
+<p>区别： <span class="math display">\[
+\begin {array}{|l|c|c|}
+\hline \text { 特性 } &amp; \text { 分类 } &amp; \text { 回归 } \\
+\hline \text { 输出类型 } &amp; \text { 离散数据 } &amp; \text { 连续数据 } \\
+\hline \text { 目的 } &amp; \text { 寻找决策边界 } &amp; \text { 找到最优拟合 } \\
+\hline \text { 评价方法 } &amp; \text { 精度 (accuracy)、混淆矩阵等 } &amp; \text { SSE (sum of square errors) 或拟合优度等 } \\
+\hline
+\end {array}
+\]</span></p>
+<h2 id="k均值聚类算法">K 均值聚类算法</h2>
+<p><img src="WebDataMiningNotes/image-20210110161144710.png" alt="image-20210110161144710" style="zoom: 33%;"></p>
+<p>时间复杂度 <span class="math inline">\(O(tkn),n\)</span> 为数据点个数，<span class="math inline">\(k\)</span> 为聚类数目，<span class="math inline">\(t\)</span> 为迭代次数，通常 <span class="math inline">\(kt&lt;&lt;n\)</span>。</p>
+<h2 id="凝聚式聚类算法">凝聚式聚类算法</h2>
+<p><img src="WebDataMiningNotes/image-20210110161408853.png" alt="image-20210110161408853" style="zoom:33%;"></p>
+<h2 id="半监督聚类之cop-k-means算法">半监督聚类之 COP K-means 算法</h2>
+<p><img src="WebDataMiningNotes/image-20210110161704093.png" alt="image-20210110161704093" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210110161908314.png" alt="image-20210110161908314" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210110161936661.png" alt="image-20210110161936661" style="zoom:33%;"></p>
+<h2 id="自然语言处理领域的歧义现象">自然语言处理领域的歧义现象</h2>
+<ul>
 <li><p>分词</p>
 <blockquote>
-<p>“能穿多少穿多少”</p>
-</blockquote>
-</li>
+<p>"能穿多少穿多少"</p>
+</blockquote></li>
 <li><p>句法</p>
 <blockquote>
-<p>“咬死了猎人的狗”</p>
-</blockquote>
-</li>
-<li><p>语义 </p>
+<p>"咬死了猎人的狗"</p>
+</blockquote></li>
+<li><p>语义</p>
 <blockquote>
-<p>“曾经喜欢一个人，如今喜欢一个人。”</p>
-</blockquote>
-</li>
+<p>"曾经喜欢一个人，如今喜欢一个人。"</p>
+</blockquote></li>
 <li><p>语用</p>
 <blockquote>
-<p>“该来的没来”</p>
-</blockquote>
-</li>
+<p>"该来的没来"</p>
+</blockquote></li>
 <li><p>反讽</p>
 <blockquote>
-<p>“What a wonderful weather!”</p>
-</blockquote>
-</li>
+<p>"What a wonderful weather!"</p>
+</blockquote></li>
 </ul>
-<h2 id="正向最大匹配分词与逆向最大匹配分词"><a href="#正向最大匹配分词与逆向最大匹配分词" class="headerlink" title="正向最大匹配分词与逆向最大匹配分词"></a>正向最大匹配分词与逆向最大匹配分词</h2><img src="image-20210111103724666.png" alt="image-20210111103724666" style="zoom:33%;">
-
-<img src="image-20210111103852232.png" alt="image-20210111103852232" style="zoom:33%;">
-
-<h2 id="无向图度数中心性-中介中心性与亲近中心性的计算-未规范化与规范化"><a href="#无向图度数中心性-中介中心性与亲近中心性的计算-未规范化与规范化" class="headerlink" title="无向图度数中心性. 中介中心性与亲近中心性的计算(未规范化与规范化)"></a>无向图度数中心性。中介中心性与亲近中心性的计算 (未规范化与规范化)</h2><h3 id="度数中心性"><a href="#度数中心性" class="headerlink" title="度数中心性"></a>度数中心性</h3><p>无向图度数中心性等于 $deg (v)$.</p>
-<p>规范化度数中心性等于 ${deg (v)}/{(n - 1)}$.</p>
-<h3 id="中介中心性"><a href="#中介中心性" class="headerlink" title="中介中心性"></a>中介中心性</h3><p>$$<br>C_{B}(i)=\sum_{j&lt;k} g_{j k}(i) / g_{j k}<br>$$<br>其中 $\mathbf {g}<em>{j k}=$ 连接节点 $j,k$ 最短路径的数量，$\mathbf {g}</em>{j k}(\mathrm {i})=$ 连接节点 $j,k$ 且经过节点 $i$ 的最短路径数量</p>
-<p>规范化中介中心性： $C’_B (i) = C_B (i)/[(n-1)(n-2)/2]$</p>
-<h3 id="亲近中心性"><a href="#亲近中心性" class="headerlink" title="亲近中心性"></a>亲近中心性</h3><p>一个节点的亲近中心性基于该节点与图中所有节点的平均最短路径距离计算得到:<br>$$<br>C_{c}(i)=\left[\sum_{j=1}^{N} d(i, j)\right]^{-1}<br>$$<br>规范化亲近中心性<br>$$<br>C_{C}(i)=(N-1) C_{C}(i)<br>$$</p>
-<h2 id="基于图排序-PageRank-的文档摘要方法"><a href="#基于图排序-PageRank-的文档摘要方法" class="headerlink" title="基于图排序(PageRank)的文档摘要方法"></a>基于图排序 (PageRank) 的文档摘要方法</h2><img src="image-20210111105114783.png" alt="image-20210111105114783" style="zoom:33%;">
-
-<p>$S (V_i)$ 原始的 $PageRank$ 算法</p>
-<p>$WS (V_i)$ 加入边的权重（如两两文本相似性）的 $PageRank$ 算法</p>
-<img src="image-20210111110516703.png" alt="image-20210111110516703" style="zoom:33%;">
-
-<h2 id="基于句子分类的文档摘要方法"><a href="#基于句子分类的文档摘要方法" class="headerlink" title="基于句子分类的文档摘要方法"></a>基于句子分类的文档摘要方法</h2><p>二分类问题：判断每个句子是否属于摘要。</p>
+<h2 id="正向最大匹配分词与逆向最大匹配分词">正向最大匹配分词与逆向最大匹配分词</h2>
+<p><img src="WebDataMiningNotes/image-20210111103724666.png" alt="image-20210111103724666" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210111103852232.png" alt="image-20210111103852232" style="zoom:33%;"></p>
+<h2 id="无向图度数中心性.-中介中心性与亲近中心性的计算未规范化与规范化">无向图度数中心性。中介中心性与亲近中心性的计算 (未规范化与规范化)</h2>
+<h3 id="度数中心性">度数中心性</h3>
+<p>无向图度数中心性等于 <span class="math inline">\(deg(v)\)</span>.</p>
+<p>规范化度数中心性等于 <span class="math inline">\({deg(v)}/{(n - 1)}\)</span>.</p>
+<h3 id="中介中心性">中介中心性</h3>
+<p><span class="math display">\[
+C_{B}(i)=\sum_{j&lt;k} g_{j k}(i) / g_{j k}
+\]</span> 其中 <span class="math inline">\(\mathbf{g}_{j k}=\)</span> 连接节点 <span class="math inline">\(j,k\)</span> 最短路径的数量，<span class="math inline">\(\mathbf{g}_{j k}(\mathrm{i})=\)</span> 连接节点 <span class="math inline">\(j,k\)</span> 且经过节点 <span class="math inline">\(i\)</span> 的最短路径数量</p>
+<p>规范化中介中心性： <span class="math inline">\(C'_B(i) = C_B(i)/[(n-1)(n-2)/2]\)</span></p>
+<h3 id="亲近中心性">亲近中心性</h3>
+<p>一个节点的亲近中心性基于该节点与图中所有节点的平均最短路径距离计算得到: <span class="math display">\[
+C_{c}(i)=\left[\sum_{j=1}^{N} d(i, j)\right]^{-1}
+\]</span> 规范化亲近中心性 <span class="math display">\[
+C_{C}(i)=(N-1) C_{C}(i)
+\]</span></p>
+<h2 id="基于图排序pagerank的文档摘要方法">基于图排序 (PageRank) 的文档摘要方法</h2>
+<p><img src="WebDataMiningNotes/image-20210111105114783.png" alt="image-20210111105114783" style="zoom:33%;"></p>
+<p><span class="math inline">\(S(V_i)\)</span> 原始的 <span class="math inline">\(PageRank\)</span> 算法</p>
+<p><span class="math inline">\(WS(V_i)\)</span> 加入边的权重（如两两文本相似性）的 <span class="math inline">\(PageRank\)</span> 算法</p>
+<p><img src="WebDataMiningNotes/image-20210111110516703.png" alt="image-20210111110516703" style="zoom:33%;"></p>
+<h2 id="基于句子分类的文档摘要方法">基于句子分类的文档摘要方法</h2>
+<p>二分类问题：判断每个句子是否属于摘要。</p>
 <p>构建数据的方法：基于相似性，对原文中每个句子向摘要进行相似度计算，若高于某阈值，则认为句子属于摘要。</p>
-<h2 id="网页正文内容抽取方法"><a href="#网页正文内容抽取方法" class="headerlink" title="网页正文内容抽取方法"></a>网页正文内容抽取方法</h2><ul>
-<li>为单一文档抽取内容的方法<ul>
+<h2 id="网页正文内容抽取方法">网页正文内容抽取方法</h2>
+<ul>
+<li>为单一文档抽取内容的方法
+<ul>
 <li>每次针对单一文档进行分析与抽取</li>
 <li>一般使用启发式方法发现主要内容</li>
 <li>不检测模板</li>
-<li>一般考虑：<ul>
+<li>一般考虑：
+<ul>
 <li>网页正文区域具有很多的词语与较少标签</li>
 <li>网页正文区域的文字具有连续性</li>
-<li>方法 1：网页主要文本抽取方法 <img src="image-20210111113551730.png" alt="image-20210111113551730" style="zoom: 33%;"></li>
-<li>方法 2：基于文本标签比例的抽取方法<img src="image-20210111113916354.png" alt="image-20210111113916354" style="zoom:25%;"> <img src="image-20210111113935972.png" alt="image-20210111113935972" style="zoom:33%;"></li>
-<li>方法 3：基于网页分块重要性识别的抽取方法 <img src="image-20210111114052856.png" alt="image-20210111114052856" style="zoom:33%;"></li>
+<li>方法 1：网页主要文本抽取方法 <img src="WebDataMiningNotes/image-20210111113551730.png" alt="image-20210111113551730" style="zoom: 33%;"></li>
+<li>方法 2：基于文本标签比例的抽取方法<img src="WebDataMiningNotes/image-20210111113916354.png" alt="image-20210111113916354" style="zoom:25%;"> <img src="WebDataMiningNotes/image-20210111113935972.png" alt="image-20210111113935972" style="zoom:33%;"></li>
+<li>方法 3：基于网页分块重要性识别的抽取方法 <img src="WebDataMiningNotes/image-20210111114052856.png" alt="image-20210111114052856" style="zoom:33%;"></li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
+<h2 id="基于bootstrappping的关系抽取方法">基于 Bootstrappping 的关系抽取方法</h2>
+<p><img src="WebDataMiningNotes/image-20210111121716012.png" alt="image-20210111121716012" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210111121806072.png" alt="image-20210111121806072" style="zoom:33%;"></p>
+<h2 id="基于pmi的情感词汇获取方法及文本情感分类方法">基于 PMI 的情感词汇获取方法及文本情感分类方法</h2>
+<p><img src="WebDataMiningNotes/image-20210111122833862.png" alt="image-20210111122833862" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210111122932275.png" alt="image-20210111122932275" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210111122156198.png" alt="image-20210111122156198" style="zoom:33%;"></p>
+<h2 id="观点抽取的目的和主要步骤">观点抽取的目的和主要步骤</h2>
+<ul>
+<li>观点抽取的目的：给定观点文本，抽取所有的五元组 <span class="math inline">\((o_j, a_k, so_{ijkl}, h_i, t_i)\)</span>，基于五元组，可将无结构化文本结构化；可利用传统数据挖掘与可视化技术进行挖掘与呈现；可以定量与定性分析</li>
+<li><img src="WebDataMiningNotes/image-20210111123442168.png" alt="image-20210111123442168" style="zoom:50%;"></li>
+<li><img src="WebDataMiningNotes/image-20210111123552489.png" alt="image-20210111123552489" style="zoom:33%;"></li>
 </ul>
-</li>
-</ul>
-<h2 id="基于Bootstrappping的关系抽取方法"><a href="#基于Bootstrappping的关系抽取方法" class="headerlink" title="基于Bootstrappping的关系抽取方法"></a>基于 Bootstrappping 的关系抽取方法</h2><img src="image-20210111121716012.png" alt="image-20210111121716012" style="zoom:33%;">
-
-<img src="image-20210111121806072.png" alt="image-20210111121806072" style="zoom:33%;">
-
-<h2 id="基于PMI的情感词汇获取方法及文本情感分类方法"><a href="#基于PMI的情感词汇获取方法及文本情感分类方法" class="headerlink" title="基于PMI的情感词汇获取方法及文本情感分类方法"></a>基于 PMI 的情感词汇获取方法及文本情感分类方法</h2><img src="image-20210111122833862.png" alt="image-20210111122833862" style="zoom:33%;">
-
-<img src="image-20210111122932275.png" alt="image-20210111122932275" style="zoom:33%;">
-
-<img src="image-20210111122156198.png" alt="image-20210111122156198" style="zoom:33%;">
-
-<h2 id="观点抽取的目的和主要步骤"><a href="#观点抽取的目的和主要步骤" class="headerlink" title="观点抽取的目的和主要步骤"></a>观点抽取的目的和主要步骤</h2><ul>
-<li>观点抽取的目的：给定观点文本，抽取所有的五元组 $(o_j, a_k, so_{ijkl}, h_i, t_i)$，基于五元组，可将无结构化文本结构化；可利用传统数据挖掘与可视化技术进行挖掘与呈现；可以定量与定性分析</li>
-<li><img src="image-20210111123442168.png" alt="image-20210111123442168" style="zoom:50%;"></li>
-<li><img src="image-20210111123552489.png" alt="image-20210111123552489" style="zoom:33%;">
-
-</li>
-</ul>
-<h2 id="基于用户-物品的协同推荐算法"><a href="#基于用户-物品的协同推荐算法" class="headerlink" title="基于用户/物品的协同推荐算法"></a>基于用户 / 物品的协同推荐算法</h2><h3 id="基于用户的协同推荐算法"><a href="#基于用户的协同推荐算法" class="headerlink" title="基于用户的协同推荐算法"></a>基于用户的协同推荐算法</h3><ol>
-<li>计算用户相似性<ul>
-<li> Pearson correlation coefficient</li>
+<h2 id="基于用户物品的协同推荐算法">基于用户 / 物品的协同推荐算法</h2>
+<h3 id="基于用户的协同推荐算法">基于用户的协同推荐算法</h3>
+<ol type="1">
+<li>计算用户相似性
+<ul>
+<li>Pearson correlation coefficient</li>
 <li>cosine measure</li>
-<li><img src="image-20210111143558017.png" alt="image-20210111143558017" style="zoom:33%;"></li>
-</ul>
-</li>
-<li><img src="image-20210111143652464.png" alt="image-20210111143652464" style="zoom:33%;"></li>
-<li><img src="image-20210111143744097.png" alt="image-20210111143744097" style="zoom:33%;">
-
-</li>
+<li><img src="WebDataMiningNotes/image-20210111143558017.png" alt="image-20210111143558017" style="zoom:33%;"></li>
+</ul></li>
+<li><img src="WebDataMiningNotes/image-20210111143652464.png" alt="image-20210111143652464" style="zoom:33%;"></li>
+<li><img src="WebDataMiningNotes/image-20210111143744097.png" alt="image-20210111143744097" style="zoom:33%;"></li>
 </ol>
-<h3 id="基于物品的协同推荐算法"><a href="#基于物品的协同推荐算法" class="headerlink" title="基于物品的协同推荐算法"></a>基于物品的协同推荐算法</h3><img src="image-20210111143911407.png" alt="image-20210111143911407" style="zoom:33%;">
-
-<img src="image-20210111144450917.png" alt="image-20210111144450917" style="zoom:33%;">
-
-<h2 id="基于矩阵分解的协同推荐算法"><a href="#基于矩阵分解的协同推荐算法" class="headerlink" title="基于矩阵分解的协同推荐算法"></a>基于矩阵分解的协同推荐算法</h2><img src="image-20210111145352091.png" alt="image-20210111145352091" style="zoom:33%;">
-
+<h3 id="基于物品的协同推荐算法">基于物品的协同推荐算法</h3>
+<p><img src="WebDataMiningNotes/image-20210111143911407.png" alt="image-20210111143911407" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210111144450917.png" alt="image-20210111144450917" style="zoom:33%;"></p>
+<h2 id="基于矩阵分解的协同推荐算法">基于矩阵分解的协同推荐算法</h2>
+<p><img src="WebDataMiningNotes/image-20210111145352091.png" alt="image-20210111145352091" style="zoom:33%;"></p>
 <ul>
 <li><p>推荐结果的评估准则</p>
 <ul>
-<li><p>Precision, Recall</p>
-</li>
-<li><p>MRR</p>
-</li>
-<li><p>Mean absolute error:<br>  $$<br>  \overline{\mid E \mid}=\frac{\sum_{i=1}^{N}\left|p_{i}-r_{i}\right|}{N}<br>  $$</p>
-</li>
+<li><p>Precision, Recall</p></li>
+<li><p>MRR</p></li>
+<li><p>Mean absolute error: <span class="math display">\[
+  \overline{\mid E \mid}=\frac{\sum_{i=1}^{N}\left|p_{i}-r_{i}\right|}{N}
+  \]</span></p></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="智能问答系统架构"><a href="#智能问答系统架构" class="headerlink" title="智能问答系统架构"></a>智能问答系统架构</h2><img src="image-20210111160356905.png" alt="image-20210111160356905" style="zoom:33%;">
+<h2 id="智能问答系统架构">智能问答系统架构</h2>
+<p><img src="WebDataMiningNotes/image-20210111160356905.png" alt="image-20210111160356905" style="zoom:33%;"></p>
 
     </div>
 
@@ -2955,7 +2976,7 @@ embed {
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">词袋模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%A1%A3%E4%BD%99%E5%BC%A6%E7%9B%B8%E4%BC%BC%E5%BA%A6%E8%AE%A1%E7%AE%97"><span class="nav-number">2.</span> <span class="nav-text">文档余弦相似度计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95%E6%9E%84%E5%BB%BA%E4%B8%8E%E4%BC%98%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">倒排索引构建与优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E6%A3%80%E7%B4%A2%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%85%B6%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">布尔检索模型及其优缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web%E6%90%9C%E7%B4%A2%E6%9E%B6%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">Web 搜索架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PageRank%E7%AE%97%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">PageRank 算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HITS%E7%AE%97%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">HITS 算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87MAP%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-number">8.</span> <span class="nav-text">信息检索评价指标 MAP 的计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E8%A7%84%E5%88%99%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B%E4%B8%8EApriori%E7%AE%97%E6%B3%95"><span class="nav-number">9.</span> <span class="nav-text">关联规则挖掘过程与 Apriori 算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">10.</span> <span class="nav-text">朴素贝叶斯分类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K%E8%BF%91%E9%82%BB%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">11.</span> <span class="nav-text">K 近邻分类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%B1%BB%E4%B8%8E%E5%9B%9E%E5%BD%92%E7%9A%84%E8%81%94%E7%B3%BB%E4%B8%8E%E5%8C%BA%E5%88%AB"><span class="nav-number">12.</span> <span class="nav-text">分类与回归的联系与区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K%E5%9D%87%E5%80%BC%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">13.</span> <span class="nav-text">K 均值聚类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%9D%E8%81%9A%E5%BC%8F%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">14.</span> <span class="nav-text">凝聚式聚类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8A%E7%9B%91%E7%9D%A3%E8%81%9A%E7%B1%BB%E4%B9%8BCOP-K-means%E7%AE%97%E6%B3%95"><span class="nav-number">15.</span> <span class="nav-text">半监督聚类之 COP K-means 算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E9%A2%86%E5%9F%9F%E7%9A%84%E6%AD%A7%E4%B9%89%E7%8E%B0%E8%B1%A1"><span class="nav-number">16.</span> <span class="nav-text">自然语言处理领域的歧义现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%90%91%E6%9C%80%E5%A4%A7%E5%8C%B9%E9%85%8D%E5%88%86%E8%AF%8D%E4%B8%8E%E9%80%86%E5%90%91%E6%9C%80%E5%A4%A7%E5%8C%B9%E9%85%8D%E5%88%86%E8%AF%8D"><span class="nav-number">17.</span> <span class="nav-text">正向最大匹配分词与逆向最大匹配分词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E5%90%91%E5%9B%BE%E5%BA%A6%E6%95%B0%E4%B8%AD%E5%BF%83%E6%80%A7-%E4%B8%AD%E4%BB%8B%E4%B8%AD%E5%BF%83%E6%80%A7%E4%B8%8E%E4%BA%B2%E8%BF%91%E4%B8%AD%E5%BF%83%E6%80%A7%E7%9A%84%E8%AE%A1%E7%AE%97-%E6%9C%AA%E8%A7%84%E8%8C%83%E5%8C%96%E4%B8%8E%E8%A7%84%E8%8C%83%E5%8C%96"><span class="nav-number">18.</span> <span class="nav-text">无向图度数中心性。中介中心性与亲近中心性的计算 (未规范化与规范化)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%A6%E6%95%B0%E4%B8%AD%E5%BF%83%E6%80%A7"><span class="nav-number">18.1.</span> <span class="nav-text">度数中心性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E4%BB%8B%E4%B8%AD%E5%BF%83%E6%80%A7"><span class="nav-number">18.2.</span> <span class="nav-text">中介中心性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%B2%E8%BF%91%E4%B8%AD%E5%BF%83%E6%80%A7"><span class="nav-number">18.3.</span> <span class="nav-text">亲近中心性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%9B%BE%E6%8E%92%E5%BA%8F-PageRank-%E7%9A%84%E6%96%87%E6%A1%A3%E6%91%98%E8%A6%81%E6%96%B9%E6%B3%95"><span class="nav-number">19.</span> <span class="nav-text">基于图排序 (PageRank) 的文档摘要方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%8F%A5%E5%AD%90%E5%88%86%E7%B1%BB%E7%9A%84%E6%96%87%E6%A1%A3%E6%91%98%E8%A6%81%E6%96%B9%E6%B3%95"><span class="nav-number">20.</span> <span class="nav-text">基于句子分类的文档摘要方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E9%A1%B5%E6%AD%A3%E6%96%87%E5%86%85%E5%AE%B9%E6%8A%BD%E5%8F%96%E6%96%B9%E6%B3%95"><span class="nav-number">21.</span> <span class="nav-text">网页正文内容抽取方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8EBootstrappping%E7%9A%84%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96%E6%96%B9%E6%B3%95"><span class="nav-number">22.</span> <span class="nav-text">基于 Bootstrappping 的关系抽取方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8EPMI%E7%9A%84%E6%83%85%E6%84%9F%E8%AF%8D%E6%B1%87%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E5%8F%8A%E6%96%87%E6%9C%AC%E6%83%85%E6%84%9F%E5%88%86%E7%B1%BB%E6%96%B9%E6%B3%95"><span class="nav-number">23.</span> <span class="nav-text">基于 PMI 的情感词汇获取方法及文本情感分类方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%82%E7%82%B9%E6%8A%BD%E5%8F%96%E7%9A%84%E7%9B%AE%E7%9A%84%E5%92%8C%E4%B8%BB%E8%A6%81%E6%AD%A5%E9%AA%A4"><span class="nav-number">24.</span> <span class="nav-text">观点抽取的目的和主要步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%94%A8%E6%88%B7-%E7%89%A9%E5%93%81%E7%9A%84%E5%8D%8F%E5%90%8C%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95"><span class="nav-number">25.</span> <span class="nav-text">基于用户 / 物品的协同推荐算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%94%A8%E6%88%B7%E7%9A%84%E5%8D%8F%E5%90%8C%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95"><span class="nav-number">25.1.</span> <span class="nav-text">基于用户的协同推荐算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%89%A9%E5%93%81%E7%9A%84%E5%8D%8F%E5%90%8C%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95"><span class="nav-number">25.2.</span> <span class="nav-text">基于物品的协同推荐算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3%E7%9A%84%E5%8D%8F%E5%90%8C%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95"><span class="nav-number">26.</span> <span class="nav-text">基于矩阵分解的协同推荐算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84"><span class="nav-number">27.</span> <span class="nav-text">智能问答系统架构</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">词袋模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%A1%A3%E4%BD%99%E5%BC%A6%E7%9B%B8%E4%BC%BC%E5%BA%A6%E8%AE%A1%E7%AE%97"><span class="nav-number">2.</span> <span class="nav-text">文档余弦相似度计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95%E6%9E%84%E5%BB%BA%E4%B8%8E%E4%BC%98%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">倒排索引构建与优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B0%94%E6%A3%80%E7%B4%A2%E6%A8%A1%E5%9E%8B%E5%8F%8A%E5%85%B6%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">布尔检索模型及其优缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pagerank%E7%AE%97%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">PageRank 算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hits%E7%AE%97%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">HITS 算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87map%E7%9A%84%E8%AE%A1%E7%AE%97"><span class="nav-number">7.</span> <span class="nav-text">信息检索评价指标 MAP 的计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E8%A7%84%E5%88%99%E6%8C%96%E6%8E%98%E8%BF%87%E7%A8%8B%E4%B8%8Eapriori%E7%AE%97%E6%B3%95"><span class="nav-number">8.</span> <span class="nav-text">关联规则挖掘过程与 Apriori 算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">9.</span> <span class="nav-text">朴素贝叶斯分类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k%E8%BF%91%E9%82%BB%E5%88%86%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">10.</span> <span class="nav-text">K 近邻分类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%B1%BB%E4%B8%8E%E5%9B%9E%E5%BD%92%E7%9A%84%E8%81%94%E7%B3%BB%E4%B8%8E%E5%8C%BA%E5%88%AB"><span class="nav-number">11.</span> <span class="nav-text">分类与回归的联系与区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k%E5%9D%87%E5%80%BC%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">12.</span> <span class="nav-text">K 均值聚类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%9D%E8%81%9A%E5%BC%8F%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95"><span class="nav-number">13.</span> <span class="nav-text">凝聚式聚类算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8A%E7%9B%91%E7%9D%A3%E8%81%9A%E7%B1%BB%E4%B9%8Bcop-k-means%E7%AE%97%E6%B3%95"><span class="nav-number">14.</span> <span class="nav-text">半监督聚类之 COP K-means 算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E9%A2%86%E5%9F%9F%E7%9A%84%E6%AD%A7%E4%B9%89%E7%8E%B0%E8%B1%A1"><span class="nav-number">15.</span> <span class="nav-text">自然语言处理领域的歧义现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%90%91%E6%9C%80%E5%A4%A7%E5%8C%B9%E9%85%8D%E5%88%86%E8%AF%8D%E4%B8%8E%E9%80%86%E5%90%91%E6%9C%80%E5%A4%A7%E5%8C%B9%E9%85%8D%E5%88%86%E8%AF%8D"><span class="nav-number">16.</span> <span class="nav-text">正向最大匹配分词与逆向最大匹配分词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E5%90%91%E5%9B%BE%E5%BA%A6%E6%95%B0%E4%B8%AD%E5%BF%83%E6%80%A7.-%E4%B8%AD%E4%BB%8B%E4%B8%AD%E5%BF%83%E6%80%A7%E4%B8%8E%E4%BA%B2%E8%BF%91%E4%B8%AD%E5%BF%83%E6%80%A7%E7%9A%84%E8%AE%A1%E7%AE%97%E6%9C%AA%E8%A7%84%E8%8C%83%E5%8C%96%E4%B8%8E%E8%A7%84%E8%8C%83%E5%8C%96"><span class="nav-number">17.</span> <span class="nav-text">无向图度数中心性。中介中心性与亲近中心性的计算 (未规范化与规范化)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%A6%E6%95%B0%E4%B8%AD%E5%BF%83%E6%80%A7"><span class="nav-number">17.1.</span> <span class="nav-text">度数中心性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E4%BB%8B%E4%B8%AD%E5%BF%83%E6%80%A7"><span class="nav-number">17.2.</span> <span class="nav-text">中介中心性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%B2%E8%BF%91%E4%B8%AD%E5%BF%83%E6%80%A7"><span class="nav-number">17.3.</span> <span class="nav-text">亲近中心性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%9B%BE%E6%8E%92%E5%BA%8Fpagerank%E7%9A%84%E6%96%87%E6%A1%A3%E6%91%98%E8%A6%81%E6%96%B9%E6%B3%95"><span class="nav-number">18.</span> <span class="nav-text">基于图排序 (PageRank) 的文档摘要方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%8F%A5%E5%AD%90%E5%88%86%E7%B1%BB%E7%9A%84%E6%96%87%E6%A1%A3%E6%91%98%E8%A6%81%E6%96%B9%E6%B3%95"><span class="nav-number">19.</span> <span class="nav-text">基于句子分类的文档摘要方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E9%A1%B5%E6%AD%A3%E6%96%87%E5%86%85%E5%AE%B9%E6%8A%BD%E5%8F%96%E6%96%B9%E6%B3%95"><span class="nav-number">20.</span> <span class="nav-text">网页正文内容抽取方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Ebootstrappping%E7%9A%84%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96%E6%96%B9%E6%B3%95"><span class="nav-number">21.</span> <span class="nav-text">基于 Bootstrappping 的关系抽取方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8Epmi%E7%9A%84%E6%83%85%E6%84%9F%E8%AF%8D%E6%B1%87%E8%8E%B7%E5%8F%96%E6%96%B9%E6%B3%95%E5%8F%8A%E6%96%87%E6%9C%AC%E6%83%85%E6%84%9F%E5%88%86%E7%B1%BB%E6%96%B9%E6%B3%95"><span class="nav-number">22.</span> <span class="nav-text">基于 PMI 的情感词汇获取方法及文本情感分类方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%82%E7%82%B9%E6%8A%BD%E5%8F%96%E7%9A%84%E7%9B%AE%E7%9A%84%E5%92%8C%E4%B8%BB%E8%A6%81%E6%AD%A5%E9%AA%A4"><span class="nav-number">23.</span> <span class="nav-text">观点抽取的目的和主要步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%94%A8%E6%88%B7%E7%89%A9%E5%93%81%E7%9A%84%E5%8D%8F%E5%90%8C%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95"><span class="nav-number">24.</span> <span class="nav-text">基于用户 / 物品的协同推荐算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%94%A8%E6%88%B7%E7%9A%84%E5%8D%8F%E5%90%8C%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95"><span class="nav-number">24.1.</span> <span class="nav-text">基于用户的协同推荐算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%89%A9%E5%93%81%E7%9A%84%E5%8D%8F%E5%90%8C%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95"><span class="nav-number">24.2.</span> <span class="nav-text">基于物品的协同推荐算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3%E7%9A%84%E5%8D%8F%E5%90%8C%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95"><span class="nav-number">25.</span> <span class="nav-text">基于矩阵分解的协同推荐算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%BA%E8%83%BD%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84"><span class="nav-number">26.</span> <span class="nav-text">智能问答系统架构</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
