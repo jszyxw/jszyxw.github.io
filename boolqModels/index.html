@@ -15,7 +15,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"nozora.xyz","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"nozora.xyz","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="PKU WebMining 2020fall project Boolean-Question 0. 项目结构总览 总体模型结构如下图所示：  其中，图的左侧为输入的文章标题、内容与人类提出的自然问题；图的中部为我们小组所设计的 Pipeline 结构；输入经过我们所设计的 Pipeline 结构，将输出由开放式评测模型生成的模型结果。 其中我们的 Pipeline 结构，根据评测方式分为两部分：">
@@ -36,7 +36,7 @@
 <meta property="og:image" content="http://nozora.xyz/boolqModels/image-20210103221053550.png">
 <meta property="og:image" content="http://nozora.xyz/boolqModels/image-20210103221645484.png">
 <meta property="article:published_time" content="2021-01-02T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-01-04T04:43:22.004Z">
+<meta property="article:modified_time" content="2021-01-02T16:00:00.000Z">
 <meta property="article:author" content="nozora">
 <meta property="article:tag" content="NLP">
 <meta property="article:tag" content="reports">
@@ -1241,7 +1241,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #d6ff11;
+  background: #f4d663;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2509,7 +2509,7 @@ mjx-container[display="true"] {
 mjx-container[display="true"] + br {
   display: none;
 }
-</style><script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}loadCss('/style.css');</script></head>
+</style><script>function loadCss(l){var d=document,h=d.head,s=d.createElement('link');s.rel='stylesheet';s.href=l;!function e(f){if (d.body)return f();setTimeout(function(){e(f)})}(function(){h.appendChild(s);});}</script><noscript><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript></head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -2609,13 +2609,6 @@ mjx-container[display="true"] + br {
 
               <time title="Created: 2021-01-03 00:00:00" itemprop="dateCreated datePublished" datetime="2021-01-03T00:00:00+08:00">2021-01-03</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-01-04 12:43:22" itemprop="dateModified" datetime="2021-01-04T12:43:22+08:00">2021-01-04</time>
-              </span>
 
           
 
@@ -3261,6 +3254,7 @@ t5<span class="token punctuation">.</span>parallelize<span class="token punctuat
 
   
   
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
   
   
 
