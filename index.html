@@ -1217,7 +1217,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #c6494a;
+  background: #397aff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2587,13 +2587,6 @@ mjx-container[display="true"] + br {
 
               <time title="Created: 2021-01-11 19:03:29" itemprop="dateCreated datePublished" datetime="2021-01-11T19:03:29+08:00">2021-01-11</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-04 00:21:13" itemprop="dateModified" datetime="2019-12-04T00:21:13+08:00">2019-12-04</time>
-              </span>
 
           
 
@@ -2640,7 +2633,10 @@ True<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span
         <span class="token hvariable">cannot</span> <span class="token hvariable">mix</span> `<span class="token punctuation">(</span><span class="token operator">+</span><span class="token punctuation">)</span>' <span class="token punctuation">[</span><span class="token keyword">infixl</span> <span class="token number">6</span><span class="token punctuation">]</span> <span class="token builtin">and</span> <span class="token hvariable">prefix</span> `<span class="token operator">-</span>' <span class="token punctuation">[</span><span class="token keyword">infixl</span> <span class="token number">6</span><span class="token punctuation">]</span> <span class="token keyword">in</span> <span class="token hvariable">the</span> <span class="token hvariable">same</span> <span class="token hvariable">infix</span> <span class="token hvariable">expression</span>
 
 <span class="token hvariable">ghci</span><span class="token operator">&gt;</span> <span class="token number">2</span> <span class="token operator">/=</span> <span class="token number">3</span>
-<span class="token constant">True</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre> # Bindings - <strong>Haskell uses the = sign to declare bindings:</strong><p></p>
+<span class="token constant">True</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre> # Bindings<p></p>
+<ul>
+<li><strong>Haskell uses the = sign to declare bindings:</strong></li>
+</ul>
 <pre class="line-numbers language-haskell" data-language="haskell"><code class="language-haskell"><span class="token hvariable">x</span> <span class="token operator">=</span> <span class="token number">2</span>
 <span class="token hvariable">y</span> <span class="token operator">=</span> <span class="token number">3</span>
 <span class="token hvariable">main</span> <span class="token operator">=</span> <span class="token keyword">let</span> <span class="token hvariable">z</span> <span class="token operator">=</span> <span class="token hvariable">x</span> <span class="token operator">+</span> <span class="token hvariable">y</span> <span class="token keyword">in</span> <span class="token builtin">print</span> <span class="token hvariable">z</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -2961,11 +2957,12 @@ h^{(k+1)}\left (v_{i}\right) \leftarrow \frac {h^{(k+1)}\left (v_{i}\right)}{\su
 <li><code>11 recall points</code> : <span class="math inline">\(0 \%, 10 \%, 20 \%, \ldots, 90 \%, 100 \%\)</span></li>
 <li> 在<strong>找到 <span class="math inline">\(n\%\)</span> 的相关文档</strong>时的 <code>precision</code> 值</li>
 <li><img src="WebDataMiningNotes/image-20210110144142726.png" alt="image-20210110144142726" style="zoom:33%;"></li>
-<li> Non-interpolated average precision(<strong>MAP</strong>) <span class="math inline">\(\mathrm{REL}_{\boldsymbol{q}}\)</span> are the relevant documents for <span class="math inline">\(\boldsymbol{q},\)</span> <span class="math display">\[
-\text { non-int. avg. prec. }=\sum_{\boldsymbol{q} \in \boldsymbol{Q}} \frac{\sum_{\boldsymbol{r}=1}^{\left|\mathrm{REL}_{\boldsymbol{q}}\right|} \frac{\boldsymbol{P}_{q}\left(\boldsymbol{r} /\left|\mathrm{REL}_{\boldsymbol{q}}\right|\right)}{\left|\mathrm{REL}_{\boldsymbol{q}}\right|}}{|\boldsymbol{Q}|}
-\]</span></li>
+<li> Non-interpolated average precision(<strong>MAP</strong>) <span class="math inline">\(\mathrm{REL}_{\boldsymbol{q}}\)</span> are the relevant documents for <span class="math inline">\(\boldsymbol{q},\)</span></li>
 </ul></li>
 </ul>
+<p><span class="math display">\[
+\text { non-int. avg. prec. }=\sum_{\boldsymbol{q} \in \boldsymbol{Q}} \frac{\sum_{\boldsymbol{r}=1}^{\left|\mathrm{REL}_{\boldsymbol{q}}\right|} \frac{\boldsymbol{P}_{q}\left(\boldsymbol{r} /\left|\mathrm{REL}_{\boldsymbol{q}}\right|\right)}{\left|\mathrm{REL}_{\boldsymbol{q}}\right|}}{|\boldsymbol{Q}|}
+\]</span></p>
 <h2 id="关联规则挖掘过程与apriori算法">关联规则挖掘过程与 Apriori 算法</h2>
 <ul>
 <li><img src="WebDataMiningNotes/image-20210110151457217.png" alt="image-20210110151457217" style="zoom:33%;"></li>

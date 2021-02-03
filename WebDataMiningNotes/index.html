@@ -1269,7 +1269,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #c6494a;
+  background: #397aff;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2711,11 +2711,12 @@ h^{(k+1)}\left (v_{i}\right) \leftarrow \frac {h^{(k+1)}\left (v_{i}\right)}{\su
 <li><code>11 recall points</code> : <span class="math inline">\(0 \%, 10 \%, 20 \%, \ldots, 90 \%, 100 \%\)</span></li>
 <li> 在<strong>找到 <span class="math inline">\(n\%\)</span> 的相关文档</strong>时的 <code>precision</code> 值</li>
 <li><img src="WebDataMiningNotes/image-20210110144142726.png" alt="image-20210110144142726" style="zoom:33%;"></li>
-<li> Non-interpolated average precision(<strong>MAP</strong>) <span class="math inline">\(\mathrm{REL}_{\boldsymbol{q}}\)</span> are the relevant documents for <span class="math inline">\(\boldsymbol{q},\)</span> <span class="math display">\[
-\text { non-int. avg. prec. }=\sum_{\boldsymbol{q} \in \boldsymbol{Q}} \frac{\sum_{\boldsymbol{r}=1}^{\left|\mathrm{REL}_{\boldsymbol{q}}\right|} \frac{\boldsymbol{P}_{q}\left(\boldsymbol{r} /\left|\mathrm{REL}_{\boldsymbol{q}}\right|\right)}{\left|\mathrm{REL}_{\boldsymbol{q}}\right|}}{|\boldsymbol{Q}|}
-\]</span></li>
+<li> Non-interpolated average precision(<strong>MAP</strong>) <span class="math inline">\(\mathrm{REL}_{\boldsymbol{q}}\)</span> are the relevant documents for <span class="math inline">\(\boldsymbol{q},\)</span></li>
 </ul></li>
 </ul>
+<p><span class="math display">\[
+\text { non-int. avg. prec. }=\sum_{\boldsymbol{q} \in \boldsymbol{Q}} \frac{\sum_{\boldsymbol{r}=1}^{\left|\mathrm{REL}_{\boldsymbol{q}}\right|} \frac{\boldsymbol{P}_{q}\left(\boldsymbol{r} /\left|\mathrm{REL}_{\boldsymbol{q}}\right|\right)}{\left|\mathrm{REL}_{\boldsymbol{q}}\right|}}{|\boldsymbol{Q}|}
+\]</span></p>
 <h2 id="关联规则挖掘过程与apriori算法">关联规则挖掘过程与 Apriori 算法</h2>
 <ul>
 <li><img src="WebDataMiningNotes/image-20210110151457217.png" alt="image-20210110151457217" style="zoom:33%;"></li>
