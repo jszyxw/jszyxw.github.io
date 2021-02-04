@@ -72,8 +72,6 @@
   </style>
 </noscript>
 
-<link rel="stylesheet" href="\assets\css\APlayer.min.css" class="aplayer-style-marker">
-<script src="\assets\js\APlayer.min.js" class="aplayer-script-marker"></script>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
@@ -121,29 +119,9 @@
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
 
   </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
-
-  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-        <li class="menu-item menu-item-schedule">
-
-    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>Schedule</a>
-
-  </li>
-        <li class="menu-item menu-item-commonweal">
-
-    <a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>Commonweal 404</a>
 
   </li>
   </ul>
@@ -213,380 +191,14 @@
       
           <h2 id="词袋模型">词袋模型</h2>
 <p>一篇文档看作一个词语的<strong>无序</strong>集合</p>
-<ul>
-<li>优点：简单有效</li>
-<li><p>缺点：忽略了词之间的句法关系以及篇章结构信息</p></li>
-<li>符号化 <code>tokenization</code>: 识别词的边界</li>
-<li>词语形态规范化 <code>Stemming</code>:
-<ul>
-<li>删除后缀</li>
-<li>结果可能不是词语</li>
-<li>不相关的词可能具有相同的 stem</li>
-</ul></li>
-<li> 词形还原 <code>lemmatization</code>：
-<ul>
-<li>将词语变为其语法原型</li>
-<li>处理结果仍然为词</li>
-<li>处理过程要考虑词性不同
-<ul>
-<li>thought -&gt; think if thought is a verb</li>
-<li>thought not change if it is a noun</li>
-</ul></li>
-</ul></li>
-<li> 停用词 <code>stop words</code>
-<ul>
-<li>不具有内容信息的词</li>
-<li>过滤停用词的原因：
-<ul>
-<li>停用词并不能提高检索效果</li>
-<li>可以大幅减少索引大小</li>
-<li>减少检索时间</li>
-</ul></li>
-</ul></li>
-</ul>
-<h2 id="文档余弦相似度计算">文档余弦相似度计算</h2>
-<p>查询向量 <span class="math inline">\(q\)</span>, 文档向量 <span class="math inline">\(d\)</span>，向量维度均为 <span class="math inline">\(n\)</span>, 其余弦相似度定义为：</p>
-<p><span class="math display">\[
-\begin{aligned}
-\operatorname{sim}(q, d) &amp;= \cos (q, d)\\
-&amp;=\left(\|q\|^{-1} \cdot q\right) \bullet\left(\|d\|^{-1} \cdot d\right) \\
-&amp;=\frac{\sum_{i=1}^{n}\left(q_{i} \cdot d_{i}\right)}{\sqrt{\sum_{i=1}^{n} q_{i}^{2}} \cdot \sqrt{\sum_{i=1}^{n} d_{i}^{2}}}
-\end{aligned}
-\]</span></p>
-<h2 id="倒排索引构建与优点">倒排索引构建与优点</h2>
-<p>以关键词为核心对文档进行索引，帮助快速地找到文档中所包含的关键词</p>
-<p><img src="/WebDataMiningNotes/image-20210110123127453.png" alt="image-20210110123127453" style="zoom:50%;"></p>
-<p>倒排索引的优势 - 关键词个数比文档少，因此检索效率高 - 特别适合信息检索任务，信息检索任务的查询词一般很少，通过几次查询就能找出所有可能的文档</p>
-<h2 id="布尔检索模型及其优缺点">布尔检索模型及其优缺点</h2>
-<p>基于布尔代数的检索模型 (<span class="math inline">\(\text{AND, OR, NOT}\)</span>)</p>
-<ul>
-<li>优点
-<ul>
-<li>简单</li>
-<li>对查询严格掌控</li>
-</ul></li>
-<li>缺点
-<ul>
-<li>一般用户难以构造布尔查询，耗时耗力</li>
-<li>检索结果文档无法排序（只能分为匹配或不匹配）</li>
-<li>根据布尔运算进行严格匹配，导致过少或过多的检索结果</li>
-</ul></li>
-</ul>
-<p>尽管布尔模型不再用做主流文档检索模型，但其思想常用于实现高级检索功能 ## Web 搜索架构</p>
-<p><img src="/WebDataMiningNotes/image-20210110141621685.png" alt="image-20210110141621685" style="zoom: 33%;"></p>
-<h2 id="pagerank算法">PageRank 算法</h2>
-<ul>
-<li><p>随机游走 (Random Walk) 模型</p>
-<ul>
-<li><p>对网页按照流行度或权威性进行排序</p></li>
-<li><p>为图中每个节点<span class="math inline"> \(v_i\)</span> 计算一个 PageRank 值<span class="math inline"> \(\pi(v_i)\)</span>, 可看作用户随机点击链接将会到达特定网页的可能性</p></li>
-</ul></li>
-<li><p>页面节点的 PageRank 与其父节点的 Rank 值成正比，但与其父节点的出度 (out-degree) 成反比</p></li>
-<li><p>样例：</p>
-<p><img src="/WebDataMiningNotes/image-20210110135316725.png" alt="image-20210110135316725" width="250" height="250"></p></li>
-</ul>
-<table>
-<thead>
-<tr class="header">
-<th>Node</th>
-<th>Outlinks</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(v_1\)</span></td>
-<td><span class="math inline">\(v_2\)</span>, <span class="math inline">\(v_3\)</span>, <span class="math inline">\(v_6\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(v_2\)</span></td>
-<td><span class="math inline">\(v_4\)</span>, <span class="math inline">\(v_5\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(v_3\)</span></td>
-<td><span class="math inline">\(v_4\)</span>, <span class="math inline">\(v_6\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(v_4\)</span></td>
-<td><span class="math inline">\(v_6\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(v_5\)</span></td>
-<td><span class="math inline">\(v_1\)</span>, <span class="math inline">\(v_4\)</span>, <span class="math inline">\(v_7\)</span>, <span class="math inline">\(v_8\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(v_6\)</span></td>
-<td><span class="math inline">\(v_4\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(v_7\)</span></td>
-<td><span class="math inline">\(v_3\)</span></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(v_8\)</span></td>
-<td><span class="math inline">\(v_4\)</span>, <span class="math inline">\(v_7\)</span></td>
-</tr>
-</tbody>
-</table>
-<p><span class="math inline">\(\text { Adjacent Matrix: }\)</span> <span class="math display">\[
-\begin{aligned}
-&amp;M=\left[\begin{array}{llllllll}
-0 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
-1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 \\
-0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0
-\end{array}\right]
-\end{aligned}
-\]</span> <span class="math inline">\(\text { Transition Probability Matrix: }\)</span> <span class="math display">\[
-P=\left[\begin{array}{cccccccc}
-0 &amp; 1 / 3 &amp; 1 / 3 &amp; 0 &amp; 0 &amp; 1 / 3 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 1 / 2 &amp; 0 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
-1 / 4 &amp; 0 &amp; 0 &amp; 1 / 4 &amp; 0 &amp; 0 &amp; 1 / 4 &amp; 1 / 4 \\
-0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
-0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0
-\end{array}\right]
-\]</span> <span class="math display">\[
-\pi(v_i) = \sum_{v_j\in inlink[v_i]} \frac{\pi(v_j)}{|outlink[v_j]} \Rightarrow \pi = P^T \pi
-\]</span></p>
-<ul>
-<li>缺点：
-<ul>
-<li>排序泄漏
-<ul>
-<li>一个独立的网页没有 outlink</li>
-<li> 得到不合理的 rank 值，影响收敛速度</li>
-<li><img src="/WebDataMiningNotes/image-20210110140859912.png" alt="image-20210110140859912" style="zoom: 50%;"></li>
-</ul></li>
-<li>排序沉入
-<ul>
-<li>形成没有外部 outlink 的强连通分量</li>
-<li>得到不合理的 rank 值，影响收敛速度</li>
-<li><img src="/WebDataMiningNotes/image-20210110140840367.png" alt="image-20210110140840367" style="zoom: 50%;"></li>
-</ul></li>
-</ul></li>
-<li><p>改进：Random walk with restart (RWR)，随机游走过程中开始浏览一个新网页</p>
-<p><img src="/WebDataMiningNotes/image-20210110141145194.png" alt="image-20210110141145194" style="zoom: 33%;"></p></li>
-</ul>
-<h2 id="hits算法">HITS 算法</h2>
-<p>考虑到两类页面：内容页 与 枢纽页 (导航、目录等)，对于某个 (子) 图中的任一顶点 <span class="math inline">\(\mathbf{v}_{\mathbf{i}}\)</span>：</p>
-<ul>
-<li><p><span class="math inline">\(\mathrm{a}\left(\mathrm{v}_{\mathrm{i}}\right): \mathrm{v}_{\mathrm {i} }\)</span> 的权威值 (authority)。一个页面被越多重要的枢纽页所引用，该页面权威性越高</p></li>
-<li><p><span class="math inline"> \(h\left(v_{i}\right): v_{i}\)</span> 的枢纽值 (hub)。一个好的枢纽页面会链接到许多权威页面</p>
-<p><img src="/WebDataMiningNotes/image-20210110131617592.png" alt="image-20210110131617592" style="zoom:50%;"></p></li>
-</ul>
-<p>计算方法:</p>
-<p><span class="math display">\[
-\text{Recursive dependency:}\\
-a\left(v_{i}\right)=\sum_{v_{j} \in \text { inlink } \left[v_{i}\right]} h\left(v_{j}\right) \\
-h\left(v_{i}\right)=\sum_{v_{j} \in \text { outlink }\left[v_{i}\right]} a\left(v_{j}\right)\\
-\]</span> <span class="math display">\[
-\text{Iterative algorithm:}\\
-a^{(k+1)}\left(v_{i}\right)=\sum_{v_{j} \in inlink\left[v_{i}\right]} h^{(k)}\left(v_{j}\right) \\
-h^{(k+1)}\left(v_{i}\right)=\sum_{v_{j} \in \text { outlink }\left[v_{i}\right]} a^{(k+1)}\left(v_{j}\right) \\
-\]</span> <span class="math display">\[
-规范化（保证收敛）：\\
-a^{(k+1)}\left (v_{i}\right) \leftarrow \frac {a^{(k+1)}\left (v_{i}\right)}{\sum_{j} a^{(k+1)}\left (v_{j}\right)} \\
-h^{(k+1)}\left (v_{i}\right) \leftarrow \frac {h^{(k+1)}\left (v_{i}\right)}{\sum_{j} h^{(k+1)}\left (v_{j}\right)}
-\]</span></p>
-<h2 id="信息检索评价指标map的计算">信息检索评价指标 MAP 的计算</h2>
-<p><img src="/WebDataMiningNotes/image-20210110142117405.png" alt="image-20210110142117405" style="zoom: 33%;"></p>
-<ul>
-<li>不同 recall levels 的 precision 值
-<ul>
-<li>沿着检索结果列表从头往后考察</li>
-<li><code>11 recall points</code> : <span class="math inline">\(0 \%, 10 \%, 20 \%, \ldots, 90 \%, 100 \%\)</span></li>
-<li> 在<strong>找到 <span class="math inline">\(n\%\)</span> 的相关文档</strong>时的 <code>precision</code> 值</li>
-<li><img src="/WebDataMiningNotes/image-20210110144142726.png" alt="image-20210110144142726" style="zoom:33%;"></li>
-<li> Non-interpolated average precision(<strong>MAP</strong>) <span class="math inline">\(\mathrm{REL}_{\boldsymbol{q}}\)</span> are the relevant documents for <span class="math inline">\(\boldsymbol{q},\)</span></li>
-</ul></li>
-</ul>
-<p><span class="math display">\[
-\text { non-int. avg. prec. }=\sum_{\boldsymbol{q} \in \boldsymbol{Q}} \frac{\sum_{\boldsymbol{r}=1}^{\left|\mathrm{REL}_{\boldsymbol{q}}\right|} \frac{\boldsymbol{P}_{q}\left(\boldsymbol{r} /\left|\mathrm{REL}_{\boldsymbol{q}}\right|\right)}{\left|\mathrm{REL}_{\boldsymbol{q}}\right|}}{|\boldsymbol{Q}|}
-\]</span></p>
-<h2 id="关联规则挖掘过程与apriori算法">关联规则挖掘过程与 Apriori 算法</h2>
-<ul>
-<li><img src="/WebDataMiningNotes/image-20210110151457217.png" alt="image-20210110151457217" style="zoom:33%;"></li>
-<li><img src="/WebDataMiningNotes/image-20210110151518107.png" alt="image-20210110151518107" style="zoom: 33%;"></li>
-<li><img src="/WebDataMiningNotes/image-20210110151607844.png" alt="image-20210110151607844" style="zoom:33%;"></li>
-<li>关联规则根据以下两个标准（包含或排除）：
-<ul>
-<li>最小支持度 <code>min</code>sup</li>
-<li> 最小置信度 <code>min</code>conf</li>
-</ul></li>
-<li> 基本步骤
-<ul>
-<li>找出所有的频繁项集
-<ul>
-<li>满足最小支持度</li>
-</ul></li>
-<li>找出所有的强关联规则
-<ul>
-<li>由频繁项集生成关联规则</li>
-<li>保留满足最小置信度的规则</li>
-</ul></li>
-</ul></li>
-<li>挖掘关联规则的总体性能由第一步决定</li>
-<li><code>Apriori 性质</code>: 若 A 是一个频繁项集，则 A 的每一个子集都是一个频繁项集。</li>
-<li><code>Apriori 算法</code>: 利用 <code>Apriori 性质</code>高效搜索所有频繁项集</li>
-<li><img src="/WebDataMiningNotes/image-20210110153127054.png" alt="image-20210110153127054" style="zoom:33%;"></li>
-<li><img src="/WebDataMiningNotes/image-20210110154115446.png" alt="image-20210110154115446" style="zoom:33%;"></li>
-<li><span class="math inline"> \(X\)</span> 满足，则<span class="math inline"> \(A\rightarrow B\)</span> 必满足（ps by me）</li>
-<li><img src="/WebDataMiningNotes/image-20210110154558264.png" alt="image-20210110154558264" style="zoom:33%;"></li>
-</ul>
-<h2 id="朴素贝叶斯分类算法">朴素贝叶斯分类算法</h2>
-<p><img src="/WebDataMiningNotes/image-20210111165334786.png" alt="image-20210111165334786" style="zoom:33%;"></p>
-<p><img src="/WebDataMiningNotes/image-20210111165353185.png" alt="image-20210111165353185" style="zoom:33%;"></p>
-<h2 id="k近邻分类算法">K 近邻分类算法</h2>
-<p><img src="/WebDataMiningNotes/image-20210110155453751.png" alt="image-20210110155453751" style="zoom: 33%;"></p>
-<p><img src="/WebDataMiningNotes/image-20210110155550089.png" alt="image-20210110155550089" style="zoom:33%;"></p>
-<ul>
-<li>优势
-<ul>
-<li>不需要训练阶段</li>
-<li>类别数量增加也具有良好的扩展性</li>
-</ul></li>
-<li>劣势
-<ul>
-<li>训练数据很大时模型很大</li>
-<li>需要大量内存</li>
-<li>性能较慢</li>
-</ul></li>
-</ul>
-<h2 id="分类与回归的联系与区别">分类与回归的联系与区别</h2>
-<p>联系：常常可以相互转化，如线性回归与逻辑回归；SVR 与 SVM 等算法具有共通性，稍加修改后两者常常可以相互转化。</p>
-<p>区别： <span class="math display">\[
-\begin {array}{|l|c|c|}
-\hline \text { 特性 } &amp; \text { 分类 } &amp; \text { 回归 } \\
-\hline \text { 输出类型 } &amp; \text { 离散数据 } &amp; \text { 连续数据 } \\
-\hline \text { 目的 } &amp; \text { 寻找决策边界 } &amp; \text { 找到最优拟合 } \\
-\hline \text { 评价方法 } &amp; \text { 精度 (accuracy)、混淆矩阵等 } &amp; \text { SSE (sum of square errors) 或拟合优度等 } \\
-\hline
-\end {array}
-\]</span></p>
-<h2 id="k均值聚类算法">K 均值聚类算法</h2>
-<p><img src="/WebDataMiningNotes/image-20210110161144710.png" alt="image-20210110161144710" style="zoom: 33%;"></p>
-<p>时间复杂度 <span class="math inline">\(O(tkn),n\)</span> 为数据点个数，<span class="math inline">\(k\)</span> 为聚类数目，<span class="math inline">\(t\)</span> 为迭代次数，通常 <span class="math inline">\(kt&lt;&lt;n\)</span>。</p>
-<h2 id="凝聚式聚类算法">凝聚式聚类算法</h2>
-<p><img src="/WebDataMiningNotes/image-20210110161408853.png" alt="image-20210110161408853" style="zoom:33%;"></p>
-<h2 id="半监督聚类之cop-k-means算法">半监督聚类之 COP K-means 算法</h2>
-<p><img src="/WebDataMiningNotes/image-20210110161704093.png" alt="image-20210110161704093" style="zoom:33%;"></p>
-<p><img src="/WebDataMiningNotes/image-20210110161908314.png" alt="image-20210110161908314" style="zoom:33%;"></p>
-<p><img src="/WebDataMiningNotes/image-20210110161936661.png" alt="image-20210110161936661" style="zoom:33%;"></p>
-<h2 id="自然语言处理领域的歧义现象">自然语言处理领域的歧义现象</h2>
-<ul>
-<li><p>分词</p>
-<blockquote>
-<p>"能穿多少穿多少"</p>
-</blockquote></li>
-<li><p>句法</p>
-<blockquote>
-<p>"咬死了猎人的狗"</p>
-</blockquote></li>
-<li><p>语义</p>
-<blockquote>
-<p>"曾经喜欢一个人，如今喜欢一个人。"</p>
-</blockquote></li>
-<li><p>语用</p>
-<blockquote>
-<p>"该来的没来"</p>
-</blockquote></li>
-<li><p>反讽</p>
-<blockquote>
-<p>"What a wonderful weather!"</p>
-</blockquote></li>
-</ul>
-<h2 id="正向最大匹配分词与逆向最大匹配分词">正向最大匹配分词与逆向最大匹配分词</h2>
-<p><img src="/WebDataMiningNotes/image-20210111103724666.png" alt="image-20210111103724666" style="zoom:33%;"></p>
-<p><img src="/WebDataMiningNotes/image-20210111103852232.png" alt="image-20210111103852232" style="zoom:33%;"></p>
-<h2 id="无向图度数中心性.-中介中心性与亲近中心性的计算未规范化与规范化">无向图度数中心性。中介中心性与亲近中心性的计算 (未规范化与规范化)</h2>
-<h3 id="度数中心性">度数中心性</h3>
-<p>无向图度数中心性等于 <span class="math inline">\(deg(v)\)</span>.</p>
-<p>规范化度数中心性等于 <span class="math inline">\({deg(v)}/{(n - 1)}\)</span>.</p>
-<h3 id="中介中心性">中介中心性</h3>
-<p><span class="math display">\[
-C_{B}(i)=\sum_{j&lt;k} g_{j k}(i) / g_{j k}
-\]</span> 其中 <span class="math inline">\(\mathbf{g}_{j k}=\)</span> 连接节点 <span class="math inline">\(j,k\)</span> 最短路径的数量，<span class="math inline">\(\mathbf{g}_{j k}(\mathrm{i})=\)</span> 连接节点 <span class="math inline">\(j,k\)</span> 且经过节点 <span class="math inline">\(i\)</span> 的最短路径数量</p>
-<p>规范化中介中心性： <span class="math inline">\(C'_B(i) = C_B(i)/[(n-1)(n-2)/2]\)</span></p>
-<h3 id="亲近中心性">亲近中心性</h3>
-<p>一个节点的亲近中心性基于该节点与图中所有节点的平均最短路径距离计算得到: <span class="math display">\[
-C_{c}(i)=\left[\sum_{j=1}^{N} d(i, j)\right]^{-1}
-\]</span> 规范化亲近中心性 <span class="math display">\[
-C_{C}(i)=(N-1) C_{C}(i)
-\]</span></p>
-<h2 id="基于图排序pagerank的文档摘要方法">基于图排序 (PageRank) 的文档摘要方法</h2>
-<p><img src="/WebDataMiningNotes/image-20210111105114783.png" alt="image-20210111105114783" style="zoom:33%;"></p>
-<p><span class="math inline">\(S(V_i)\)</span> 原始的 <span class="math inline">\(PageRank\)</span> 算法</p>
-<p><span class="math inline">\(WS(V_i)\)</span> 加入边的权重（如两两文本相似性）的 <span class="math inline">\(PageRank\)</span> 算法</p>
-<p><img src="/WebDataMiningNotes/image-20210111110516703.png" alt="image-20210111110516703" style="zoom:33%;"></p>
-<h2 id="基于句子分类的文档摘要方法">基于句子分类的文档摘要方法</h2>
-<p>二分类问题：判断每个句子是否属于摘要。</p>
-<p>构建数据的方法：基于相似性，对原文中每个句子向摘要进行相似度计算，若高于某阈值，则认为句子属于摘要。</p>
-<h2 id="网页正文内容抽取方法">网页正文内容抽取方法</h2>
-<ul>
-<li>为单一文档抽取内容的方法
-<ul>
-<li>每次针对单一文档进行分析与抽取</li>
-<li>一般使用启发式方法发现主要内容</li>
-<li>不检测模板</li>
-<li>一般考虑：
-<ul>
-<li>网页正文区域具有很多的词语与较少标签</li>
-<li>网页正文区域的文字具有连续性</li>
-<li>方法 1：网页主要文本抽取方法 <img src="/WebDataMiningNotes/image-20210111113551730.png" alt="image-20210111113551730" style="zoom: 33%;"></li>
-<li>方法 2：基于文本标签比例的抽取方法<img src="/WebDataMiningNotes/image-20210111113916354.png" alt="image-20210111113916354" style="zoom:25%;"> <img src="/WebDataMiningNotes/image-20210111113935972.png" alt="image-20210111113935972" style="zoom:33%;"></li>
-<li>方法 3：基于网页分块重要性识别的抽取方法 <img src="/WebDataMiningNotes/image-20210111114052856.png" alt="image-20210111114052856" style="zoom:33%;"></li>
-</ul></li>
-</ul></li>
-</ul>
-<h2 id="基于bootstrappping的关系抽取方法">基于 Bootstrappping 的关系抽取方法</h2>
-<p><img src="/WebDataMiningNotes/image-20210111121716012.png" alt="image-20210111121716012" style="zoom:33%;"></p>
-<p><img src="/WebDataMiningNotes/image-20210111121806072.png" alt="image-20210111121806072" style="zoom:33%;"></p>
-<h2 id="基于pmi的情感词汇获取方法及文本情感分类方法">基于 PMI 的情感词汇获取方法及文本情感分类方法</h2>
-<p><img src="/WebDataMiningNotes/image-20210111122833862.png" alt="image-20210111122833862" style="zoom:33%;"></p>
-<p><img src="/WebDataMiningNotes/image-20210111122932275.png" alt="image-20210111122932275" style="zoom:33%;"></p>
-<p><img src="/WebDataMiningNotes/image-20210111122156198.png" alt="image-20210111122156198" style="zoom:33%;"></p>
-<h2 id="观点抽取的目的和主要步骤">观点抽取的目的和主要步骤</h2>
-<ul>
-<li>观点抽取的目的：给定观点文本，抽取所有的五元组 <span class="math inline">\((o_j, a_k, so_{ijkl}, h_i, t_i)\)</span>，基于五元组，可将无结构化文本结构化；可利用传统数据挖掘与可视化技术进行挖掘与呈现；可以定量与定性分析</li>
-<li><img src="/WebDataMiningNotes/image-20210111123442168.png" alt="image-20210111123442168" style="zoom:50%;"></li>
-<li><img src="/WebDataMiningNotes/image-20210111123552489.png" alt="image-20210111123552489" style="zoom:33%;"></li>
-</ul>
-<h2 id="基于用户物品的协同推荐算法">基于用户 / 物品的协同推荐算法</h2>
-<h3 id="基于用户的协同推荐算法">基于用户的协同推荐算法</h3>
-<ol type="1">
-<li>计算用户相似性
-<ul>
-<li>Pearson correlation coefficient</li>
-<li>cosine measure</li>
-<li><img src="/WebDataMiningNotes/image-20210111143558017.png" alt="image-20210111143558017" style="zoom:33%;"></li>
-</ul></li>
-<li><img src="/WebDataMiningNotes/image-20210111143652464.png" alt="image-20210111143652464" style="zoom:33%;"></li>
-<li><img src="/WebDataMiningNotes/image-20210111143744097.png" alt="image-20210111143744097" style="zoom:33%;"></li>
-</ol>
-<h3 id="基于物品的协同推荐算法">基于物品的协同推荐算法</h3>
-<p><img src="/WebDataMiningNotes/image-20210111143911407.png" alt="image-20210111143911407" style="zoom:33%;"></p>
-<p><img src="/WebDataMiningNotes/image-20210111144450917.png" alt="image-20210111144450917" style="zoom:33%;"></p>
-<h2 id="基于矩阵分解的协同推荐算法">基于矩阵分解的协同推荐算法</h2>
-<p><img src="/WebDataMiningNotes/image-20210111145352091.png" alt="image-20210111145352091" style="zoom:33%;"></p>
-<ul>
-<li><p>推荐结果的评估准则</p>
-<ul>
-<li><p>Precision, Recall</p></li>
-<li><p>MRR</p></li>
-<li><p>Mean absolute error: <span class="math display">\[
-  \overline{\mid E \mid}=\frac{\sum_{i=1}^{N}\left|p_{i}-r_{i}\right|}{N}
-  \]</span></p></li>
-</ul></li>
-</ul>
-<h2 id="智能问答系统架构">智能问答系统架构</h2>
-<p><img src="/WebDataMiningNotes/image-20210111160356905.png" alt="image-20210111160356905" style="zoom:33%;"></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/WebDataMiningNotes/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -645,489 +257,14 @@ C_{C}(i)=(N-1) C_{C}(i)
       
           <h1 id="pku-webmining-2020fall-project-boolean-question">PKU WebMining 2020fall project Boolean-Question</h1>
 <h2 id="项目结构总览">0. 项目结构总览</h2>
-<p>总体模型结构如下图所示：</p>
-<p><img src="/boolqModels/hw3-pipeline.svg" alt="hw3-pipeline" style="zoom:33%;"></p>
-<p>其中，图的左侧为输入的文章标题、内容与人类提出的自然问题；图的中部为我们小组所设计的 Pipeline 结构；输入经过我们所设计的 Pipeline 结构，将输出由开放式评测模型生成的模型结果。</p>
-<p>其中我们的 Pipeline 结构，根据评测方式分为两部分：封闭式测试模型与开放式测试模型。</p>
-<p>封闭式测试模型架构为 <code>bidirestional LSTM with attention</code>，详见 <code>2.2</code> 节。</p>
-<p>开放式测试模型架构为多 <span class="math inline">\(Transformer\)</span> 的集成学习模型，详见第 <span class="math inline">\(3\)</span> 章。</p>
-<p>无论是封闭式测试模型还是开放式测试模型，输入数据都需要经过预处理，并且我们在两个模型上进行了针对训练集的数据增强实验。</p>
-<p>项目代码地址请见 https://github.com/jszyxw/boolq-project.</p>
-<h2 id="数据增强">1. 数据增强</h2>
-<p>我们使用了两种方式尝试数据增强，然而两种方式均需要不同程度的手工成本，因此我们仅进行了少量数据的添加，在后面我们默认使用数据增强后的数据集。</p>
-<p><img src="/boolqModels/微信截图_20210103190118.png" style="zoom:33%;"></p>
-<h3 id="基于问题生成的数据增强">1.1 基于问题生成的数据增强</h3>
-<p><img src="/boolqModels/QG-1609690356199.svg" style="zoom:80%;"></p>
-<p>基于问题生成的数据增强如上图所示。训练一个问题生成模型，输入文章、标题、问题答案，输出一个问题以及其置信度。</p>
-<p>处于方便，我们直接使用了<a href="%5Bgenerate_boolean_questions_using_T5_transformer%5D(https://github.com/ramsrigouthamg/generate_boolean_questions_using_T5_transformer)">开源代码</a>在 <code>boolQ</code><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> 数据集上进行模型训练，训练后的模型样例输入输出如下：</p>
-<p><code>Context</code>:</p>
-<blockquote>
-<p>Months earlier, Coca-Cola had begun “Project Kansas.” It sounds like a nuclear experiment but it was just a testing project for the new flavor. In individual surveys, they’d found that more than 75% of respondents loved the taste, 15% were indifferent, and 10% had a strong aversion to the taste to the point that they were angry.</p>
-</blockquote>
-<p><code>Most accurate questions</code>:</p>
-<blockquote>
-<p>Does coca cola have a kansas flavor? Is project kansas the same as coca cola? Is project kansas a new coca cola flavor?</p>
-</blockquote>
-<p>然而由于 <code>boolQ</code> 数据集训练量较少（~10k) ，问题生成的质量并不高，需要人工鉴别出符合文章内容的问题，并确认答案是否正确。我们人工检查确认了 1000 多条数据，清洗出 500 个新问题数据，新问题所对应的文章均取自于训练集。</p>
-<h3 id="基于问题扰动的数据增强3">1.2 基于问题扰动的数据增强 <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></h3>
-<p><img src="/boolqModels/image-20210103224559605.png" alt="image-20210103224559605" style="zoom: 33%;"></p>
-<p>方法如上图所示，对于一个问题的某个部分进行一定程度上的改变，同时要求答案也尽量改变，通过这种方法构造数据以提高模型的鲁棒性，具体参考论文 <a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>。我们尝试使用这种方法生成了 200 条新数据。然而使用这种方法进行数据扩充，对模型的推理能力要求更高，在低资源的封闭式测试中，加入新数据进行模型训练效果反而会变差。</p>
-<h2 id="封闭式">2. 封闭式</h2>
-<h3 id="预处理">2.1 预处理</h3>
-<ol type="1">
-<li><p>将原始的 <code>jsonl</code> 文件处理成可训练的 sample</p>
-<ol type="1">
-<li>输入为 <code>question $ (title) passage</code> 的格式，标签为 <code>answer</code></li>
-<li>统一转化为小写</li>
-<li>除去<code>数字</code>、<code>字母</code>以及用来标记输入格式的 <code>(</code>，<code>)</code>，<code>$</code> 以外的字符</li>
-<li>动词还原为基本形态</li>
-<li>删除属于停用词表的词</li>
-</ol>
-<p>示例如下表：</p></li>
-</ol>
-<table>
-<colgroup>
-<col style="width: 7%">
-<col style="width: 92%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Attri</th>
-<th>Value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>INPUT</td>
-<td>['iran', 'afghanistan', 'speak', 'language', '$', '(persian', 'language)', 'persian', '(', 'p', 'r', 'n', 'n', ')', 'also', 'know', 'endonym', 'farsi', '(', 'f', 'rsi', '(f', 'si', ')', '(', 'listen))', 'one', 'western', 'iranian', 'languages', 'within', 'indo', 'iranian', 'branch', 'indo', 'european', 'language', 'family', 'primarily', 'speak', 'iran', 'afghanistan', '(officially', 'know', 'dari', 'since', ')', 'tajikistan', '(officially', 'know', 'tajiki', 'since', 'soviet', 'era)', 'regions', 'historically', 'persianate', 'societies', 'consider', 'part', 'greater', 'iran', 'write', 'persian', 'alphabet', 'modify', 'variant', 'arabic', 'script', 'evolve', 'aramaic', 'alphabet']</td>
-</tr>
-<tr class="even">
-<td>Label</td>
-<td>True</td>
-</tr>
-</tbody>
-</table>
-<ol start="2" type="1">
-<li> 用预训练词向量 <code>GloVe</code> 做 <code>word embedding</code>。经过实验测试，超参数设为 <span class="math inline">\(dim=100\)</span> 时效果较好。</li>
-</ol>
-<h3 id="模型搭建">2.2 模型搭建</h3>
-<h3 id="模型架构">2.2.1 模型架构</h3>
-<p>模型架构为 <code>bidirestional LSTM with attention</code>，参考了 <span class="math inline">\(ACL2016\)</span> 的一篇文章 <code>Attention-Based Bidirectional Long Short-Term Memory Networks for Relation Classification</code><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>，在当时与封闭集评测条件类似的条件下，获得了当时 state of the art 的结果，模型整体结构如下：</p>
-<p><img src="/boolqModels/image-20210103193431007-1609690349900.png" style="zoom: 50%;"></p>
-<h3 id="变种-lstm">2.2.2 变种 LSTM</h3>
-<p>参考论文 <a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>，模型中的 LSTM 为变种 LSTM，其主要思想为：在原 LSTM 的基础上，<strong>各个门也将上一个记忆单元考虑上</strong>。修改后各门的具体计算方式如下： <span class="math display">\[
-\begin{aligned} i_{t} &amp;=\sigma\left(W_{x i} x_{t}+W_{h i} h_{t-1}+W_{c i} c_{t-1}+b_{i}\right) \\ f_{t} &amp;=\sigma\left(W_{x f} x_{t}+W_{h f} h_{t-1}+W_{c f} c_{t-1}+b_{f}\right) \\ g_{t} &amp;=\tanh \left(W_{x c} x_{t}+W_{h c} h_{t-1}+W_{c c} c_{t-1}+b_{c}\right) \\ c_{t} &amp;=i_{t} g_{t}+f_{t} c_{t-1} \\ o_{t} &amp;=\sigma\left(W_{x o} x_{t}+W_{h o} h_{t-1}+W_{c o} c_{t}+b_{o}\right) \\ h_{t} &amp;=o_{t} \tanh \left(c_{t}\right) \end{aligned}
-\]</span></p>
-<h3 id="attention-layer">2.2.3 Attention Layer</h3>
-<p>Attention 层按如下公式计算： <span class="math display">\[
-M =\tanh (H)\\ \alpha =\operatorname{softmax}\left(w^{T} M\right) \\ r =H \alpha^{T} \\ h^{*} =\tanh (r)
-\]</span> 其中，H 是 <span class="math inline">\(BiLSTM\)</span> 的输出，H 首先通过 <span class="math inline">\(tanh\)</span> 函数激活得到 M, 再通过 全连接层 + softmax 层 得到。然后 H 乘以权重，得到输出 r 。最后经过 <span class="math inline">\(tanh\)</span> 函数激活得到最后输出 h。得到输出后，直接作为 softmax 层的输入，就可以得到相应预测标签的输出。</p>
-<h3 id="训练过程">2.3 训练过程</h3>
-<p>训练过程中尝试为微调了 <code>embedding dimension</code>（见 <code>2.1</code> 节）及下表中参数，其中 <code>dropout prob</code>、<code>batch size</code>、<code>lr</code> 对最终结果的稳定性影响较大，其余参数对训练结果影响不大。最终结果大部分均能在 10 个 <code>epoch</code> 以内稳定在 <span class="math inline">\(accuracy &gt; 65%\)</span>, <span class="math inline">\(f1 \approx 50\%\)</span>。</p>
-<p>微调后的参数如下：</p>
-<table>
-<thead>
-<tr class="header">
-<th>参数</th>
-<th>参数值</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>隐藏层维度</td>
-<td> 200</td>
-</tr>
-<tr class="even">
-<td> 注意力层维度</td>
-<td> 120</td>
-</tr>
-<tr class="odd">
-<td>LSTM 层数</td>
-<td> 2</td>
-</tr>
-<tr class="even">
-<td>Dropout probabiliy</td>
-<td>0.5</td>
-</tr>
-<tr class="odd">
-<td>batch size</td>
-<td>128</td>
-</tr>
-<tr class="even">
-<td>epoch</td>
-<td>20，保存验证集 accuracy 最高的模型参数</td>
-</tr>
-<tr class="odd">
-<td> loss</td>
-<td><span class="math inline">\(BCEloss\)</span></td>
-</tr>
-<tr class="even">
-<td>optimizer</td>
-<td><span class="math inline">\(Adam(lr=0.001, betas=(0.9, 0.999))\)</span></td>
-</tr>
-</tbody>
-</table>
-<h3 id="训练结果">2.4 训练结果</h3>
-<p>训练集与验证集结果如下表：</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>accuracy</th>
-<th>F1-score</th>
-<th>precision</th>
-<th>recall</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td> 训练集</td>
-<td> 98.621</td>
-<td>98.158</td>
-<td>98.858</td>
-<td>97.467</td>
-</tr>
-<tr class="even">
-<td> 验证集</td>
-<td> 67.003</td>
-<td>51.331</td>
-<td>58.061</td>
-<td>45.998</td>
-</tr>
-</tbody>
-</table>
-<p>测试集结果：见 <code>result/close_result.txt</code></p>
-<p>上表中的训练集未加入进行问题扰动型数据增强的数据，训练集加入问题扰动型数据增强的数据后，模型训练结果明显变差，原因可能是 LSTM 模型无法承担如此复杂的、带有推理性质的语法解析任务；因此，基于 Transformer 结构的模型、图神经网络等具有更强语法解析能力、更具推理能力的模型可能对问题扰动更加有效。</p>
-<h2 id="开放式">3. 开放式</h2>
-<h3 id="预处理-1">3.1 预处理</h3>
-<p>将原始的 <code>jsonl</code> 文件导入，并将标题信息融入到文章中，详见 <code>/code/Preprocese.py</code>:</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> 
-    x <span class="token operator">=</span> json<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>line<span class="token punctuation">)</span>
-    x<span class="token punctuation">[</span><span class="token string">'passage'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"("</span> <span class="token operator">+</span> x<span class="token punctuation">[</span><span class="token string">'title'</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">") "</span> <span class="token operator">+</span> x<span class="token punctuation">[</span><span class="token string">'passage'</span><span class="token punctuation">]</span>
-<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="模型结构">3.2 模型结构</h3>
-<p>整体模型结构如下图所示：</p>
-<p><img src="open-pipeline.svg"></p>
-<h3 id="albert-模型">3.2.1 Albert 模型</h3>
-<h4 id="模型结构-1">模型结构</h4>
-<p>相比于 BERT 模型，ALBERT [^7] 使用了如下 3 个 Trick：</p>
-<ul>
-<li>对于 word Embedding 进行了因数分解，将单词先投影到低维的 embedding 空间 E，再投影到高维的隐藏空间 H，使得 E 的维度可以不与 H 绑定，大大减少了 embedding 矩阵的的维度（从 <span class="math inline">\(V*H\)</span> 减少至 <span class="math inline">\(V*E+E*H\)</span>）</li>
-<li>参数共享，让每一层都使用相同的参数，这样可以大幅度减少参数量（最重要的减少参数量方式），但实际上我们可以看出，虽然谈论的是轻量级，论文中也是给出了 xxlarge 的高参数量版本，毕竟低参数实验不好看。(PS by 宁淳：参数共享我认为本身就是一个宽度和深度的权衡问题，真有多 work 我认为也不一定会有太大作用。）</li>
-<li>SOP 任务的提出：对于 Bert 所提出的 NSP 任务，很多后续模型都已经证明其的不适用性。主要在于 NSP 选取不同文档的句子，会导致在预测过程中，不一定单纯的预测句子之间的连贯性，还会很大程度受到不同文档间 topic 的影响。而 SOP 任务反例为两个连续句子的逆序，就能解决这一问题。</li>
-</ul>
-<h4 id="实验结果">实验结果</h4>
-<p>我们使用 <code>Albert-xxlarge</code> 预训练模型，对 BoolQ 任务进行进一步调参，具体代码请见 <code>code/train-albert.py</code></p>
-<p>训练过程中尝试微调了下表中参数，其中 <code>dropout prob</code>、<code>batch size</code>、<code>lr</code> 对最终结果的稳定性影响较大，其余参数对训练结果影响不大。最终结果大部分均能在 10 个 <code>epoch</code> 以内稳定在 <span class="math inline">\(accuracy &gt; 87%\)</span>, <span class="math inline">\(f1 \approx 90\%\)</span>。</p>
-<p>微调后的参数如下：</p>
-<table>
-<thead>
-<tr class="header">
-<th>参数</th>
-<th>参数值</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>隐藏层维度</td>
-<td> 200</td>
-</tr>
-<tr class="even">
-<td> 注意力层维度</td>
-<td> 120</td>
-</tr>
-<tr class="odd">
-<td>LSTM 层数</td>
-<td> 2</td>
-</tr>
-<tr class="even">
-<td>Dropout probabiliy</td>
-<td>0.1</td>
-</tr>
-<tr class="odd">
-<td>batch size</td>
-<td>32</td>
-</tr>
-<tr class="even">
-<td>epoch</td>
-<td>15，保存验证集 accuracy 最高的模型参数</td>
-</tr>
-<tr class="odd">
-<td> loss</td>
-<td><span class="math inline">\(CEloss\)</span></td>
-</tr>
-<tr class="even">
-<td>optimizer</td>
-<td><span class="math inline">\(AdamW, lr=1e-5, eps=1e-8\)</span></td>
-</tr>
-</tbody>
-</table>
-<p>验证集上的结果如下：</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>accuracy</th>
-<th>F1-score</th>
-<th>precision</th>
-<th>recall</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td> 验证集</td>
-<td> 87.49</td>
-<td>90.01</td>
-<td>91.24</td>
-<td>88.93</td>
-</tr>
-</tbody>
-</table>
-<h3 id="roberta-模型">3.2.2 RoBERTa 模型</h3>
-<h4 id="模型结构-2">模型结构</h4>
-<p>在原始 Bert 模型的基础上，RoBERTa<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> 通过实验，证明了如下几点：</p>
-<ol type="1">
-<li>进一步增加预训练数据数量，能够改善模型效果；</li>
-<li>延长预训练时间或增加预训练步数，能够改善模型效果；</li>
-<li>急剧放大预训练的每个 Batch 的 Batch Size，能够明显改善模型效果；</li>
-<li>拿掉预训练任务中的 Next Sentence Prediction 子任务，它不必要存在；</li>
-<li>输入文本的动态 Masking 策略有帮助.</li>
-</ol>
-<h4 id="实验结果-1">实验结果</h4>
-<p>我们使用 <code>RoBERTa-large</code> 预训练模型，对 BoolQ 任务进行进一步调参，具体代码请见 <code>code/train-roberta.py</code></p>
-<p>训练过程中尝试微调了下表中参数，其中 <code>dropout prob</code>、<code>batch size</code>、<code>lr</code> 对最终结果的稳定性影响较大，其余参数对训练结果影响不大。最终结果大部分均能在 10 个 <code>epoch</code> 以内稳定在 <span class="math inline">\(accuracy &gt; 87%\)</span>, <span class="math inline">\(f1 \approx 90\%\)</span>。</p>
-<p>微调后的参数如下：</p>
-<table>
-<thead>
-<tr class="header">
-<th>参数</th>
-<th>参数值</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>隐藏层维度</td>
-<td> 200</td>
-</tr>
-<tr class="even">
-<td> 注意力层维度</td>
-<td> 120</td>
-</tr>
-<tr class="odd">
-<td>LSTM 层数</td>
-<td> 2</td>
-</tr>
-<tr class="even">
-<td>Dropout probabiliy</td>
-<td>0.1</td>
-</tr>
-<tr class="odd">
-<td>batch size</td>
-<td>32</td>
-</tr>
-<tr class="even">
-<td>epoch</td>
-<td>15，保存验证集 accuracy 最高的模型参数</td>
-</tr>
-<tr class="odd">
-<td> loss</td>
-<td><span class="math inline">\(CEloss\)</span></td>
-</tr>
-<tr class="even">
-<td>optimizer</td>
-<td><span class="math inline">\(AdamW, lr=1e-5, eps=1e-8\)</span></td>
-</tr>
-</tbody>
-</table>
-<p>验证集上的结果如下：</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>accuracy</th>
-<th>F1-score</th>
-<th>precision</th>
-<th>recall</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td> 验证集</td>
-<td> 86.51</td>
-<td>89.14</td>
-<td>89.21</td>
-<td>89.08</td>
-</tr>
-</tbody>
-</table>
-<h3 id="deberta-模型">3.2.3 DeBERTa 模型</h3>
-<h4 id="模型结构-3">模型结构</h4>
-<p>相比于 BERT 模型，DeBERTa<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> 使用了如下 2 个 Trick：</p>
-<ul>
-<li><strong>DeBERTa 使用一种分离的注意机制来进行自我注意</strong>。在 BERT 中，输入层中的每个单词都是用一个向量表示的，这个向量是单词（内容）嵌入和位置嵌入的总和，而 DeBERTa 中的每个单词都是用两个向量表示的，这两个向量分别对其内容和位置进行编码，并且单词之间的注意力权重是根据单词的位置和内容来计算的内容和相对位置。这是因为观察到一对词的注意力权重不仅取决于它们的内容，而且取决于它们的相对位置。例如，当单词 “deep” 和 “learning” 相邻出现时，它们之间的依赖性要比出现在不同句子中时强得多。</li>
-<li><strong>DeBERTa 在预训练时增强了 BERT 的输出层。在模型预训练过程中，将 BERT 的输出 Softmax 层替换为一个增强的掩码解码器（EMD）来预测被屏蔽的令牌。</strong>这是为了缓解训练前和微调之间的不匹配。在微调时，我们使用一个任务特定的解码器，它将 BERT 输出作为输入并生成任务标签。然而，在预训练时，我们不使用任何特定任务的解码器，而只是通过 Softmax 归一化 BERT 输出（logits）。因此，我们将掩码语言模型（MLM）视为任何微调任务，并添加一个任务特定解码器，该解码器被实现为两层 Transformer 解码器和 Softmax 输出层，用于预训练。</li>
-</ul>
-<h4 id="实验结果-2">实验结果</h4>
-<p>我们使用 <code>DeBERTa-large</code> 预训练模型，对 BoolQ 任务进行进一步调参，具体代码请见 <code>code/train-deberta.py</code></p>
-<p>训练过程中尝试微调了下表中参数，其中 <code>dropout prob</code>、<code>batch size</code>、<code>lr</code> 对最终结果的稳定性影响较大，其余参数对训练结果影响不大。最终结果大部分均能在 10 个 <code>epoch</code> 以内稳定在 <span class="math inline">\(accuracy &gt; 87%\)</span>, <span class="math inline">\(f1 \approx 90\%\)</span>。</p>
-<p>微调后的参数如下：</p>
-<table>
-<thead>
-<tr class="header">
-<th>参数</th>
-<th>参数值</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>隐藏层维度</td>
-<td> 200</td>
-</tr>
-<tr class="even">
-<td> 注意力层维度</td>
-<td> 120</td>
-</tr>
-<tr class="odd">
-<td>LSTM 层数</td>
-<td> 2</td>
-</tr>
-<tr class="even">
-<td>Dropout probabiliy</td>
-<td>0.1</td>
-</tr>
-<tr class="odd">
-<td>batch size</td>
-<td>32</td>
-</tr>
-<tr class="even">
-<td>epoch</td>
-<td>15，保存验证集 accuracy 最高的模型参数</td>
-</tr>
-<tr class="odd">
-<td> loss</td>
-<td><span class="math inline">\(CEloss\)</span></td>
-</tr>
-<tr class="even">
-<td>optimizer</td>
-<td><span class="math inline">\(AdamW, lr=1e-5, eps=1e-8\)</span></td>
-</tr>
-</tbody>
-</table>
-<p>验证集上的结果如下：</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>accuracy</th>
-<th>F1-score</th>
-<th>precision</th>
-<th>recall</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td> 验证集</td>
-<td> 87.12</td>
-<td>89.56</td>
-<td>90.34</td>
-<td>88.78</td>
-</tr>
-</tbody>
-</table>
-<h3 id="t5-模型">3.2.4 T5 模型</h3>
-<h4 id="模型结构-4">模型结构</h4>
-<p><img src="/boolqModels/image-20210103213541471.png" alt="image-20210103213541471" style="zoom:33%;"></p>
-<p>T5 想要将所有的 NLP 任务归为一统，以后所有的 NLP 任务，在其模型下就转化为了如何进行合适的文本输入输出。由于模型预训练量极为巨大，各任务之间可以互相迁移学习，因此对于许多低资源的任务 T5 取得了非常好的效果。而其模型中最闪光的一点是：它使用了相对位置的 embedding，让模型对位置更加敏感 <a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>。然而，T5 本身模型所带的参数量也达到了惊人的 <code>11 billion</code> 的规模，我们小组尝试使用 4 块 11GB 显存的 GPU，仅模型装载就超出了显存限制，进行训练调参更是天方夜谭。在本次实验中，我们进行了大量尝试对论文给出的结果进行复现，然而由于算力资源的限制，我们最终都以失败告终，详见附录。最终，T5 模型我们只是用于作为参考，因为参数量过大难以进行训练，只是进行了一个简单的预测集成。</p>
-<h4 id="实验结果-3">实验结果</h4>
-<p>我们使用 <code>T5-3b</code> 预训练模型预测结果，具体代码请见 <code>code/T5.py</code></p>
-<p>验证集上的结果如下：</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>accuracy</th>
-<th>F1-score</th>
-<th>precision</th>
-<th>recall</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td> 验证集</td>
-<td> 84.25</td>
-<td>86.71</td>
-<td>91.21</td>
-<td>82.64</td>
-</tr>
-</tbody>
-</table>
-<p>可以发现结果远远不如论文中所声称的 <code>T5-3b</code> 正确率 <span class="math inline">\(89.9\%\)</span>，而仅为 <span class="math inline">\(84.25\%\)</span>，原因见附录。</p>
-<h3 id="模型集成">3.2.5 模型集成</h3>
-<p>模型集成结构如下图所示。</p>
-<p><img src="Spring%20Boot源码初步理解%20(1).svg"></p>
-<p>输入为上述 4 个单模型的预测 <code>yes/no</code> 的经过标准化的概率参数 <code>YES Proba</code> 与 <code>NO Proba</code>，共 8 个值。</p>
-<p>使用一层全连接层进行预测，详见 <code>code/ensemble.py</code>。</p>
-<p>进行调参后，验证集上的结果如下：</p>
-<table>
-<thead>
-<tr class="header">
-<th></th>
-<th>accuracy</th>
-<th>F1-score</th>
-<th>precision</th>
-<th>recall</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td> 验证集</td>
-<td> 89.02</td>
-<td>91.17</td>
-<td>91.15</td>
-<td>91.20</td>
-</tr>
-</tbody>
-</table>
-<p>可以发现正确率为 89.02%，已与人类表现相当 <a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>，在 <code>SUPER GLUE</code> 排行榜上 <code>BoolQ</code> 任务排名前 5.</p>
-<p><img src="/boolqModels/image-20210103221053550.png" alt="image-20210103221053550" style="zoom: 33%;"></p>
-<h2 id="小组分工情况">4. 小组分工情况</h2>
-<h2 id="附录">5. 附录</h2>
-<h3 id="t5-复现过程">5.1 T5 复现过程</h3>
-<ol type="1">
-<li><p><code>T5-11b</code> 尝试装载：</p>
-<p>使用 <code>huggingface</code> 文档推荐的配置进行 <code>Transformer</code> 的并行化装载：</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python">tokenizer <span class="token operator">=</span> T5Tokenizer<span class="token punctuation">.</span>from_pretrained<span class="token punctuation">(</span><span class="token string">"t5-11b"</span><span class="token punctuation">)</span>
-t5 <span class="token operator">=</span> T5ForConditionalGeneration<span class="token punctuation">.</span>from_pretrained<span class="token punctuation">(</span><span class="token string">"t5-11b"</span><span class="token punctuation">)</span>
-device_map <span class="token operator">=</span> <span class="token punctuation">{</span>
-            <span class="token number">0</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-             <span class="token number">1</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-             <span class="token number">2</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">13</span><span class="token punctuation">,</span> <span class="token number">14</span><span class="token punctuation">,</span> <span class="token number">15</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-             <span class="token number">3</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">17</span><span class="token punctuation">,</span> <span class="token number">18</span><span class="token punctuation">,</span> <span class="token number">19</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">21</span><span class="token punctuation">,</span> <span class="token number">22</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">]</span><span class="token punctuation">}</span>
-t5<span class="token punctuation">.</span>parallelize<span class="token punctuation">(</span>device_map<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>运行报错，显存溢出：</p>
-<p><img src="/boolqModels/image-20210103221645484.png" alt="image-20210103221645484"></p></li>
-<li><p><code>T5-3b</code> 尝试复现论文结果：</p>
-<p>经过大量尝试对论文给出的 <code>T5-3b</code> 的结果进行复现，修改几天代码后仍然正确率仅有 84% 左右，远低于论文所述 89.9%，故向论文作者进行邮件沟通：</p>
-<p>得到回复是 HuggingFace 版的 T5 参数和训练方式与原版有区别，即如需获得论文结果，需要从头开始训练与调参：</p>
-<p>从零调参对我们小组的计算资源而言非常不现实，故只好作罢。</p></li>
-</ol>
-<h3 id="参考文献">5.2 参考文献</h3>
-<p>[^7 ]: Lan, Zhenzhong, et al. "Albert: A lite bert for self-supervised learning of language representations." <em>arXiv preprint arXiv:1909.11942</em> (2019).</p>
-<section class="footnotes">
-<hr>
-<ol>
-<li id="fn1"><p>Clark, Christopher, et al. "BoolQ: Exploring the surprising difficulty of natural yes/no questions." <em>arXiv preprint arXiv:1905.10044</em> (2019).<a href="#fnref1" class="footnote-back">↩</a></p></li>
-<li id="fn2"><p>Daniel Khashabi, et al. "More Bang for Your Buck: Natural Perturbation for Robust Question Answering." EMNLP’20<a href="#fnref2" class="footnote-back">↩</a></p></li>
-<li id="fn3"><p>Daniel Khashabi, et al. "More Bang for Your Buck: Natural Perturbation for Robust Question Answering." EMNLP’20<a href="#fnref3" class="footnote-back">↩</a></p></li>
-<li id="fn4"><p>Zhou, Peng , et al. "Attention-Based Bidirectional Long Short-Term Memory Networks for Relation Classification." Meeting of the Association for Computational Linguistics 2016.<a href="#fnref4" class="footnote-back">↩</a></p></li>
-<li id="fn5"><p>Zhou, Peng , et al. "Attention-Based Bidirectional Long Short-Term Memory Networks for Relation Classification." Meeting of the Association for Computational Linguistics 2016.<a href="#fnref5" class="footnote-back">↩</a></p></li>
-<li id="fn6"><p>Liu, Yinhan, et al. "Roberta: A robustly optimized bert pretraining approach." <em>arXiv preprint arXiv:1907.11692</em> (2019).<a href="#fnref6" class="footnote-back">↩</a></p></li>
-<li id="fn7"><p>He, Pengcheng, et al. "DeBERTa: Decoding-enhanced BERT with Disentangled Attention." <em>arXiv preprint arXiv:2006.03654</em> (2020).<a href="#fnref7" class="footnote-back">↩</a></p></li>
-<li id="fn8"><p>Raffel, Colin, et al. "Exploring the limits of transfer learning with a unified text-to-text transformer." <em>arXiv preprint arXiv:1910.10683</em> (2019).<a href="#fnref8" class="footnote-back">↩</a></p></li>
-<li id="fn9"><p>Clark, Christopher, et al. "BoolQ: Exploring the surprising difficulty of natural yes/no questions." <em>arXiv preprint arXiv:1905.10044</em> (2019).<a href="#fnref9" class="footnote-back">↩</a></p></li>
-</ol>
-</section>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/boolqModels/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1186,90 +323,14 @@ t5<span class="token punctuation">.</span>parallelize<span class="token punctuat
       
           <p>Since my blog theme cyanstyle doesn't come with a pre-installed post indexing plugin, I added a simple index via hexo's built-in toc interface.</p>
 <h1 id="steps">Steps</h1>
-<h2 id="toc.ejs">toc.ejs</h2>
-<p>Create <code>toc.ejs</code> at <code>themes\cyanstyle2\layout\_partial\post</code></p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token style-attr"><span class="token attr-name">style</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span><span class="token style language-css"><span class="token property">float</span><span class="token punctuation">:</span>left<span class="token punctuation">;</span><span class="token property">padding</span><span class="token punctuation">:</span>10px 10px 0px 5px<span class="token punctuation">;</span><span class="token property">margin-bottom</span><span class="token punctuation">:</span>20px<span class="token punctuation">;</span><span class="token property">margin-right</span><span class="token punctuation">:</span>30px<span class="token punctuation">;</span><span class="token property">background-color</span><span class="token punctuation">:</span><span class="token function">rgba</span><span class="token punctuation">(</span>255<span class="token punctuation">,</span> 255<span class="token punctuation">,</span> 255<span class="token punctuation">,</span> 0.45<span class="token punctuation">)</span><span class="token punctuation">;</span></span><span class="token punctuation">"</span></span></span><span class="token punctuation">&gt;</span></span>
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>toc<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>toc-article<span class="token punctuation">"</span></span> <span class="token punctuation">&gt;</span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>toc-title<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
-         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span><span class="token punctuation">&gt;</span></span> 
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>strong</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>font</span> <span class="token attr-name">face</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Lato<span class="token punctuation">"</span></span> <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>Index<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>font</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>strong</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span>
-            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>#<span class="token punctuation">"</span></span> <span class="token attr-name">onclick</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>javascript:return openct(this);<span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>收起<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>[-]<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">&gt;</span></span>
-         <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-      &lt;%- toc(post.content, {list_number: true}) %&gt;
-   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
-   <span class="token keyword">function</span> <span class="token function">openct</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span><span class="token punctuation">{</span>    
-      <span class="token keyword">if</span> <span class="token punctuation">(</span>e<span class="token punctuation">.</span>innerHTML <span class="token operator">==</span> <span class="token string">'[+]'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-         <span class="token function">$</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">'title'</span><span class="token punctuation">,</span> <span class="token string">'收起'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">html</span><span class="token punctuation">(</span><span class="token string">'[-]'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-         <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".toc-article ol"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">show</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
-         <span class="token function">$</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">attr</span><span class="token punctuation">(</span><span class="token string">'title'</span><span class="token punctuation">,</span> <span class="token string">'展开'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">html</span><span class="token punctuation">(</span><span class="token string">'[+]'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-         <span class="token function">$</span><span class="token punctuation">(</span><span class="token string">".toc-article ol"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">hide</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token punctuation">}</span>
-      e<span class="token punctuation">.</span><span class="token function">blur</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-   <span class="token punctuation">}</span>
-</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="article.ejs">article.ejs</h2>
-<p>Modify <code>article.ejs</code> at <code>themes\theme-name\layout\_partial</code></p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html">.....
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>entry-content<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
-  &lt;% if (post.excerpt &amp;&amp; index){ %&gt;
-    &lt;%- post.excerpt %&gt;
-    &lt;% if (theme.excerpt_link){ %&gt;
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>article-more-link<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>
-        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>&lt;%- url_for(post.path) %&gt;#more<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>more-link<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>&lt;%= theme.excerpt_link %&gt; <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>meta-nav<span class="token punctuation">"</span></span><span class="token punctuation">&gt;</span></span>→<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">&gt;</span></span>
-      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
-    &lt;% } %&gt;
-  &lt;% } else { if (post.toc == true) %&gt;
-    &lt;%- partial('post/toc') %&gt;
-    &lt;%- post.content %&gt;
-  &lt;% } %&gt;
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span><span class="token comment">&lt;!-- .entry-content --&gt;</span>
-.....<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="css-configuration">CSS configuration</h2>
-<p>Create toc.css at themes-name_partial</p>
-<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token selector">.toc-article</span> <span class="token punctuation">{</span>
-   <span class="token property">float</span><span class="token punctuation">:</span>left<span class="token punctuation">;</span> 
-   <span class="token property">min-width</span><span class="token punctuation">:</span>200px<span class="token punctuation">;</span>
-   <span class="token property">padding</span><span class="token punctuation">:</span> 4px 10px<span class="token punctuation">;</span>
-   <span class="token property">font-size</span><span class="token punctuation">:</span> 12px<span class="token punctuation">;</span> 
-   <span class="token property">background-color</span><span class="token punctuation">:</span> #eee<span class="token punctuation">;</span>
-   <span class="token property">border</span><span class="token punctuation">:</span> 1px solid #ccc<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token selector">.toc-article a</span> <span class="token punctuation">{</span>
-   <span class="token property">color</span><span class="token punctuation">:</span> #369<span class="token punctuation">;</span>
-   <span class="token property">border-bottom</span><span class="token punctuation">:</span> 0px<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token selector">.toc-article ol</span> <span class="token punctuation">{</span>
-  
-   <span class="token property">margin</span><span class="token punctuation">:</span> 0px 14px 0px<span class="token punctuation">;</span>
-   <span class="token property">line-height</span><span class="token punctuation">:</span> 160%<span class="token punctuation">;</span>
-   <span class="token property">padding-left</span><span class="token punctuation">:</span> 14px<span class="token punctuation">;</span>
-   <span class="token property">list-style-type</span><span class="token punctuation">:</span> none<span class="token punctuation">;</span>
-   <span class="token property">display</span><span class="token punctuation">:</span> none<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token selector">.toc-article li</span> <span class="token punctuation">{</span>
-   <span class="token property">list-style</span><span class="token punctuation">:</span> decimal<span class="token punctuation">;</span>
-   <span class="token property">list-style-type</span><span class="token punctuation">:</span> none<span class="token punctuation">;</span>
-   <span class="token property">margin</span><span class="token punctuation">:</span> 0px<span class="token punctuation">;</span>
-   <span class="token property">padding</span><span class="token punctuation">:</span> 0px<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token selector">.toc-article .toc-title p</span><span class="token punctuation">{</span>
-   <span class="token property">text-align</span><span class="token punctuation">:</span> right<span class="token punctuation">;</span>
-   <span class="token property">margin</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token selector">.toc-article .toc-title p span</span><span class="token punctuation">{</span>
-   <span class="token property">float</span><span class="token punctuation">:</span> left<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>Then add the following code at the rear of themes-name.css to import config:</p>
-<pre class="line-numbers language-css" data-language="css"><code class="language-css">@import ‘_partial/toc’
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/add%20index%20to%20hexo%20posts/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1329,47 +390,14 @@ t5<span class="token punctuation">.</span>parallelize<span class="token punctuat
           <h1 id="start">start</h1>
 <pre class="line-numbers language-none"><code class="language-none">$ ghci
 Prelude&gt;  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-haskell" data-language="haskell"><code class="language-haskell"><span class="token constant">Prelude</span><span class="token operator">&gt;</span> <span class="token operator">:</span><span class="token hvariable">set</span> <span class="token hvariable">prompt</span> <span class="token string">"ghci&gt; "</span>
-<span class="token hvariable">ghci</span><span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<pre class="line-numbers language-none"><code class="language-none">ghci&gt; 2 + 2
-4
-ghci&gt; (+) 2 2
-4
-ghci&gt; True&amp;&amp;False
-False
-ghci&gt; False||True
-True<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>warning: </p><pre class="line-numbers language-haskell" data-language="haskell"><code class="language-haskell"><span class="token hvariable">ghci</span><span class="token operator">&gt;</span> <span class="token constant">True</span> <span class="token operator">&amp;&amp;</span> <span class="token number">1</span>
-
-<span class="token operator">&lt;</span><span class="token hvariable">interactive</span><span class="token operator">&gt;:</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">8</span><span class="token operator">:</span>
-    <span class="token constant">No</span> <span class="token keyword">instance</span> <span class="token hvariable">for</span> <span class="token punctuation">(</span><span class="token constant">Num</span> <span class="token constant">Bool</span><span class="token punctuation">)</span>
-      <span class="token hvariable">arising</span> <span class="token hvariable">from</span> <span class="token hvariable">the</span> <span class="token hvariable">literal</span> `<span class="token number">1</span>' <span class="token hvariable">at</span> <span class="token operator">&lt;</span><span class="token hvariable">interactive</span><span class="token operator">&gt;:</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">8</span>
-    <span class="token constant">Possible</span> <span class="token hvariable">fix</span><span class="token operator">:</span> <span class="token hvariable">add</span> <span class="token hvariable">an</span> <span class="token keyword">instance</span> <span class="token hvariable">declaration</span> <span class="token hvariable">for</span> <span class="token punctuation">(</span><span class="token constant">Num</span> <span class="token constant">Bool</span><span class="token punctuation">)</span>
-    <span class="token constant">In</span> <span class="token hvariable">the</span> <span class="token hvariable">second</span> <span class="token hvariable">argument</span> <span class="token keyword">of</span> `<span class="token punctuation">(</span><span class="token operator">&amp;&amp;</span><span class="token punctuation">)</span>'<span class="token punctuation">,</span> <span class="token hvariable">namely</span> `<span class="token number">1</span>'
-    <span class="token constant">In</span> <span class="token hvariable">the</span> <span class="token hvariable">expression</span><span class="token operator">:</span> <span class="token constant">True</span> <span class="token operator">&amp;&amp;</span> <span class="token number">1</span>
-    <span class="token constant">In</span> <span class="token hvariable">the</span> <span class="token hvariable">definition</span> <span class="token keyword">of</span> `<span class="token hvariable">it</span>'<span class="token operator">:</span> <span class="token hvariable">it</span> <span class="token operator">=</span> <span class="token constant">True</span> <span class="token operator">&amp;&amp;</span> <span class="token number">1</span>
-
-<span class="token hvariable">ghci</span><span class="token operator">&gt;</span> <span class="token number">2</span><span class="token operator">*-</span><span class="token number">3</span>
-
-<span class="token operator">&lt;</span><span class="token hvariable">interactive</span><span class="token operator">&gt;:</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">1</span><span class="token operator">:</span> <span class="token constant">Not</span> <span class="token keyword">in</span> <span class="token hvariable">scope</span><span class="token operator">:</span> `<span class="token operator">*-</span>'
-
-<span class="token hvariable">ghci</span><span class="token operator">&gt;</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token operator">-</span><span class="token number">3</span>
-
-<span class="token operator">&lt;</span><span class="token hvariable">interactive</span><span class="token operator">&gt;:</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">0</span><span class="token operator">:</span>
-    <span class="token hvariable">precedence</span> <span class="token hvariable">parsing</span> <span class="token builtin">error</span>
-        <span class="token hvariable">cannot</span> <span class="token hvariable">mix</span> `<span class="token punctuation">(</span><span class="token operator">+</span><span class="token punctuation">)</span>' <span class="token punctuation">[</span><span class="token keyword">infixl</span> <span class="token number">6</span><span class="token punctuation">]</span> <span class="token builtin">and</span> <span class="token hvariable">prefix</span> `<span class="token operator">-</span>' <span class="token punctuation">[</span><span class="token keyword">infixl</span> <span class="token number">6</span><span class="token punctuation">]</span> <span class="token keyword">in</span> <span class="token hvariable">the</span> <span class="token hvariable">same</span> <span class="token hvariable">infix</span> <span class="token hvariable">expression</span>
-
-<span class="token hvariable">ghci</span><span class="token operator">&gt;</span> <span class="token number">2</span> <span class="token operator">/=</span> <span class="token number">3</span>
-<span class="token constant">True</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre> # Bindings<p></p>
-<ul>
-<li><p>Haskell uses the = sign to declare bindings: </p><pre class="line-numbers language-haskell" data-language="haskell"><code class="language-haskell"><span class="token hvariable">x</span> <span class="token operator">=</span> <span class="token number">2</span>
-<span class="token hvariable">y</span> <span class="token operator">=</span> <span class="token number">3</span>
-<span class="token hvariable">main</span> <span class="token operator">=</span> <span class="token keyword">let</span> <span class="token hvariable">z</span> <span class="token operator">=</span> <span class="token hvariable">x</span> <span class="token operator">+</span> <span class="token hvariable">y</span> <span class="token keyword">in</span> <span class="token builtin">print</span> <span class="token hvariable">z</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre> Bound name cannot start with upper-case letters Bindings are seperated by ";", witch is usually auto-inserted by a layout rule<p></p></li>
-<li><p>A binding may declare a function of one or more arguments Function and arguments are seperated by spaces(when defining or invoking) </p><pre class="line-numbers language-haskell" data-language="haskell"><code class="language-haskell"><span class="token hvariable">add</span> <span class="token hvariable">arg1</span> <span class="token hvariable">arg2</span> <span class="token operator">=</span> <span class="token hvariable">arg1</span> <span class="token operator">+</span> <span class="token hvariable">arg2</span>
-<span class="token hvariable">five</span> <span class="token operator">=</span> <span class="token hvariable">add</span> <span class="token number">2</span> <span class="token number">3</span>
-<span class="token hvariable">main</span> <span class="token operator">=</span> <span class="token builtin">print</span> <span class="token punctuation">(</span><span class="token hvariable">add</span> <span class="token number">2</span> <span class="token number">3</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p></li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Haskell%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1428,26 +456,14 @@ True<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span
       
           <h1 id="进制转换">进制转换</h1>
 <p>电容 <span class="math inline">\(1F = 10^3 mF = 10^6 \mu F = 10^9 nF = 10^{12} pF\)</span></p>
-<p>电感 <span class="math inline">\(1H (henry)\)</span></p>
-<p><span class="math inline">\(\omega = 2 \pi f\)</span></p>
-<h1 id="正弦电压">正弦电压</h1>
-<p><span class="math inline">\(V(t)=Asin(ωt)​\)</span> 作为信号源</p>
-<ul>
-<li>电阻 (<span class="math inline">\(V=IR​\)</span>)： $ I(t) =Asin(ωt) / R​$</li>
-<li> 电容 (<span class="math inline">\(I=CV'​\)</span>)： <span class="math inline">\(I(t)=ωC·Acos(ωt) ​\)</span></li>
-<li> 电感 (<span class="math inline">\(V=L I'\)</span>)： <span class="math inline">\(I(t)= -Acos(ωt) / ωL\)</span></li>
-</ul>
-<h2 id="广义欧姆定律">广义欧姆定律</h2>
-<p><span class="math inline">\(V_0 = Z * I_0\)</span></p>
-<ul>
-<li>电阻：<span class="math inline">\(Z_R = R\)</span></li>
-<li> 电容: <span class="math inline">\(Z_C = \frac{1}{j \omega C}\)</span></li>
-<li> 电感: <span class="math inline">\(Z_L = j \omega L\)</span></li>
-</ul>
-<h2 id="正余弦函数-to-复指数函数">正余弦函数 to 复指数函数</h2>
-<p><span class="math inline">\(cos \omega t = \frac {e^{j \omega t} + e ^ {- j \omega t} }{2} ​\)</span></p>
-<p>$sin t =  $</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/physics%20notes/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1512,57 +528,15 @@ True<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span
   gsettings <span class="token builtin class-name">set</span> org.gnome.desktop.background picture-uri <span class="token variable">$p</span>
   <span class="token function">sleep</span> <span class="token number">10</span> <span class="token comment"># seconds</span>
  <span class="token keyword">done</span>
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre> 加一点 <code>random_shuffle</code> ：<p></p>
-<pre class="line-numbers language-bash" data-language="bash"><div class="caption"><span>wallpaperChanger.sh</span></div><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
-<span class="token keyword">while</span> <span class="token boolean">true</span>
-<span class="token keyword">do</span>
- <span class="token keyword">for</span> <span class="token for-or-select variable">p</span> <span class="token keyword">in</span> ~/Pictures/Wallpapers/*
- <span class="token keyword">do</span>
-  <span class="token assign-left variable">Q</span><span class="token operator">=</span><span class="token environment constant">$RANDOM</span>
-  <span class="token keyword">while</span> <span class="token punctuation">[</span> -f ~/Pictures/Wallpapers/<span class="token variable">$Q</span> <span class="token punctuation">]</span>
-  <span class="token keyword">do</span>
-   <span class="token assign-left variable">Q</span><span class="token operator">=</span><span class="token environment constant">$RANDOM</span>
-  <span class="token keyword">done</span>
-  <span class="token function">mv</span> <span class="token variable">$p</span> ~/Pictures/Wallpapers/<span class="token variable">$Q</span> <span class="token comment"># RandomShuffle</span>
- <span class="token keyword">done</span>
- <span class="token keyword">for</span> <span class="token for-or-select variable">p</span> <span class="token keyword">in</span> ~/Pictures/Wallpapers/*
- <span class="token keyword">do</span>
-  gsettings <span class="token builtin class-name">set</span> org.gnome.desktop.background picture-uri <span class="token variable">$p</span>
-  <span class="token function">sleep</span> <span class="token number">1800</span> <span class="token comment"># seconds</span>
- <span class="token keyword">done</span>
-<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>可以添加到 <code>~/.profile</code> 开机启动。 不能直接把代码复制进<code>.profile</code>，因为<code>.profile</code> 在进入图形界面之前运行，需将脚本后台运行。 正确姿势为加入语句： </p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token punctuation">..</span>.
-<span class="token function">bash</span> AutoWallpaperChanger.sh <span class="token operator">&amp;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre> Update 7.1 <code>c++</code> 大法好。 <pre class="line-numbers language-c" data-language="c"><div class="caption"><span>wallpaperChanger.cpp</span></div><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h&gt;</span></span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">INTERVAL</span> <span class="token expression"><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> </span><span class="token comment">// seconds</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PATH</span> <span class="token string">"~/Pictures/Wallpapers/"</span></span>
- 
-std<span class="token operator">::</span>vector<span class="token operator">&lt;</span>std<span class="token operator">::</span>string<span class="token operator">&gt;</span> Name<span class="token punctuation">;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token function">system</span><span class="token punctuation">(</span><span class="token string">"ls "</span> PATH <span class="token string">" &gt; wallpaper.txt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token function">freopen</span><span class="token punctuation">(</span><span class="token string">"wallpaper.txt"</span><span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">,</span> <span class="token constant">stdin</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    std<span class="token operator">::</span>string i<span class="token punctuation">;</span>
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>std<span class="token operator">::</span>cin <span class="token operator">&gt;&gt;</span> i<span class="token punctuation">)</span> Name<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token function">srand</span><span class="token punctuation">(</span><span class="token function">time</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-    <span class="token keyword">while</span> <span class="token punctuation">(</span>true<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        std<span class="token operator">::</span><span class="token function">random_shuffle</span><span class="token punctuation">(</span>Name<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> Name<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> name<span class="token operator">:</span> Name<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token function">system</span><span class="token punctuation">(</span><span class="token punctuation">(</span>std<span class="token operator">::</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token string">"gsettings set org.gnome.desktop.background picture-uri "</span> PATH<span class="token punctuation">)</span> <span class="token operator">+</span> name<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token function">sleep</span><span class="token punctuation">(</span>INTERVAL<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
-
+<span class="token keyword">done</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/gnome%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%8D%A2%E5%A3%81%E7%BA%B8/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1671,7 +645,14 @@ M &amp; &amp; &amp; &amp; -1 &amp; \cdots &amp; \cdots &amp; -1 \\\
 \right]
 \]</span></p>
 <p>Multiplying diagonally, we get <span class="math display">\[ M^{N-1}*N^{M-1} \]</span></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/completeBipartiteGraphSpanningTreeCounting/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1730,92 +711,14 @@ M &amp; &amp; &amp; &amp; -1 &amp; \cdots &amp; \cdots &amp; -1 \\\
       
           <h3 id="font-test">Font test</h3>
 <p>巴东三峡巫峡长 猿鸣三声泪沾裳</p>
-<p>良いと思います。</p>
-<p>Saber Lancer Archer Rider Caster Assassin Berserker</p>
-<h3 id="code-test">Code test</h3>
-<pre class="line-numbers language-cpp" data-language="cpp"><div class="caption"><span>helloWorld.cpp</span><a target="_blank" rel="noopener" href="https://wikipedia.com">wikipedia</a></div><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h&gt;</span></span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">"hello world!"</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>endl<span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="math-test">Math test</h3>
-<p><span class="math display">\[ \sum_{i=1}^{n} \frac{n}{i} \]</span> 设<span class="math inline"> \(a = b + \alpha\)</span>. <span class="math inline">\(cos \omega t = \frac {e^{j \omega t} + e ^ {- j \omega t} }{2} ​\)</span></p>
-<h3 id="media-test">Media test</h3>
-<blockquote><p>Every interaction is both precious and an opportunity to delight.</p>
-<footer><strong>Seth Godin</strong><cite><a target="_blank" rel="noopener" href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html">Welcome to Island Marketing</a></cite></footer></blockquote>
-<img src="/hello-test/jc1.jpg" class="" title="hibiki!eupho">
-
-        <div id="aplayer-gsEnSbDS" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
-            <pre class="aplayer-lrc-content">[ar:アイマリン(CV.内田彩)]
-[al:Dive to Blue]
-[00:28.04]
-[00:41.39]マリンブルー 深いため息溶かしたピューバティー
-[00:46.39]出会いと憂いに愛と後悔 巡る心模様
-[00:51.75]季節が終わりカレンダーをめくったら
-[00:56.59]明日がちょっと怖くなってふいに立ち止まる
-[01:01.30]
-[01:01.75]君に会えたら 伝えたい事があるんだ
-[01:07.00]海の蒼さや 眩しさや 君の優しさ
-[01:12.36]吹き抜ける風に 種をまいたら
-[01:17.42]心の闇を遮って 君を迎えに行くよ
-[01:23.32]
-[01:23.93]さあLet me diving 深海潜ったらユートピア
-[01:28.78]波に溶けてっちゃうくらいのスピード エモーション
-[01:34.04]さあBreak it down 君が壊してよディストピア
-[01:39.13]この果てない海原に 君の手を取って飛び込むよ
-[01:45.09]
-[02:05.32]ノスタルジア 心をほどいて遠くまで
-[02:10.35]流した涙は光となって やがて降り注ぐ
-[02:14.84]
-[02:15.28]君にいつかは 見せたい景色があるんだ
-[02:20.37]空の広さや 輝きや 君の美しさ
-[02:25.49]遠ざかる昨日 まだ見ぬ明日
-[02:30.96]おぼろげな今 抱きしめて 君を迎えに行くよ
-[02:36.83]
-[02:37.36]さあLet me shining 光彩届いたらユートピア
-[02:42.24]通り過ぎてった時 思い出 スローモーション
-[02:47.60]さあBreak up 手を振ってさよならディストピア
-[02:52.65]満ち溢れた未来に 君の手を取って飛び込むよ
-[02:58.57]
-[03:08.48]悩んだり 迷ったり 巡り巡って
-[03:13.39]もどかしさの中で 遠ざかってく
-[03:18.73]あの日の悲しみ 喜びが全部
-[03:23.53]君になってくんだ さあ手を伸ばして
-[03:29.50]
-[03:31.53]さあLet me diving 深海潜ったらユートピア
-[03:36.53]波に溶けてっちゃうくらいのスピード エモーション
-[03:41.65]さあBreak it down 君が壊してよディストピア
-[03:46.77]この果てない海原に 君の手を取って飛び込むよ
-[03:52.14]
-[03:52.54]Blue, Blight, Let me dive 空中 舞う 天国みたい
-[04:14.30]
-
-</pre>
-        </div>
-        <script>
-          var ap = new APlayer({
-            element: document.getElementById("aplayer-gsEnSbDS"),
-            narrow: false,
-            autoplay: false,
-            showlrc: 2,
-            music: {
-              title: "Dive to Blue",
-              author: "内田彩",
-              url: "http://167.179.65.155:8001/blog/%E5%86%85%E7%94%B0%E5%BD%A9%20-%20Dive%20to%20Blue.flac",
-              pic: "http://p1.music.126.net/fapQP1XmVlmp96GrrpxCyg==/3440371889925157.jpg",
-              lrc: "DTB.txt"
-            }
-          });
-          window.aplayers || (window.aplayers = []);
-          window.aplayers.push(ap);
-        </script>
-<div class="pdfobject-container" data-target="./233.pdf" data-height="500px"></div>
-<h2 id="finished">Finished！</h2>
-<p>Congradulaions!</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hello-test/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1874,19 +777,14 @@ M &amp; &amp; &amp; &amp; -1 &amp; \cdots &amp; \cdots &amp; -1 \\\
       
           <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hello-world/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
