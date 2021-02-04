@@ -328,348 +328,368 @@ mjx-container[display="true"] + br {
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="词袋模型"><a href="#词袋模型" class="headerlink" title="词袋模型"></a>词袋模型</h2><p>一篇文档看作一个词语的<strong>无序</strong>集合</p>
+          <h2 id="词袋模型">词袋模型</h2>
+<p>一篇文档看作一个词语的<strong>无序</strong>集合</p>
 <ul>
-<li><p>优点：简单有效</p>
-</li>
-<li><p>缺点：忽略了词之间的句法关系以及篇章结构信息</p>
-</li>
-<li><p>符号化 <code>tokenization</code>: 识别词的边界</p>
-</li>
-<li><p>词语形态规范化 <code>Stemming</code>: </p>
+<li>优点：简单有效</li>
+<li><p>缺点：忽略了词之间的句法关系以及篇章结构信息</p></li>
+<li>符号化 <code>tokenization</code>: 识别词的边界</li>
+<li>词语形态规范化 <code>Stemming</code>:
 <ul>
 <li>删除后缀</li>
 <li>结果可能不是词语</li>
 <li>不相关的词可能具有相同的 stem</li>
-</ul>
-</li>
-<li><p> 词形还原 <code>lemmatization</code>：</p>
+</ul></li>
+<li> 词形还原 <code>lemmatization</code>：
 <ul>
 <li>将词语变为其语法原型</li>
 <li>处理结果仍然为词</li>
-<li>处理过程要考虑词性不同<ul>
-<li> thought -&gt; think if thought is a verb</li>
+<li>处理过程要考虑词性不同
+<ul>
+<li>thought -&gt; think if thought is a verb</li>
 <li>thought not change if it is a noun</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p> 停用词 <code>stop words</code></p>
+</ul></li>
+</ul></li>
+<li> 停用词 <code>stop words</code>
 <ul>
 <li>不具有内容信息的词</li>
-<li>过滤停用词的原因：<ul>
+<li>过滤停用词的原因：
+<ul>
 <li>停用词并不能提高检索效果</li>
 <li>可以大幅减少索引大小</li>
 <li>减少检索时间</li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="文档余弦相似度计算"><a href="#文档余弦相似度计算" class="headerlink" title="文档余弦相似度计算"></a>文档余弦相似度计算</h2><p>查询向量 $q$, 文档向量 $d$，向量维度均为 $n$, 其余弦相似度定义为：</p>
-<p>$$<br>\begin{aligned}<br>\operatorname{sim}(q, d) &amp;= \cos (q, d)\<br>&amp;=\left(|q|^{-1} \cdot q\right) \bullet\left(|d|^{-1} \cdot d\right) \<br>&amp;=\frac{\sum_{i=1}^{n}\left(q_{i} \cdot d_{i}\right)}{\sqrt{\sum_{i=1}^{n} q_{i}^{2}} \cdot \sqrt{\sum_{i=1}^{n} d_{i}^{2}}}<br>\end{aligned}<br>$$</p>
-<h2 id="倒排索引构建与优点"><a href="#倒排索引构建与优点" class="headerlink" title="倒排索引构建与优点"></a>倒排索引构建与优点</h2><p>以关键词为核心对文档进行索引，帮助快速地找到文档中所包含的关键词</p>
-<img src="WebDataMiningNotes/image-20210110123127453.png" alt="image-20210110123127453" style="zoom:50%;">
-
-<p>倒排索引的优势</p>
+<h2 id="文档余弦相似度计算">文档余弦相似度计算</h2>
+<p>查询向量 <span class="math inline">\(q\)</span>, 文档向量 <span class="math inline">\(d\)</span>，向量维度均为 <span class="math inline">\(n\)</span>, 其余弦相似度定义为：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\operatorname{sim}(q, d) &amp;= \cos (q, d)\\
+&amp;=\left(\|q\|^{-1} \cdot q\right) \bullet\left(\|d\|^{-1} \cdot d\right) \\
+&amp;=\frac{\sum_{i=1}^{n}\left(q_{i} \cdot d_{i}\right)}{\sqrt{\sum_{i=1}^{n} q_{i}^{2}} \cdot \sqrt{\sum_{i=1}^{n} d_{i}^{2}}}
+\end{aligned}
+\]</span></p>
+<h2 id="倒排索引构建与优点">倒排索引构建与优点</h2>
+<p>以关键词为核心对文档进行索引，帮助快速地找到文档中所包含的关键词</p>
+<p><img src="WebDataMiningNotes/image-20210110123127453.png" alt="image-20210110123127453" style="zoom:50%;"></p>
+<p>倒排索引的优势 - 关键词个数比文档少，因此检索效率高 - 特别适合信息检索任务，信息检索任务的查询词一般很少，通过几次查询就能找出所有可能的文档</p>
+<h2 id="布尔检索模型及其优缺点">布尔检索模型及其优缺点</h2>
+<p>基于布尔代数的检索模型 (<span class="math inline">\(\text{AND, OR, NOT}\)</span>) - 优点 - 简单 - 对查询严格掌控 - 缺点 - 一般用户难以构造布尔查询，耗时耗力 - 检索结果文档无法排序（只能分为匹配或不匹配） - 根据布尔运算进行严格匹配，导致过少或过多的检索结果</p>
+<p>尽管布尔模型不再用做主流文档检索模型，但其思想常用于实现高级检索功能 ## Web 搜索架构</p>
+<p><img src="WebDataMiningNotes/image-20210110141621685.png" alt="image-20210110141621685" style="zoom: 33%;"></p>
+<h2 id="pagerank算法">PageRank 算法</h2>
 <ul>
-<li>关键词个数比文档少，因此检索效率高</li>
-<li>特别适合信息检索任务，信息检索任务的查询词一般很少，通过几次查询就能找出所有可能的文档</li>
-</ul>
-<h2 id="布尔检索模型及其优缺点"><a href="#布尔检索模型及其优缺点" class="headerlink" title="布尔检索模型及其优缺点"></a>布尔检索模型及其优缺点</h2><p>基于布尔代数的检索模型 ($\text {AND, OR, NOT}$)</p>
-<ul>
-<li>优点<ul>
-<li>简单</li>
-<li>对查询严格掌控</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>一般用户难以构造布尔查询，耗时耗力</li>
-<li>检索结果文档无法排序（只能分为匹配或不匹配）</li>
-<li>根据布尔运算进行严格匹配，导致过少或过多的检索结果</li>
-</ul>
-</li>
-</ul>
-<p>尽管布尔模型不再用做主流文档检索模型，但其思想常用于实现高级检索功能</p>
-<h2 id="Web搜索架构"><a href="#Web搜索架构" class="headerlink" title="Web搜索架构"></a>Web 搜索架构</h2><img src="WebDataMiningNotes/image-20210110141621685.png" alt="image-20210110141621685" style="zoom: 33%;">
-
-<h2 id="PageRank算法"><a href="#PageRank算法" class="headerlink" title="PageRank算法"></a>PageRank 算法</h2><ul>
 <li><p>随机游走 (Random Walk) 模型</p>
 <ul>
-<li><p>对网页按照流行度或权威性进行排序</p>
-</li>
-<li><p>为图中每个节点 $v_i$ 计算一个 PageRank 值 $\pi (v_i)$, 可看作用户随机点击链接将会到达特定网页的可能性</p>
-</li>
-</ul>
-</li>
-<li><p>页面节点的 PageRank 与其父节点的 Rank 值成正比，但与其父节点的出度 (out-degree) 成反比</p>
-</li>
+<li><p>对网页按照流行度或权威性进行排序</p></li>
+<li><p>为图中每个节点<span class="math inline"> \(v_i\)</span> 计算一个 PageRank 值<span class="math inline"> \(\pi(v_i)\)</span>, 可看作用户随机点击链接将会到达特定网页的可能性</p></li>
+</ul></li>
+<li><p>页面节点的 PageRank 与其父节点的 Rank 值成正比，但与其父节点的出度 (out-degree) 成反比</p></li>
 <li><p>样例：</p>
-  <img src="WebDataMiningNotes/image-20210110135316725.png" alt="image-20210110135316725" width="250" height="250">
-
-</li>
+<p><img src="WebDataMiningNotes/image-20210110135316725.png" alt="image-20210110135316725" width="250" height="250"></p></li>
 </ul>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Node</th>
 <th>Outlinks</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>$v_1$</td>
-<td>$v_2$, $v_3$, $v_6$</td>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(v_1\)</span></td>
+<td><span class="math inline">\(v_2\)</span>, <span class="math inline">\(v_3\)</span>, <span class="math inline">\(v_6\)</span></td>
 </tr>
-<tr>
-<td>$v_2$</td>
-<td>$v_4$, $v_5$</td>
+<tr class="even">
+<td><span class="math inline">\(v_2\)</span></td>
+<td><span class="math inline">\(v_4\)</span>, <span class="math inline">\(v_5\)</span></td>
 </tr>
-<tr>
-<td>$v_3$</td>
-<td>$v_4$, $v_6$</td>
+<tr class="odd">
+<td><span class="math inline">\(v_3\)</span></td>
+<td><span class="math inline">\(v_4\)</span>, <span class="math inline">\(v_6\)</span></td>
 </tr>
-<tr>
-<td>$v_4$</td>
-<td>$v_6$</td>
+<tr class="even">
+<td><span class="math inline">\(v_4\)</span></td>
+<td><span class="math inline">\(v_6\)</span></td>
 </tr>
-<tr>
-<td>$v_5$</td>
-<td>$v_1$, $v_4$, $v_7$, $v_8$</td>
+<tr class="odd">
+<td><span class="math inline">\(v_5\)</span></td>
+<td><span class="math inline">\(v_1\)</span>, <span class="math inline">\(v_4\)</span>, <span class="math inline">\(v_7\)</span>, <span class="math inline">\(v_8\)</span></td>
 </tr>
-<tr>
-<td>$v_6$</td>
-<td>$v_4$</td>
+<tr class="even">
+<td><span class="math inline">\(v_6\)</span></td>
+<td><span class="math inline">\(v_4\)</span></td>
 </tr>
-<tr>
-<td>$v_7$</td>
-<td>$v_3$</td>
+<tr class="odd">
+<td><span class="math inline">\(v_7\)</span></td>
+<td><span class="math inline">\(v_3\)</span></td>
 </tr>
-<tr>
-<td>$v_8$</td>
-<td>$v_4$, $v_7$</td>
+<tr class="even">
+<td><span class="math inline">\(v_8\)</span></td>
+<td><span class="math inline">\(v_4\)</span>, <span class="math inline">\(v_7\)</span></td>
 </tr>
-</tbody></table>
-<p>$\text { Adjacent Matrix: }$<br>$$<br>\begin{aligned}<br>&amp;M=\left[\begin{array}{llllllll}<br>0 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \<br>1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 \<br>0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0<br>\end{array}\right]<br>\end{aligned}<br>$$<br>$\text { Transition Probability Matrix: }$<br>$$<br>P=\left[\begin{array}{cccccccc}<br>0 &amp; 1 / 3 &amp; 1 / 3 &amp; 0 &amp; 0 &amp; 1 / 3 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 1 / 2 &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \<br>1 / 4 &amp; 0 &amp; 0 &amp; 1 / 4 &amp; 0 &amp; 0 &amp; 1 / 4 &amp; 1 / 4 \<br>0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \<br>0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0<br>\end{array}\right]<br>$$<br>$$<br>\pi(v_i) = \sum_{v_j\in inlink[v_i]} \frac{\pi(v_j)}{|outlink[v_j]} \Rightarrow \pi = P^T \pi<br>$$</p>
+</tbody>
+</table>
+<p><span class="math inline">\(\text { Adjacent Matrix: }\)</span> <span class="math display">\[
+\begin{aligned}
+&amp;M=\left[\begin{array}{llllllll}
+0 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 1 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0
+\end{array}\right]
+\end{aligned}
+\]</span> <span class="math inline">\(\text { Transition Probability Matrix: }\)</span> <span class="math display">\[
+P=\left[\begin{array}{cccccccc}
+0 &amp; 1 / 3 &amp; 1 / 3 &amp; 0 &amp; 0 &amp; 1 / 3 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 1 / 2 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+1 / 4 &amp; 0 &amp; 0 &amp; 1 / 4 &amp; 0 &amp; 0 &amp; 1 / 4 &amp; 1 / 4 \\
+0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0 &amp; 0 &amp; 1 / 2 &amp; 0
+\end{array}\right]
+\]</span> <span class="math display">\[
+\pi(v_i) = \sum_{v_j\in inlink[v_i]} \frac{\pi(v_j)}{|outlink[v_j]} \Rightarrow \pi = P^T \pi
+\]</span></p>
 <ul>
-<li><p>缺点：</p>
+<li>缺点：
 <ul>
-<li>排序泄漏<ul>
+<li>排序泄漏
+<ul>
 <li>一个独立的网页没有 outlink</li>
 <li> 得到不合理的 rank 值，影响收敛速度</li>
 <li><img src="WebDataMiningNotes/image-20210110140859912.png" alt="image-20210110140859912" style="zoom: 50%;"></li>
-</ul>
-</li>
-<li>排序沉入<ul>
+</ul></li>
+<li>排序沉入
+<ul>
 <li>形成没有外部 outlink 的强连通分量</li>
 <li>得到不合理的 rank 值，影响收敛速度</li>
-<li><img src="WebDataMiningNotes/image-20210110140840367.png" alt="image-20210110140840367" style="zoom: 50%;">
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li><img src="WebDataMiningNotes/image-20210110140840367.png" alt="image-20210110140840367" style="zoom: 50%;"></li>
+</ul></li>
+</ul></li>
 <li><p>改进：Random walk with restart (RWR)，随机游走过程中开始浏览一个新网页</p>
-  <img src="WebDataMiningNotes/image-20210110141145194.png" alt="image-20210110141145194" style="zoom: 33%;">
-
-</li>
+<p><img src="WebDataMiningNotes/image-20210110141145194.png" alt="image-20210110141145194" style="zoom: 33%;"></p></li>
 </ul>
-<h2 id="HITS算法"><a href="#HITS算法" class="headerlink" title="HITS算法"></a>HITS 算法</h2><p>考虑到两类页面：内容页 与 枢纽页 (导航、目录等)，对于某个 (子) 图中的任一顶点 $\mathbf {v}_{\mathbf {i}}$：</p>
+<h2 id="hits算法">HITS 算法</h2>
+<p>考虑到两类页面：内容页 与 枢纽页 (导航、目录等)，对于某个 (子) 图中的任一顶点 <span class="math inline">\(\mathbf{v}_{\mathbf{i}}\)</span>：</p>
 <ul>
-<li><p>$\mathrm{a}\left(\mathrm{v}<em>{\mathrm{i}}\right): \mathrm{v}</em>{\mathrm {i} }$ 的权威值 (authority)。一个页面被越多重要的枢纽页所引用，该页面权威性越高</p>
-</li>
-<li><p>$h\left (v_{i}\right): v_{i}$ 的枢纽值 (hub)。一个好的枢纽页面会链接到许多权威页面</p>
-  <img src="WebDataMiningNotes/image-20210110131617592.png" alt="image-20210110131617592" style="zoom:50%;">
-
-</li>
+<li><p><span class="math inline">\(\mathrm{a}\left(\mathrm{v}_{\mathrm{i}}\right): \mathrm{v}_{\mathrm {i} }\)</span> 的权威值 (authority)。一个页面被越多重要的枢纽页所引用，该页面权威性越高</p></li>
+<li><p><span class="math inline"> \(h\left(v_{i}\right): v_{i}\)</span> 的枢纽值 (hub)。一个好的枢纽页面会链接到许多权威页面</p>
+<p><img src="WebDataMiningNotes/image-20210110131617592.png" alt="image-20210110131617592" style="zoom:50%;"></p></li>
 </ul>
 <p>计算方法:</p>
-<p>$$<br>\text{Recursive dependency:}\<br>a\left(v_{i}\right)=\sum_{v_{j} \in \text { inlink } \left[v_{i}\right]} h\left(v_{j}\right) \<br>h\left(v_{i}\right)=\sum_{v_{j} \in \text { outlink }\left[v_{i}\right]} a\left(v_{j}\right)\<br>$$<br>$$<br>\text{Iterative algorithm:}\<br>a^{(k+1)}\left(v_{i}\right)=\sum_{v_{j} \in inlink\left[v_{i}\right]} h^{(k)}\left(v_{j}\right) \<br>h^{(k+1)}\left(v_{i}\right)=\sum_{v_{j} \in \text { outlink }\left[v_{i}\right]} a^{(k+1)}\left(v_{j}\right) \<br>$$<br>$$<br>规范化（保证收敛）：\<br>a^{(k+1)}\left(v_{i}\right) \leftarrow \frac{a^{(k+1)}\left(v_{i}\right)}{\sum_{j} a^{(k+1)}\left(v_{j}\right)} \<br>h^{(k+1)}\left(v_{i}\right) \leftarrow \frac{h^{(k+1)}\left(v_{i}\right)}{\sum_{j} h^{(k+1)}\left(v_{j}\right)}<br>$$</p>
-<h2 id="信息检索评价指标MAP的计算"><a href="#信息检索评价指标MAP的计算" class="headerlink" title="信息检索评价指标MAP的计算"></a>信息检索评价指标 MAP 的计算</h2><img src="WebDataMiningNotes/image-20210110142117405.png" alt="image-20210110142117405" style="zoom: 33%;">
-
+<p><span class="math display">\[
+\text{Recursive dependency:}\\
+a\left(v_{i}\right)=\sum_{v_{j} \in \text { inlink } \left[v_{i}\right]} h\left(v_{j}\right) \\
+h\left(v_{i}\right)=\sum_{v_{j} \in \text { outlink }\left[v_{i}\right]} a\left(v_{j}\right)\\
+\]</span> <span class="math display">\[
+\text{Iterative algorithm:}\\
+a^{(k+1)}\left(v_{i}\right)=\sum_{v_{j} \in inlink\left[v_{i}\right]} h^{(k)}\left(v_{j}\right) \\
+h^{(k+1)}\left(v_{i}\right)=\sum_{v_{j} \in \text { outlink }\left[v_{i}\right]} a^{(k+1)}\left(v_{j}\right) \\
+\]</span> <span class="math display">\[
+规范化（保证收敛）：\\
+a^{(k+1)}\left (v_{i}\right) \leftarrow \frac {a^{(k+1)}\left (v_{i}\right)}{\sum_{j} a^{(k+1)}\left (v_{j}\right)} \\
+h^{(k+1)}\left (v_{i}\right) \leftarrow \frac {h^{(k+1)}\left (v_{i}\right)}{\sum_{j} h^{(k+1)}\left (v_{j}\right)}
+\]</span></p>
+<h2 id="信息检索评价指标map的计算">信息检索评价指标 MAP 的计算</h2>
+<p><img src="WebDataMiningNotes/image-20210110142117405.png" alt="image-20210110142117405" style="zoom: 33%;"></p>
 <ul>
-<li>不同 recall levels 的 precision 值<ul>
+<li>不同 recall levels 的 precision 值
+<ul>
 <li>沿着检索结果列表从头往后考察</li>
-<li><code>11 recall points</code> : $0 %, 10 %, 20 %, \ldots, 90 %, 100 %$</li>
-<li> 在<strong>找到 $n%$ 的相关文档</strong>时的 <code>precision</code> 值</li>
+<li><code>11 recall points</code> : <span class="math inline">\(0 \%, 10 \%, 20 \%, \ldots, 90 \%, 100 \%\)</span></li>
+<li> 在<strong>找到 <span class="math inline">\(n\%\)</span> 的相关文档</strong>时的 <code>precision</code> 值</li>
 <li><img src="WebDataMiningNotes/image-20210110144142726.png" alt="image-20210110144142726" style="zoom:33%;"></li>
-<li> Non-interpolated average precision(<strong>MAP</strong>)<br>  $\mathrm{REL}_{\boldsymbol{q}}$ are the relevant documents for $\boldsymbol{q},$</li>
+<li> Non-interpolated average precision(<strong>MAP</strong>) <span class="math inline">\(\mathrm{REL}_{\boldsymbol{q}}\)</span> are the relevant documents for <span class="math inline">\(\boldsymbol{q},\)</span></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<p>$$<br>\text { non-int. avg. prec. }=\sum_{\boldsymbol{q} \in \boldsymbol{Q}} \frac{\sum_{\boldsymbol{r}=1}^{\left|\mathrm{REL}<em>{\boldsymbol{q}}\right|} \frac{\boldsymbol{P}</em>{q}\left(\boldsymbol{r} /\left|\mathrm{REL}<em>{\boldsymbol{q}}\right|\right)}{\left|\mathrm{REL}</em>{\boldsymbol{q}}\right|}}{|\boldsymbol{Q}|}<br>$$</p>
-<h2 id="关联规则挖掘过程与Apriori算法"><a href="#关联规则挖掘过程与Apriori算法" class="headerlink" title="关联规则挖掘过程与Apriori算法"></a>关联规则挖掘过程与 Apriori 算法</h2><ul>
+<p><span class="math display">\[
+\text { non-int. avg. prec. }=\sum_{\boldsymbol{q} \in \boldsymbol{Q}} \frac{\sum_{\boldsymbol{r}=1}^{\left|\mathrm{REL}_{\boldsymbol{q}}\right|} \frac{\boldsymbol{P}_{q}\left(\boldsymbol{r} /\left|\mathrm{REL}_{\boldsymbol{q}}\right|\right)}{\left|\mathrm{REL}_{\boldsymbol{q}}\right|}}{|\boldsymbol{Q}|}
+\]</span></p>
+<h2 id="关联规则挖掘过程与apriori算法">关联规则挖掘过程与 Apriori 算法</h2>
+<ul>
 <li><img src="WebDataMiningNotes/image-20210110151457217.png" alt="image-20210110151457217" style="zoom:33%;"></li>
 <li><img src="WebDataMiningNotes/image-20210110151518107.png" alt="image-20210110151518107" style="zoom: 33%;"></li>
 <li><img src="WebDataMiningNotes/image-20210110151607844.png" alt="image-20210110151607844" style="zoom:33%;"></li>
-<li>关联规则根据以下两个标准（包含或排除）：<ul>
+<li>关联规则根据以下两个标准（包含或排除）：
+<ul>
 <li>最小支持度 <code>min</code>sup</li>
 <li> 最小置信度 <code>min</code>conf</li>
-</ul>
-</li>
-<li> 基本步骤<ul>
-<li>找出所有的频繁项集<ul>
+</ul></li>
+<li> 基本步骤
+<ul>
+<li>找出所有的频繁项集
+<ul>
 <li>满足最小支持度</li>
-</ul>
-</li>
-<li>找出所有的强关联规则<ul>
+</ul></li>
+<li>找出所有的强关联规则
+<ul>
 <li>由频繁项集生成关联规则</li>
 <li>保留满足最小置信度的规则</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
 <li>挖掘关联规则的总体性能由第一步决定</li>
 <li><code>Apriori 性质</code>: 若 A 是一个频繁项集，则 A 的每一个子集都是一个频繁项集。</li>
 <li><code>Apriori 算法</code>: 利用 <code>Apriori 性质</code>高效搜索所有频繁项集</li>
 <li><img src="WebDataMiningNotes/image-20210110153127054.png" alt="image-20210110153127054" style="zoom:33%;"></li>
 <li><img src="WebDataMiningNotes/image-20210110154115446.png" alt="image-20210110154115446" style="zoom:33%;"></li>
-<li> $X$ 满足，则 $A\rightarrow B$ 必满足（ps by me）</li>
-<li><img src="WebDataMiningNotes/image-20210110154558264.png" alt="image-20210110154558264" style="zoom:33%;">
-
-</li>
+<li><span class="math inline"> \(X\)</span> 满足，则<span class="math inline"> \(A\rightarrow B\)</span> 必满足（ps by me）</li>
+<li><img src="WebDataMiningNotes/image-20210110154558264.png" alt="image-20210110154558264" style="zoom:33%;"></li>
 </ul>
-<h2 id="朴素贝叶斯分类算法"><a href="#朴素贝叶斯分类算法" class="headerlink" title="朴素贝叶斯分类算法"></a>朴素贝叶斯分类算法</h2><img src="WebDataMiningNotes/image-20210111165334786.png" alt="image-20210111165334786" style="zoom:33%;">
-
-<img src="WebDataMiningNotes/image-20210111165353185.png" alt="image-20210111165353185" style="zoom:33%;">
-
-<h2 id="K近邻分类算法"><a href="#K近邻分类算法" class="headerlink" title="K近邻分类算法"></a>K 近邻分类算法</h2><img src="WebDataMiningNotes/image-20210110155453751.png" alt="image-20210110155453751" style="zoom: 33%;">
-
-<img src="WebDataMiningNotes/image-20210110155550089.png" alt="image-20210110155550089" style="zoom:33%;">
-
+<h2 id="朴素贝叶斯分类算法">朴素贝叶斯分类算法</h2>
+<p><img src="WebDataMiningNotes/image-20210111165334786.png" alt="image-20210111165334786" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210111165353185.png" alt="image-20210111165353185" style="zoom:33%;"></p>
+<h2 id="k近邻分类算法">K 近邻分类算法</h2>
+<p><img src="WebDataMiningNotes/image-20210110155453751.png" alt="image-20210110155453751" style="zoom: 33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210110155550089.png" alt="image-20210110155550089" style="zoom:33%;"></p>
 <ul>
-<li>优势<ul>
+<li>优势
+<ul>
 <li>不需要训练阶段</li>
 <li>类别数量增加也具有良好的扩展性</li>
-</ul>
-</li>
-<li>劣势<ul>
+</ul></li>
+<li>劣势
+<ul>
 <li>训练数据很大时模型很大</li>
 <li>需要大量内存</li>
 <li>性能较慢</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="分类与回归的联系与区别"><a href="#分类与回归的联系与区别" class="headerlink" title="分类与回归的联系与区别"></a>分类与回归的联系与区别</h2><p>联系：常常可以相互转化，如线性回归与逻辑回归；SVR 与 SVM 等算法具有共通性，稍加修改后两者常常可以相互转化。</p>
-<p>区别：<br>$$<br>\begin{array}{|l|c|c|}<br>\hline \text {特性} &amp; \text { 分类 } &amp; \text { 回归 } \<br>\hline \text {输出类型} &amp; \text { 离散数据 } &amp; \text { 连续数据 } \<br>\hline \text {目的} &amp; \text { 寻找决策边界 } &amp; \text { 找到最优拟合 } \<br>\hline \text {评价方法} &amp; \text { 精度 (accuracy)、混淆矩阵等 } &amp; \text { SSE (sum of square errors) 或拟合优度等 } \<br>\hline<br>\end{array}<br>$$</p>
-<h2 id="K均值聚类算法"><a href="#K均值聚类算法" class="headerlink" title="K均值聚类算法"></a>K 均值聚类算法</h2><img src="WebDataMiningNotes/image-20210110161144710.png" alt="image-20210110161144710" style="zoom: 33%;">
-
-<p>时间复杂度 $O (tkn),n$ 为数据点个数，$k$ 为聚类数目，$t$ 为迭代次数，通常 $kt&lt;&lt;n$。</p>
-<h2 id="凝聚式聚类算法"><a href="#凝聚式聚类算法" class="headerlink" title="凝聚式聚类算法"></a>凝聚式聚类算法</h2><img src="WebDataMiningNotes/image-20210110161408853.png" alt="image-20210110161408853" style="zoom:33%;">
-
-<h2 id="半监督聚类之COP-K-means算法"><a href="#半监督聚类之COP-K-means算法" class="headerlink" title="半监督聚类之COP K-means算法"></a>半监督聚类之 COP K-means 算法</h2><img src="WebDataMiningNotes/image-20210110161704093.png" alt="image-20210110161704093" style="zoom:33%;">
-
-<img src="WebDataMiningNotes/image-20210110161908314.png" alt="image-20210110161908314" style="zoom:33%;">
-
-<img src="WebDataMiningNotes/image-20210110161936661.png" alt="image-20210110161936661" style="zoom:33%;">
-
-<h2 id="自然语言处理领域的歧义现象"><a href="#自然语言处理领域的歧义现象" class="headerlink" title="自然语言处理领域的歧义现象"></a>自然语言处理领域的歧义现象</h2><ul>
+<h2 id="分类与回归的联系与区别">分类与回归的联系与区别</h2>
+<p>联系：常常可以相互转化，如线性回归与逻辑回归；SVR 与 SVM 等算法具有共通性，稍加修改后两者常常可以相互转化。</p>
+<p>区别： <span class="math display">\[
+\begin {array}{|l|c|c|}
+\hline \text { 特性 } &amp; \text { 分类 } &amp; \text { 回归 } \\
+\hline \text { 输出类型 } &amp; \text { 离散数据 } &amp; \text { 连续数据 } \\
+\hline \text { 目的 } &amp; \text { 寻找决策边界 } &amp; \text { 找到最优拟合 } \\
+\hline \text { 评价方法 } &amp; \text { 精度 (accuracy)、混淆矩阵等 } &amp; \text { SSE (sum of square errors) 或拟合优度等 } \\
+\hline
+\end {array}
+\]</span></p>
+<h2 id="k均值聚类算法">K 均值聚类算法</h2>
+<p><img src="WebDataMiningNotes/image-20210110161144710.png" alt="image-20210110161144710" style="zoom: 33%;"></p>
+<p>时间复杂度 <span class="math inline">\(O(tkn),n\)</span> 为数据点个数，<span class="math inline">\(k\)</span> 为聚类数目，<span class="math inline">\(t\)</span> 为迭代次数，通常 <span class="math inline">\(kt&lt;&lt;n\)</span>。</p>
+<h2 id="凝聚式聚类算法">凝聚式聚类算法</h2>
+<p><img src="WebDataMiningNotes/image-20210110161408853.png" alt="image-20210110161408853" style="zoom:33%;"></p>
+<h2 id="半监督聚类之cop-k-means算法">半监督聚类之 COP K-means 算法</h2>
+<p><img src="WebDataMiningNotes/image-20210110161704093.png" alt="image-20210110161704093" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210110161908314.png" alt="image-20210110161908314" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210110161936661.png" alt="image-20210110161936661" style="zoom:33%;"></p>
+<h2 id="自然语言处理领域的歧义现象">自然语言处理领域的歧义现象</h2>
+<ul>
 <li><p>分词</p>
 <blockquote>
-<p>“能穿多少穿多少”</p>
-</blockquote>
-</li>
+<p>"能穿多少穿多少"</p>
+</blockquote></li>
 <li><p>句法</p>
 <blockquote>
-<p>“咬死了猎人的狗”</p>
-</blockquote>
-</li>
-<li><p>语义 </p>
+<p>"咬死了猎人的狗"</p>
+</blockquote></li>
+<li><p>语义</p>
 <blockquote>
-<p>“曾经喜欢一个人，如今喜欢一个人。”</p>
-</blockquote>
-</li>
+<p>"曾经喜欢一个人，如今喜欢一个人。"</p>
+</blockquote></li>
 <li><p>语用</p>
 <blockquote>
-<p>“该来的没来”</p>
-</blockquote>
-</li>
+<p>"该来的没来"</p>
+</blockquote></li>
 <li><p>反讽</p>
 <blockquote>
-<p>“What a wonderful weather!”</p>
-</blockquote>
-</li>
+<p>"What a wonderful weather!"</p>
+</blockquote></li>
 </ul>
-<h2 id="正向最大匹配分词与逆向最大匹配分词"><a href="#正向最大匹配分词与逆向最大匹配分词" class="headerlink" title="正向最大匹配分词与逆向最大匹配分词"></a>正向最大匹配分词与逆向最大匹配分词</h2><img src="WebDataMiningNotes/image-20210111103724666.png" alt="image-20210111103724666" style="zoom:33%;">
-
-<img src="WebDataMiningNotes/image-20210111103852232.png" alt="image-20210111103852232" style="zoom:33%;">
-
-<h2 id="无向图度数中心性-中介中心性与亲近中心性的计算-未规范化与规范化"><a href="#无向图度数中心性-中介中心性与亲近中心性的计算-未规范化与规范化" class="headerlink" title="无向图度数中心性. 中介中心性与亲近中心性的计算(未规范化与规范化)"></a>无向图度数中心性。中介中心性与亲近中心性的计算 (未规范化与规范化)</h2><h3 id="度数中心性"><a href="#度数中心性" class="headerlink" title="度数中心性"></a>度数中心性</h3><p>无向图度数中心性等于 $deg (v)$.</p>
-<p>规范化度数中心性等于 ${deg (v)}/{(n - 1)}$.</p>
-<h3 id="中介中心性"><a href="#中介中心性" class="headerlink" title="中介中心性"></a>中介中心性</h3><p>$$<br>C_{B}(i)=\sum_{j&lt;k} g_{j k}(i) / g_{j k}<br>$$<br>其中 $\mathbf {g}<em>{j k}=$ 连接节点 $j,k$ 最短路径的数量，$\mathbf {g}</em>{j k}(\mathrm {i})=$ 连接节点 $j,k$ 且经过节点 $i$ 的最短路径数量</p>
-<p>规范化中介中心性： $C’_B (i) = C_B (i)/[(n-1)(n-2)/2]$</p>
-<h3 id="亲近中心性"><a href="#亲近中心性" class="headerlink" title="亲近中心性"></a>亲近中心性</h3><p>一个节点的亲近中心性基于该节点与图中所有节点的平均最短路径距离计算得到:<br>$$<br>C_{c}(i)=\left[\sum_{j=1}^{N} d(i, j)\right]^{-1}<br>$$<br>规范化亲近中心性<br>$$<br>C_{C}(i)=(N-1) C_{C}(i)<br>$$</p>
-<h2 id="基于图排序-PageRank-的文档摘要方法"><a href="#基于图排序-PageRank-的文档摘要方法" class="headerlink" title="基于图排序(PageRank)的文档摘要方法"></a>基于图排序 (PageRank) 的文档摘要方法</h2><img src="WebDataMiningNotes/image-20210111105114783.png" alt="image-20210111105114783" style="zoom:33%;">
-
-<p>$S (V_i)$ 原始的 $PageRank$ 算法</p>
-<p>$WS (V_i)$ 加入边的权重（如两两文本相似性）的 $PageRank$ 算法</p>
-<img src="WebDataMiningNotes/image-20210111110516703.png" alt="image-20210111110516703" style="zoom:33%;">
-
-<h2 id="基于句子分类的文档摘要方法"><a href="#基于句子分类的文档摘要方法" class="headerlink" title="基于句子分类的文档摘要方法"></a>基于句子分类的文档摘要方法</h2><p>二分类问题：判断每个句子是否属于摘要。</p>
+<h2 id="正向最大匹配分词与逆向最大匹配分词">正向最大匹配分词与逆向最大匹配分词</h2>
+<p><img src="WebDataMiningNotes/image-20210111103724666.png" alt="image-20210111103724666" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210111103852232.png" alt="image-20210111103852232" style="zoom:33%;"></p>
+<h2 id="无向图度数中心性.-中介中心性与亲近中心性的计算未规范化与规范化">无向图度数中心性。中介中心性与亲近中心性的计算 (未规范化与规范化)</h2>
+<h3 id="度数中心性">度数中心性</h3>
+<p>无向图度数中心性等于 <span class="math inline">\(deg(v)\)</span>.</p>
+<p>规范化度数中心性等于 <span class="math inline">\({deg(v)}/{(n - 1)}\)</span>.</p>
+<h3 id="中介中心性">中介中心性</h3>
+<p><span class="math display">\[
+C_{B}(i)=\sum_{j&lt;k} g_{j k}(i) / g_{j k}
+\]</span> 其中 <span class="math inline">\(\mathbf{g}_{j k}=\)</span> 连接节点 <span class="math inline">\(j,k\)</span> 最短路径的数量，<span class="math inline">\(\mathbf{g}_{j k}(\mathrm{i})=\)</span> 连接节点 <span class="math inline">\(j,k\)</span> 且经过节点 <span class="math inline">\(i\)</span> 的最短路径数量</p>
+<p>规范化中介中心性： <span class="math inline">\(C'_B(i) = C_B(i)/[(n-1)(n-2)/2]\)</span></p>
+<h3 id="亲近中心性">亲近中心性</h3>
+<p>一个节点的亲近中心性基于该节点与图中所有节点的平均最短路径距离计算得到: <span class="math display">\[
+C_{c}(i)=\left[\sum_{j=1}^{N} d(i, j)\right]^{-1}
+\]</span> 规范化亲近中心性 <span class="math display">\[
+C_{C}(i)=(N-1) C_{C}(i)
+\]</span></p>
+<h2 id="基于图排序pagerank的文档摘要方法">基于图排序 (PageRank) 的文档摘要方法</h2>
+<p><img src="WebDataMiningNotes/image-20210111105114783.png" alt="image-20210111105114783" style="zoom:33%;"></p>
+<p><span class="math inline">\(S(V_i)\)</span> 原始的 <span class="math inline">\(PageRank\)</span> 算法</p>
+<p><span class="math inline">\(WS(V_i)\)</span> 加入边的权重（如两两文本相似性）的 <span class="math inline">\(PageRank\)</span> 算法</p>
+<p><img src="WebDataMiningNotes/image-20210111110516703.png" alt="image-20210111110516703" style="zoom:33%;"></p>
+<h2 id="基于句子分类的文档摘要方法">基于句子分类的文档摘要方法</h2>
+<p>二分类问题：判断每个句子是否属于摘要。</p>
 <p>构建数据的方法：基于相似性，对原文中每个句子向摘要进行相似度计算，若高于某阈值，则认为句子属于摘要。</p>
-<h2 id="网页正文内容抽取方法"><a href="#网页正文内容抽取方法" class="headerlink" title="网页正文内容抽取方法"></a>网页正文内容抽取方法</h2><ul>
-<li>为单一文档抽取内容的方法<ul>
+<h2 id="网页正文内容抽取方法">网页正文内容抽取方法</h2>
+<ul>
+<li>为单一文档抽取内容的方法
+<ul>
 <li>每次针对单一文档进行分析与抽取</li>
 <li>一般使用启发式方法发现主要内容</li>
 <li>不检测模板</li>
-<li>一般考虑：<ul>
+<li>一般考虑：
+<ul>
 <li>网页正文区域具有很多的词语与较少标签</li>
 <li>网页正文区域的文字具有连续性</li>
 <li>方法 1：网页主要文本抽取方法 <img src="WebDataMiningNotes/image-20210111113551730.png" alt="image-20210111113551730" style="zoom: 33%;"></li>
 <li>方法 2：基于文本标签比例的抽取方法<img src="WebDataMiningNotes/image-20210111113916354.png" alt="image-20210111113916354" style="zoom:25%;"> <img src="WebDataMiningNotes/image-20210111113935972.png" alt="image-20210111113935972" style="zoom:33%;"></li>
 <li>方法 3：基于网页分块重要性识别的抽取方法 <img src="WebDataMiningNotes/image-20210111114052856.png" alt="image-20210111114052856" style="zoom:33%;"></li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="基于Bootstrappping的关系抽取方法"><a href="#基于Bootstrappping的关系抽取方法" class="headerlink" title="基于Bootstrappping的关系抽取方法"></a>基于 Bootstrappping 的关系抽取方法</h2><img src="WebDataMiningNotes/image-20210111121716012.png" alt="image-20210111121716012" style="zoom:33%;">
-
-<img src="WebDataMiningNotes/image-20210111121806072.png" alt="image-20210111121806072" style="zoom:33%;">
-
-<h2 id="基于PMI的情感词汇获取方法及文本情感分类方法"><a href="#基于PMI的情感词汇获取方法及文本情感分类方法" class="headerlink" title="基于PMI的情感词汇获取方法及文本情感分类方法"></a>基于 PMI 的情感词汇获取方法及文本情感分类方法</h2><img src="WebDataMiningNotes/image-20210111122833862.png" alt="image-20210111122833862" style="zoom:33%;">
-
-<img src="WebDataMiningNotes/image-20210111122932275.png" alt="image-20210111122932275" style="zoom:33%;">
-
-<img src="WebDataMiningNotes/image-20210111122156198.png" alt="image-20210111122156198" style="zoom:33%;">
-
-<h2 id="观点抽取的目的和主要步骤"><a href="#观点抽取的目的和主要步骤" class="headerlink" title="观点抽取的目的和主要步骤"></a>观点抽取的目的和主要步骤</h2><ul>
-<li>观点抽取的目的：给定观点文本，抽取所有的五元组 $(o_j, a_k, so_{ijkl}, h_i, t_i)$，基于五元组，可将无结构化文本结构化；可利用传统数据挖掘与可视化技术进行挖掘与呈现；可以定量与定性分析</li>
+<h2 id="基于bootstrappping的关系抽取方法">基于 Bootstrappping 的关系抽取方法</h2>
+<p><img src="WebDataMiningNotes/image-20210111121716012.png" alt="image-20210111121716012" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210111121806072.png" alt="image-20210111121806072" style="zoom:33%;"></p>
+<h2 id="基于pmi的情感词汇获取方法及文本情感分类方法">基于 PMI 的情感词汇获取方法及文本情感分类方法</h2>
+<p><img src="WebDataMiningNotes/image-20210111122833862.png" alt="image-20210111122833862" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210111122932275.png" alt="image-20210111122932275" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210111122156198.png" alt="image-20210111122156198" style="zoom:33%;"></p>
+<h2 id="观点抽取的目的和主要步骤">观点抽取的目的和主要步骤</h2>
+<ul>
+<li>观点抽取的目的：给定观点文本，抽取所有的五元组 <span class="math inline">\((o_j, a_k, so_{ijkl}, h_i, t_i)\)</span>，基于五元组，可将无结构化文本结构化；可利用传统数据挖掘与可视化技术进行挖掘与呈现；可以定量与定性分析</li>
 <li><img src="WebDataMiningNotes/image-20210111123442168.png" alt="image-20210111123442168" style="zoom:50%;"></li>
-<li><img src="WebDataMiningNotes/image-20210111123552489.png" alt="image-20210111123552489" style="zoom:33%;">
-
-</li>
+<li><img src="WebDataMiningNotes/image-20210111123552489.png" alt="image-20210111123552489" style="zoom:33%;"></li>
 </ul>
-<h2 id="基于用户-物品的协同推荐算法"><a href="#基于用户-物品的协同推荐算法" class="headerlink" title="基于用户/物品的协同推荐算法"></a>基于用户 / 物品的协同推荐算法</h2><h3 id="基于用户的协同推荐算法"><a href="#基于用户的协同推荐算法" class="headerlink" title="基于用户的协同推荐算法"></a>基于用户的协同推荐算法</h3><ol>
-<li>计算用户相似性<ul>
-<li> Pearson correlation coefficient</li>
+<h2 id="基于用户物品的协同推荐算法">基于用户 / 物品的协同推荐算法</h2>
+<h3 id="基于用户的协同推荐算法">基于用户的协同推荐算法</h3>
+<ol type="1">
+<li>计算用户相似性
+<ul>
+<li>Pearson correlation coefficient</li>
 <li>cosine measure</li>
 <li><img src="WebDataMiningNotes/image-20210111143558017.png" alt="image-20210111143558017" style="zoom:33%;"></li>
-</ul>
-</li>
+</ul></li>
 <li><img src="WebDataMiningNotes/image-20210111143652464.png" alt="image-20210111143652464" style="zoom:33%;"></li>
-<li><img src="WebDataMiningNotes/image-20210111143744097.png" alt="image-20210111143744097" style="zoom:33%;">
-
-</li>
+<li><img src="WebDataMiningNotes/image-20210111143744097.png" alt="image-20210111143744097" style="zoom:33%;"></li>
 </ol>
-<h3 id="基于物品的协同推荐算法"><a href="#基于物品的协同推荐算法" class="headerlink" title="基于物品的协同推荐算法"></a>基于物品的协同推荐算法</h3><img src="WebDataMiningNotes/image-20210111143911407.png" alt="image-20210111143911407" style="zoom:33%;">
-
-<img src="WebDataMiningNotes/image-20210111144450917.png" alt="image-20210111144450917" style="zoom:33%;">
-
-<h2 id="基于矩阵分解的协同推荐算法"><a href="#基于矩阵分解的协同推荐算法" class="headerlink" title="基于矩阵分解的协同推荐算法"></a>基于矩阵分解的协同推荐算法</h2><img src="WebDataMiningNotes/image-20210111145352091.png" alt="image-20210111145352091" style="zoom:33%;">
-
+<h3 id="基于物品的协同推荐算法">基于物品的协同推荐算法</h3>
+<p><img src="WebDataMiningNotes/image-20210111143911407.png" alt="image-20210111143911407" style="zoom:33%;"></p>
+<p><img src="WebDataMiningNotes/image-20210111144450917.png" alt="image-20210111144450917" style="zoom:33%;"></p>
+<h2 id="基于矩阵分解的协同推荐算法">基于矩阵分解的协同推荐算法</h2>
+<p><img src="WebDataMiningNotes/image-20210111145352091.png" alt="image-20210111145352091" style="zoom:33%;"></p>
 <ul>
 <li><p>推荐结果的评估准则</p>
 <ul>
-<li><p>Precision, Recall</p>
-</li>
-<li><p>MRR</p>
-</li>
-<li><p>Mean absolute error:<br>  $$<br>  \overline{\mid E \mid}=\frac{\sum_{i=1}^{N}\left|p_{i}-r_{i}\right|}{N}<br>  $$</p>
-</li>
+<li><p>Precision, Recall</p></li>
+<li><p>MRR</p></li>
+<li><p>Mean absolute error: <span class="math display">\[
+  \overline{\mid E \mid}=\frac{\sum_{i=1}^{N}\left|p_{i}-r_{i}\right|}{N}
+  \]</span></p></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="智能问答系统架构"><a href="#智能问答系统架构" class="headerlink" title="智能问答系统架构"></a>智能问答系统架构</h2><img src="WebDataMiningNotes/image-20210111160356905.png" alt="image-20210111160356905" style="zoom:33%;">
+<h2 id="智能问答系统架构">智能问答系统架构</h2>
+<p><img src="WebDataMiningNotes/image-20210111160356905.png" alt="image-20210111160356905" style="zoom:33%;"></p>
 
       
     </div>
@@ -1406,7 +1426,8 @@ t5<span class="token punctuation">.</span>parallelize<span class="token punctuat
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="start"><a href="#start" class="headerlink" title="start"></a>start</h1><pre class="line-numbers language-none"><code class="language-none">$ ghci
+          <h1 id="start">start</h1>
+<pre class="line-numbers language-none"><code class="language-none">$ ghci
 Prelude&gt;  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <pre class="line-numbers language-haskell" data-language="haskell"><code class="language-haskell"><span class="token constant">Prelude</span><span class="token operator">&gt;</span> <span class="token operator">:</span><span class="token hvariable">set</span> <span class="token hvariable">prompt</span> <span class="token string">"ghci&gt; "</span>
 <span class="token hvariable">ghci</span><span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -1418,8 +1439,7 @@ ghci&gt; True&amp;&amp;False
 False
 ghci&gt; False||True
 True<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>warning:</p>
-<pre class="line-numbers language-haskell" data-language="haskell"><code class="language-haskell"><span class="token hvariable">ghci</span><span class="token operator">&gt;</span> <span class="token constant">True</span> <span class="token operator">&amp;&amp;</span> <span class="token number">1</span>
+<p>warning: </p><pre class="line-numbers language-haskell" data-language="haskell"><code class="language-haskell"><span class="token hvariable">ghci</span><span class="token operator">&gt;</span> <span class="token constant">True</span> <span class="token operator">&amp;&amp;</span> <span class="token number">1</span>
 
 <span class="token operator">&lt;</span><span class="token hvariable">interactive</span><span class="token operator">&gt;:</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">8</span><span class="token operator">:</span>
     <span class="token constant">No</span> <span class="token keyword">instance</span> <span class="token hvariable">for</span> <span class="token punctuation">(</span><span class="token constant">Num</span> <span class="token constant">Bool</span><span class="token punctuation">)</span>
@@ -1440,19 +1460,14 @@ True<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span
         <span class="token hvariable">cannot</span> <span class="token hvariable">mix</span> `<span class="token punctuation">(</span><span class="token operator">+</span><span class="token punctuation">)</span>' <span class="token punctuation">[</span><span class="token keyword">infixl</span> <span class="token number">6</span><span class="token punctuation">]</span> <span class="token builtin">and</span> <span class="token hvariable">prefix</span> `<span class="token operator">-</span>' <span class="token punctuation">[</span><span class="token keyword">infixl</span> <span class="token number">6</span><span class="token punctuation">]</span> <span class="token keyword">in</span> <span class="token hvariable">the</span> <span class="token hvariable">same</span> <span class="token hvariable">infix</span> <span class="token hvariable">expression</span>
 
 <span class="token hvariable">ghci</span><span class="token operator">&gt;</span> <span class="token number">2</span> <span class="token operator">/=</span> <span class="token number">3</span>
-<span class="token constant">True</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h1 id="Bindings"><a href="#Bindings" class="headerlink" title="Bindings"></a>Bindings</h1><ul>
-<li><p>Haskell uses the = sign to declare bindings:</p>
-<pre class="line-numbers language-haskell" data-language="haskell"><code class="language-haskell"><span class="token hvariable">x</span> <span class="token operator">=</span> <span class="token number">2</span>
+<span class="token constant">True</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre> # Bindings<p></p>
+<ul>
+<li><p>Haskell uses the = sign to declare bindings: </p><pre class="line-numbers language-haskell" data-language="haskell"><code class="language-haskell"><span class="token hvariable">x</span> <span class="token operator">=</span> <span class="token number">2</span>
 <span class="token hvariable">y</span> <span class="token operator">=</span> <span class="token number">3</span>
-<span class="token hvariable">main</span> <span class="token operator">=</span> <span class="token keyword">let</span> <span class="token hvariable">z</span> <span class="token operator">=</span> <span class="token hvariable">x</span> <span class="token operator">+</span> <span class="token hvariable">y</span> <span class="token keyword">in</span> <span class="token builtin">print</span> <span class="token hvariable">z</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>Bound name cannot start with upper-case letters<br>Bindings are seperated by “;”, witch is usually auto-inserted by a layout rule</p>
-</li>
-<li><p>A binding may declare a function of one or more arguments<br>Function and arguments are seperated by spaces(when defining or invoking)</p>
-<pre class="line-numbers language-haskell" data-language="haskell"><code class="language-haskell"><span class="token hvariable">add</span> <span class="token hvariable">arg1</span> <span class="token hvariable">arg2</span> <span class="token operator">=</span> <span class="token hvariable">arg1</span> <span class="token operator">+</span> <span class="token hvariable">arg2</span>
+<span class="token hvariable">main</span> <span class="token operator">=</span> <span class="token keyword">let</span> <span class="token hvariable">z</span> <span class="token operator">=</span> <span class="token hvariable">x</span> <span class="token operator">+</span> <span class="token hvariable">y</span> <span class="token keyword">in</span> <span class="token builtin">print</span> <span class="token hvariable">z</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre> Bound name cannot start with upper-case letters Bindings are seperated by ";", witch is usually auto-inserted by a layout rule<p></p></li>
+<li><p>A binding may declare a function of one or more arguments Function and arguments are seperated by spaces(when defining or invoking) </p><pre class="line-numbers language-haskell" data-language="haskell"><code class="language-haskell"><span class="token hvariable">add</span> <span class="token hvariable">arg1</span> <span class="token hvariable">arg2</span> <span class="token operator">=</span> <span class="token hvariable">arg1</span> <span class="token operator">+</span> <span class="token hvariable">arg2</span>
 <span class="token hvariable">five</span> <span class="token operator">=</span> <span class="token hvariable">add</span> <span class="token number">2</span> <span class="token number">3</span>
-<span class="token hvariable">main</span> <span class="token operator">=</span> <span class="token builtin">print</span> <span class="token punctuation">(</span><span class="token hvariable">add</span> <span class="token number">2</span> <span class="token number">3</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
+<span class="token hvariable">main</span> <span class="token operator">=</span> <span class="token builtin">print</span> <span class="token punctuation">(</span><span class="token hvariable">add</span> <span class="token number">2</span> <span class="token number">3</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><p></p></li>
 </ul>
 
       
@@ -1763,10 +1778,13 @@ std<span class="token operator">::</span>vector<span class="token operator">&lt;
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><h3 id="Font-test"><a href="#Font-test" class="headerlink" title="Font test"></a>Font test</h3><p>巴东三峡巫峡长<br>猿鸣三声泪沾裳</p>
+          <h2 id="test">Test</h2>
+<h3 id="font-test">Font test</h3>
+<p>巴东三峡巫峡长 猿鸣三声泪沾裳</p>
 <p>良いと思います。</p>
 <p>Saber Lancer Archer Rider Caster Assassin Berserker</p>
-<h3 id="Code-test"><a href="#Code-test" class="headerlink" title="Code test"></a>Code test</h3><pre class="line-numbers language-cpp" data-language="cpp"><div class="caption"><span>helloWorld.cpp</span><a target="_blank" rel="noopener" href="https://wikipedia.com">wikipedia</a></div><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h&gt;</span></span>
+<h3 id="code-test">Code test</h3>
+<pre class="line-numbers language-cpp" data-language="cpp"><div class="caption"><span>helloWorld.cpp</span><a target="_blank" rel="noopener" href="https://wikipedia.com">wikipedia</a></div><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;bits/stdc++.h&gt;</span></span>
 
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
@@ -1774,14 +1792,14 @@ std<span class="token operator">::</span>vector<span class="token operator">&lt;
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="Math-test"><a href="#Math-test" class="headerlink" title="Math test"></a>Math test</h3><p><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -2.819ex" xmlns="http://www.w3.org/2000/svg" width="5.997ex" height="6.354ex" role="img" focusable="false" viewBox="0 -1562.5 2650.7 2808.5"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="munderover"><g data-mml-node="mo"><path data-c="2211" d="M60 948Q63 950 665 950H1267L1325 815Q1384 677 1388 669H1348L1341 683Q1320 724 1285 761Q1235 809 1174 838T1033 881T882 898T699 902H574H543H251L259 891Q722 258 724 252Q725 250 724 246Q721 243 460 -56L196 -356Q196 -357 407 -357Q459 -357 548 -357T676 -358Q812 -358 896 -353T1063 -332T1204 -283T1307 -196Q1328 -170 1348 -124H1388Q1388 -125 1381 -145T1356 -210T1325 -294L1267 -449L666 -450Q64 -450 61 -448Q55 -446 55 -439Q55 -437 57 -433L590 177Q590 178 557 222T452 366T322 544L56 909L55 924Q55 945 60 948Z"></path></g><g data-mml-node="TeXAtom" transform="translate(148.2, -1087.9) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(345, 0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1123, 0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g><g data-mml-node="TeXAtom" transform="translate(509.9, 1150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g><g data-mml-node="mfrac" transform="translate(1610.7, 0)"><g data-mml-node="mi" transform="translate(220, 676)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(347.5, -686)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><rect width="800" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container><br>设<mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.186ex" xmlns="http://www.w3.org/2000/svg" width="9.398ex" height="1.756ex" role="img" focusable="false" viewBox="0 -694 4154 776"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="mo" transform="translate(806.8, 0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(1862.6, 0)"><path data-c="1D44F" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path></g><g data-mml-node="mo" transform="translate(2513.8, 0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mi" transform="translate(3514, 0)"><path data-c="1D6FC" d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z"></path></g></g></g></svg></mjx-container>.<br><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.781ex" xmlns="http://www.w3.org/2000/svg" width="16.306ex" height="3.009ex" role="img" focusable="false" viewBox="0 -985.2 7207.4 1330.2"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mi" transform="translate(433, 0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(918, 0)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mi" transform="translate(1387, 0)"><path data-c="1D714" d="M495 384Q495 406 514 424T555 443Q574 443 589 425T604 364Q604 334 592 278T555 155T483 38T377 -11Q297 -11 267 66Q266 68 260 61Q201 -11 125 -11Q15 -11 15 139Q15 230 56 325T123 434Q135 441 147 436Q160 429 160 418Q160 406 140 379T94 306T62 208Q61 202 61 187Q61 124 85 100T143 76Q201 76 245 129L253 137V156Q258 297 317 297Q348 297 348 261Q348 243 338 213T318 158L308 135Q309 133 310 129T318 115T334 97T358 83T393 76Q456 76 501 148T546 274Q546 305 533 325T508 357T495 384Z"></path></g><g data-mml-node="mi" transform="translate(2009, 0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mo" transform="translate(2647.8, 0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mfrac" transform="translate(3703.6, 0)"><g data-mml-node="mrow" transform="translate(220, 398) scale(0.707)"><g data-mml-node="msup"><g data-mml-node="mi"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="TeXAtom" transform="translate(466, 363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g><g data-mml-node="mi" transform="translate(412, 0)"><path data-c="1D714" d="M495 384Q495 406 514 424T555 443Q574 443 589 425T604 364Q604 334 592 278T555 155T483 38T377 -11Q297 -11 267 66Q266 68 260 61Q201 -11 125 -11Q15 -11 15 139Q15 230 56 325T123 434Q135 441 147 436Q160 429 160 418Q160 406 140 379T94 306T62 208Q61 202 61 187Q61 124 85 100T143 76Q201 76 245 129L253 137V156Q258 297 317 297Q348 297 348 261Q348 243 338 213T318 158L308 135Q309 133 310 129T318 115T334 97T358 83T393 76Q456 76 501 148T546 274Q546 305 533 325T508 357T495 384Z"></path></g><g data-mml-node="mi" transform="translate(1034, 0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g></g><g data-mml-node="mo" transform="translate(1502.4, 0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="msup" transform="translate(2280.4, 0)"><g data-mml-node="mi"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="TeXAtom" transform="translate(466, 363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mi" transform="translate(778, 0)"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g><g data-mml-node="mi" transform="translate(1190, 0)"><path data-c="1D714" d="M495 384Q495 406 514 424T555 443Q574 443 589 425T604 364Q604 334 592 278T555 155T483 38T377 -11Q297 -11 267 66Q266 68 260 61Q201 -11 125 -11Q15 -11 15 139Q15 230 56 325T123 434Q135 441 147 436Q160 429 160 418Q160 406 140 379T94 306T62 208Q61 202 61 187Q61 124 85 100T143 76Q201 76 245 129L253 137V156Q258 297 317 297Q348 297 348 261Q348 243 338 213T318 158L308 135Q309 133 310 129T318 115T334 97T358 83T393 76Q456 76 501 148T546 274Q546 305 533 325T508 357T495 384Z"></path></g><g data-mml-node="mi" transform="translate(1812, 0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g></g></g><g data-mml-node="mn" transform="translate(1575.2, -345) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><rect width="3263.9" height="60" x="120" y="220"></rect></g><g data-mml-node="mo" transform="translate(7207.4, 0)"><path data-c="200B" d=""></path></g></g></g></svg></mjx-container></p>
-<h3 id="Media-test"><a href="#Media-test" class="headerlink" title="Media test"></a>Media test</h3><blockquote><p>Every interaction is both precious and an opportunity to delight.</p>
+<h3 id="math-test">Math test</h3>
+<p><span class="math display"><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -2.819ex" xmlns="http://www.w3.org/2000/svg" width="5.997ex" height="6.354ex" role="img" focusable="false" viewBox="0 -1562.5 2650.7 2808.5"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="munderover"><g data-mml-node="mo"><path data-c="2211" d="M60 948Q63 950 665 950H1267L1325 815Q1384 677 1388 669H1348L1341 683Q1320 724 1285 761Q1235 809 1174 838T1033 881T882 898T699 902H574H543H251L259 891Q722 258 724 252Q725 250 724 246Q721 243 460 -56L196 -356Q196 -357 407 -357Q459 -357 548 -357T676 -358Q812 -358 896 -353T1063 -332T1204 -283T1307 -196Q1328 -170 1348 -124H1388Q1388 -125 1381 -145T1356 -210T1325 -294L1267 -449L666 -450Q64 -450 61 -448Q55 -446 55 -439Q55 -437 57 -433L590 177Q590 178 557 222T452 366T322 544L56 909L55 924Q55 945 60 948Z"></path></g><g data-mml-node="TeXAtom" transform="translate(148.2, -1087.9) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(345, 0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1123, 0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g><g data-mml-node="TeXAtom" transform="translate(509.9, 1150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g><g data-mml-node="mfrac" transform="translate(1610.7, 0)"><g data-mml-node="mi" transform="translate(220, 676)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(347.5, -686)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><rect width="800" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container></span> 设<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.186ex" xmlns="http://www.w3.org/2000/svg" width="9.398ex" height="1.756ex" role="img" focusable="false" viewBox="0 -694 4154 776"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D44E" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g data-mml-node="mo" transform="translate(806.8, 0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(1862.6, 0)"><path data-c="1D44F" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path></g><g data-mml-node="mo" transform="translate(2513.8, 0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mi" transform="translate(3514, 0)"><path data-c="1D6FC" d="M34 156Q34 270 120 356T309 442Q379 442 421 402T478 304Q484 275 485 237V208Q534 282 560 374Q564 388 566 390T582 393Q603 393 603 385Q603 376 594 346T558 261T497 161L486 147L487 123Q489 67 495 47T514 26Q528 28 540 37T557 60Q559 67 562 68T577 70Q597 70 597 62Q597 56 591 43Q579 19 556 5T512 -10H505Q438 -10 414 62L411 69L400 61Q390 53 370 41T325 18T267 -2T203 -11Q124 -11 79 39T34 156ZM208 26Q257 26 306 47T379 90L403 112Q401 255 396 290Q382 405 304 405Q235 405 183 332Q156 292 139 224T121 120Q121 71 146 49T208 26Z"></path></g></g></g></svg></mjx-container></span>. <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.781ex" xmlns="http://www.w3.org/2000/svg" width="16.306ex" height="3.009ex" role="img" focusable="false" viewBox="0 -985.2 7207.4 1330.2"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D450" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path></g><g data-mml-node="mi" transform="translate(433, 0)"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(918, 0)"><path data-c="1D460" d="M131 289Q131 321 147 354T203 415T300 442Q362 442 390 415T419 355Q419 323 402 308T364 292Q351 292 340 300T328 326Q328 342 337 354T354 372T367 378Q368 378 368 379Q368 382 361 388T336 399T297 405Q249 405 227 379T204 326Q204 301 223 291T278 274T330 259Q396 230 396 163Q396 135 385 107T352 51T289 7T195 -10Q118 -10 86 19T53 87Q53 126 74 143T118 160Q133 160 146 151T160 120Q160 94 142 76T111 58Q109 57 108 57T107 55Q108 52 115 47T146 34T201 27Q237 27 263 38T301 66T318 97T323 122Q323 150 302 164T254 181T195 196T148 231Q131 256 131 289Z"></path></g><g data-mml-node="mi" transform="translate(1387, 0)"><path data-c="1D714" d="M495 384Q495 406 514 424T555 443Q574 443 589 425T604 364Q604 334 592 278T555 155T483 38T377 -11Q297 -11 267 66Q266 68 260 61Q201 -11 125 -11Q15 -11 15 139Q15 230 56 325T123 434Q135 441 147 436Q160 429 160 418Q160 406 140 379T94 306T62 208Q61 202 61 187Q61 124 85 100T143 76Q201 76 245 129L253 137V156Q258 297 317 297Q348 297 348 261Q348 243 338 213T318 158L308 135Q309 133 310 129T318 115T334 97T358 83T393 76Q456 76 501 148T546 274Q546 305 533 325T508 357T495 384Z"></path></g><g data-mml-node="mi" transform="translate(2009, 0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g data-mml-node="mo" transform="translate(2647.8, 0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mfrac" transform="translate(3703.6, 0)"><g data-mml-node="mrow" transform="translate(220, 398) scale(0.707)"><g data-mml-node="msup"><g data-mml-node="mi"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="TeXAtom" transform="translate(466, 363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g><g data-mml-node="mi" transform="translate(412, 0)"><path data-c="1D714" d="M495 384Q495 406 514 424T555 443Q574 443 589 425T604 364Q604 334 592 278T555 155T483 38T377 -11Q297 -11 267 66Q266 68 260 61Q201 -11 125 -11Q15 -11 15 139Q15 230 56 325T123 434Q135 441 147 436Q160 429 160 418Q160 406 140 379T94 306T62 208Q61 202 61 187Q61 124 85 100T143 76Q201 76 245 129L253 137V156Q258 297 317 297Q348 297 348 261Q348 243 338 213T318 158L308 135Q309 133 310 129T318 115T334 97T358 83T393 76Q456 76 501 148T546 274Q546 305 533 325T508 357T495 384Z"></path></g><g data-mml-node="mi" transform="translate(1034, 0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g></g><g data-mml-node="mo" transform="translate(1502.4, 0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="msup" transform="translate(2280.4, 0)"><g data-mml-node="mi"><path data-c="1D452" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path></g><g data-mml-node="TeXAtom" transform="translate(466, 363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mi" transform="translate(778, 0)"><path data-c="1D457" d="M297 596Q297 627 318 644T361 661Q378 661 389 651T403 623Q403 595 384 576T340 557Q322 557 310 567T297 596ZM288 376Q288 405 262 405Q240 405 220 393T185 362T161 325T144 293L137 279Q135 278 121 278H107Q101 284 101 286T105 299Q126 348 164 391T252 441Q253 441 260 441T272 442Q296 441 316 432Q341 418 354 401T367 348V332L318 133Q267 -67 264 -75Q246 -125 194 -164T75 -204Q25 -204 7 -183T-12 -137Q-12 -110 7 -91T53 -71Q70 -71 82 -81T95 -112Q95 -148 63 -167Q69 -168 77 -168Q111 -168 139 -140T182 -74L193 -32Q204 11 219 72T251 197T278 308T289 365Q289 372 288 376Z"></path></g><g data-mml-node="mi" transform="translate(1190, 0)"><path data-c="1D714" d="M495 384Q495 406 514 424T555 443Q574 443 589 425T604 364Q604 334 592 278T555 155T483 38T377 -11Q297 -11 267 66Q266 68 260 61Q201 -11 125 -11Q15 -11 15 139Q15 230 56 325T123 434Q135 441 147 436Q160 429 160 418Q160 406 140 379T94 306T62 208Q61 202 61 187Q61 124 85 100T143 76Q201 76 245 129L253 137V156Q258 297 317 297Q348 297 348 261Q348 243 338 213T318 158L308 135Q309 133 310 129T318 115T334 97T358 83T393 76Q456 76 501 148T546 274Q546 305 533 325T508 357T495 384Z"></path></g><g data-mml-node="mi" transform="translate(1812, 0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g></g></g><g data-mml-node="mn" transform="translate(1575.2, -345) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><rect width="3263.9" height="60" x="120" y="220"></rect></g><g data-mml-node="mo" transform="translate(7207.4, 0)"><path data-c="200B" d=""></path></g></g></g></svg></mjx-container></span></p>
+<h3 id="media-test">Media test</h3>
+<blockquote><p>Every interaction is both precious and an opportunity to delight.</p>
 <footer><strong>Seth Godin</strong><cite><a target="_blank" rel="noopener" href="http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html">Welcome to Island Marketing</a></cite></footer></blockquote>
-
 <img src="/hello-test/jc1.jpg" class="" title="hibiki!eupho">
 
-
-        <div id="aplayer-FycLIiUv" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+        <div id="aplayer-Qsxdlcjg" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
             <pre class="aplayer-lrc-content">[ar:アイマリン(CV.内田彩)]
 [al:Dive to Blue]
 [00:28.04]
@@ -1830,7 +1848,7 @@ std<span class="token operator">::</span>vector<span class="token operator">&lt;
         </div>
         <script>
           var ap = new APlayer({
-            element: document.getElementById("aplayer-FycLIiUv"),
+            element: document.getElementById("aplayer-Qsxdlcjg"),
             narrow: false,
             autoplay: false,
             showlrc: 2,
@@ -1845,10 +1863,9 @@ std<span class="token operator">::</span>vector<span class="token operator">&lt;
           window.aplayers || (window.aplayers = []);
           window.aplayers.push(ap);
         </script>
-
 <div class="pdfobject-container" data-target="./233.pdf" data-height="500px"></div>
-
-<h2 id="Finished！"><a href="#Finished！" class="headerlink" title="Finished！"></a>Finished！</h2><p>Congradulaions!</p>
+<h2 id="finished">Finished！</h2>
+<p>Congradulaions!</p>
 
       
     </div>
@@ -1907,13 +1924,18 @@ std<span class="token operator">::</span>vector<span class="token operator">&lt;
 
       
           <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="run-server">Run server</h3>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="generate-static-files">Generate static files</h3>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo generate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ hexo deploy<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
       
@@ -2086,6 +2108,11 @@ std<span class="token operator">::</span>vector<span class="token operator">&lt;
 
 
   
+
+  
+      
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+
 
   
 
