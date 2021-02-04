@@ -229,7 +229,7 @@
         <h1 id="pku-webmining-2020fall-project-boolean-question">PKU WebMining 2020fall project Boolean-Question</h1>
 <h2 id="项目结构总览">0. 项目结构总览</h2>
 <p>总体模型结构如下图所示：</p>
-<p><img src="hw3-pipeline.svg" alt="hw3-pipeline" style="zoom:33%;"></p>
+<p><img src="/boolqModels/hw3-pipeline.svg" alt="hw3-pipeline" style="zoom:33%;"></p>
 <p>其中，图的左侧为输入的文章标题、内容与人类提出的自然问题；图的中部为我们小组所设计的 Pipeline 结构；输入经过我们所设计的 Pipeline 结构，将输出由开放式评测模型生成的模型结果。</p>
 <p>其中我们的 Pipeline 结构，根据评测方式分为两部分：封闭式测试模型与开放式测试模型。</p>
 <p>封闭式测试模型架构为 <code>bidirestional LSTM with attention</code>，详见 <code>2.2</code> 节。</p>
@@ -238,9 +238,9 @@
 <p>项目代码地址请见 https://github.com/jszyxw/boolq-project.</p>
 <h2 id="数据增强">1. 数据增强</h2>
 <p>我们使用了两种方式尝试数据增强，然而两种方式均需要不同程度的手工成本，因此我们仅进行了少量数据的添加，在后面我们默认使用数据增强后的数据集。</p>
-<p><img src="微信截图_20210103190118.png" style="zoom:33%;"></p>
+<p><img src="/boolqModels/微信截图_20210103190118.png" style="zoom:33%;"></p>
 <h3 id="基于问题生成的数据增强">1.1 基于问题生成的数据增强</h3>
-<p><img src="QG-1609690356199.svg" style="zoom:80%;"></p>
+<p><img src="/boolqModels/QG-1609690356199.svg" style="zoom:80%;"></p>
 <p>基于问题生成的数据增强如上图所示。训练一个问题生成模型，输入文章、标题、问题答案，输出一个问题以及其置信度。</p>
 <p>处于方便，我们直接使用了<a href="%5Bgenerate_boolean_questions_using_T5_transformer%5D(https://github.com/ramsrigouthamg/generate_boolean_questions_using_T5_transformer)">开源代码</a>在 <code>boolQ</code><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> 数据集上进行模型训练，训练后的模型样例输入输出如下：</p>
 <p><code>Context</code>:</p>
@@ -253,7 +253,7 @@
 </blockquote>
 <p>然而由于 <code>boolQ</code> 数据集训练量较少（~10k) ，问题生成的质量并不高，需要人工鉴别出符合文章内容的问题，并确认答案是否正确。我们人工检查确认了 1000 多条数据，清洗出 500 个新问题数据，新问题所对应的文章均取自于训练集。</p>
 <h3 id="基于问题扰动的数据增强3">1.2 基于问题扰动的数据增强 <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></h3>
-<p><img src="image-20210103224559605.png" alt="image-20210103224559605" style="zoom: 33%;"></p>
+<p><img src="/boolqModels/image-20210103224559605.png" alt="image-20210103224559605" style="zoom: 33%;"></p>
 <p>方法如上图所示，对于一个问题的某个部分进行一定程度上的改变，同时要求答案也尽量改变，通过这种方法构造数据以提高模型的鲁棒性，具体参考论文 <a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>。我们尝试使用这种方法生成了 200 条新数据。然而使用这种方法进行数据扩充，对模型的推理能力要求更高，在低资源的封闭式测试中，加入新数据进行模型训练效果反而会变差。</p>
 <h2 id="封闭式">2. 封闭式</h2>
 <h3 id="预处理">2.1 预处理</h3>
@@ -296,7 +296,7 @@
 <h3 id="模型搭建">2.2 模型搭建</h3>
 <h3 id="模型架构">2.2.1 模型架构</h3>
 <p>模型架构为 <code>bidirestional LSTM with attention</code>，参考了 <span class="math inline">\(ACL2016\)</span> 的一篇文章 <code>Attention-Based Bidirectional Long Short-Term Memory Networks for Relation Classification</code><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a>，在当时与封闭集评测条件类似的条件下，获得了当时 state of the art 的结果，模型整体结构如下：</p>
-<p><img src="image-20210103193431007-1609690349900.png" style="zoom: 50%;"></p>
+<p><img src="/boolqModels/image-20210103193431007-1609690349900.png" style="zoom: 50%;"></p>
 <h3 id="变种-lstm">2.2.2 变种 LSTM</h3>
 <p>参考论文 <a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>，模型中的 LSTM 为变种 LSTM，其主要思想为：在原 LSTM 的基础上，<strong>各个门也将上一个记忆单元考虑上</strong>。修改后各门的具体计算方式如下： <span class="math display">\[
 \begin{aligned} i_{t} &amp;=\sigma\left(W_{x i} x_{t}+W_{h i} h_{t-1}+W_{c i} c_{t-1}+b_{i}\right) \\ f_{t} &amp;=\sigma\left(W_{x f} x_{t}+W_{h f} h_{t-1}+W_{c f} c_{t-1}+b_{f}\right) \\ g_{t} &amp;=\tanh \left(W_{x c} x_{t}+W_{h c} h_{t-1}+W_{c c} c_{t-1}+b_{c}\right) \\ c_{t} &amp;=i_{t} g_{t}+f_{t} c_{t-1} \\ o_{t} &amp;=\sigma\left(W_{x o} x_{t}+W_{h o} h_{t-1}+W_{c o} c_{t}+b_{o}\right) \\ h_{t} &amp;=o_{t} \tanh \left(c_{t}\right) \end{aligned}
@@ -619,7 +619,7 @@ M =\tanh (H)\\ \alpha =\operatorname{softmax}\left(w^{T} M\right) \\ r =H \alpha
 </table>
 <h3 id="t5-模型">3.2.4 T5 模型</h3>
 <h4 id="模型结构-4">模型结构</h4>
-<p><img src="image-20210103213541471.png" alt="image-20210103213541471" style="zoom:33%;"></p>
+<p><img src="/boolqModels/image-20210103213541471.png" alt="image-20210103213541471" style="zoom:33%;"></p>
 <p>T5 想要将所有的 NLP 任务归为一统，以后所有的 NLP 任务，在其模型下就转化为了如何进行合适的文本输入输出。由于模型预训练量极为巨大，各任务之间可以互相迁移学习，因此对于许多低资源的任务 T5 取得了非常好的效果。而其模型中最闪光的一点是：它使用了相对位置的 embedding，让模型对位置更加敏感 <a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a>。然而，T5 本身模型所带的参数量也达到了惊人的 <code>11 billion</code> 的规模，我们小组尝试使用 4 块 11GB 显存的 GPU，仅模型装载就超出了显存限制，进行训练调参更是天方夜谭。在本次实验中，我们进行了大量尝试对论文给出的结果进行复现，然而由于算力资源的限制，我们最终都以失败告终，详见附录。最终，T5 模型我们只是用于作为参考，因为参数量过大难以进行训练，只是进行了一个简单的预测集成。</p>
 <h4 id="实验结果-3">实验结果</h4>
 <p>我们使用 <code>T5-3b</code> 预训练模型预测结果，具体代码请见 <code>code/T5.py</code></p>
@@ -672,7 +672,7 @@ M =\tanh (H)\\ \alpha =\operatorname{softmax}\left(w^{T} M\right) \\ r =H \alpha
 </tbody>
 </table>
 <p>可以发现正确率为 89.02%，已与人类表现相当 <a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>，在 <code>SUPER GLUE</code> 排行榜上 <code>BoolQ</code> 任务排名前 5.</p>
-<p><img src="image-20210103221053550.png" alt="image-20210103221053550" style="zoom: 33%;"></p>
+<p><img src="/boolqModels/image-20210103221053550.png" alt="image-20210103221053550" style="zoom: 33%;"></p>
 <h2 id="小组分工情况">4. 小组分工情况</h2>
 <h2 id="附录">5. 附录</h2>
 <h3 id="t5-复现过程">5.1 T5 复现过程</h3>
@@ -688,7 +688,7 @@ device_map <span class="token operator">=</span> <span class="token punctuation"
              <span class="token number">3</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">17</span><span class="token punctuation">,</span> <span class="token number">18</span><span class="token punctuation">,</span> <span class="token number">19</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">,</span> <span class="token number">21</span><span class="token punctuation">,</span> <span class="token number">22</span><span class="token punctuation">,</span> <span class="token number">23</span><span class="token punctuation">]</span><span class="token punctuation">}</span>
 t5<span class="token punctuation">.</span>parallelize<span class="token punctuation">(</span>device_map<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>运行报错，显存溢出：</p>
-<p><img src="image-20210103221645484.png" alt="image-20210103221645484"></p></li>
+<p><img src="/boolqModels/image-20210103221645484.png" alt="image-20210103221645484"></p></li>
 <li><p><code>T5-3b</code> 尝试复现论文结果：</p>
 <p>经过大量尝试对论文给出的 <code>T5-3b</code> 的结果进行复现，修改几天代码后仍然正确率仅有 84% 左右，远低于论文所述 89.9%，故向论文作者进行邮件沟通：</p>
 <p>得到回复是 HuggingFace 版的 T5 参数和训练方式与原版有区别，即如需获得论文结果，需要从头开始训练与调参：</p>
